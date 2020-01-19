@@ -1,0 +1,384 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a18bce666e.js" crossorigin="anonymous"></script>
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em;
+                font-family: 'Varela Round', sans-serif;
+                padding-top: 6%; 
+            }
+            
+            h1 {
+                font-size: 2em;
+                font-weight: 700;
+                text-shadow: 0px 4px 3px rgba(0,0,20,0.1),
+						 0px 8px 13px rgba(0,0,0,0.1),
+						 0px 18px 18px rgba(0,0,0,0.1);
+            }
+            
+            hr {
+                border: 0;
+                height: 1px;
+                background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+            }
+            
+            #popup {
+                color: rgba(255,255,255,1);
+                font-size: 1.5em; 
+            }
+            
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
+            
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 75px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:75px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:75px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:75px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Rounding Game</title>
+    
+    <body>
+           
+        <h1>Hanson Rounding Game</h1>
+        <hr>
+        
+        <p id='problem' class='problem'></p>
+         
+        <div id = 'popup'> </div>
+        <br>
+            
+        <input id='input' class='input' type='number' placeholder=''>
+        <br>
+            
+        <button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
+        <br>
+        <button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+            
+        <p id='score' class='score'></p>
+        <p id='incorrect' class='incorrect'></p>
+        
+    </body>
+    
+    <script>
+        
+        const startGameVar = document.querySelector('.startGame');
+        const resetGameVar = document.querySelector('.resetGame');
+        const continueVar = document.querySelector('.input');
+        
+        let score = 0;
+        let answer = 0;
+        let answerString = '';
+        let answerStringCommas = ''; 
+        let problem = ''; 
+        
+        //game start conditions
+        resetGameVar.disabled = true;
+        resetGameVar.style.visibility = 'hidden';
+        continueVar.style.visibility = 'hidden'; 
+        continueVar.disabled = true; //make ability to check answer disabled until start of game
+        
+        //events
+        
+        startGameVar.addEventListener('click',startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer(); 
+            }
+        }); 
+        
+        //functions
+        
+        function startGame() {
+            
+            startGameVar.disabled = true;
+            startGameVar.style.visibility = 'hidden';
+            continueVar.disabled = false; //make it possible to check an answer            
+            continueVar.style.visibility = 'visible'; 
+            continueVar.disabled = false; //make ability to check answer disabled until start of game
+            
+            document.getElementById('score').innerHTML = 'Problems Correct: '; 
+            
+            setTimeout(function() {
+                
+                //end game conditions
+                alert('Time\s Up!');
+                document.querySelector('body').style.backgroundColor = '#ffffff';
+                continueVar.disabled = true;
+                resetGameVar.disabled = false;
+                resetGameVar.style.visibility = 'visible';
+                document.querySelector('.score').style.color = 'green';}, 60000);
+            
+            createProblem();
+            
+        }
+        
+        function createProblem() {
+            
+            answerString = '';
+            answerStringCommas = ''; 
+            
+            let place = ['ten','hundred','thousand','ten thousand','hundred thousand'];
+            
+            let randomNumber = Math.floor(Math.random() * 998999 + 1000);
+            
+            let randomNumberString = String(randomNumber);
+            let randomNumberStringCommas = '';
+            
+            let stringToRound = '';
+            let numberToRound = 0;
+            let remainingNumberString = '';
+            let remainingZeroString = '';
+            
+            let randomPlace = Math.floor(Math.random() * (randomNumberString.length - 1));
+            
+            console.log('random place: ' + randomPlace);
+            console.log('random number: ' + randomNumber);
+            console.log(String(randomNumberString.length));
+            
+            let characterArray = [];
+            let characterArrayCommas = [];
+            
+            let characterArrayAnswer = [];
+            let characterArrayCommasAnswer = []; 
+            
+            //Add a comma to randomNumberString:
+            if(randomNumberString.length > 3)
+            {
+                
+                for(let i = 0; i < randomNumberString.length; i++)
+                {
+                    characterArray[i] = randomNumberString[i];
+                }
+                
+                console.log(characterArray);
+            
+                
+                for(let i = characterArray.length - 1; i >= 0; i--)
+                {
+                    if(i === characterArray.length - 4)
+                    {
+                        characterArrayCommas.unshift(','); 
+                    }
+                    characterArrayCommas.unshift(characterArray[i]); 
+                }
+                
+                console.log(characterArrayCommas);
+                
+                //put the characterArrayCommas back into a string:
+                
+                for(let i = 0; i < characterArrayCommas.length; i++)
+                {
+                    randomNumberStringCommas += characterArrayCommas[i]; 
+                }
+            }
+            
+            problem = 'Round the number ' + randomNumberStringCommas + ' to the nearest ' + '<span style="text-decoration:underline;">' + place[randomPlace] + '</span>' + ':';
+            document.getElementById('problem').innerHTML = problem; 
+            
+            console.log(problem);
+            
+            //CREATE ANSWER BELOW:
+            
+            let rightPlace = characterArray[characterArray.length - 1 - place.indexOf(place[randomPlace])];
+            
+            console.log(rightPlace);
+            
+            stringToRound = randomNumberString.substr(0, randomNumberString.length - 1 - place.indexOf(place[randomPlace])); 
+
+            console.log('String to round: ' + stringToRound);
+            
+            numberToRound = Number(stringToRound); 
+            
+            console.log(typeof(stringToRound)); 
+            
+            console.log('Number to round: ' + numberToRound);
+            
+            console.log(typeof(numberToRound));
+            
+            remainingNumberString = randomNumberString.substr(randomNumberString.length - 1 - place.indexOf(place[randomPlace]), randomNumberString.length);
+            
+            console.log('Remaining number string:' + remainingNumberString);
+            
+            for(let i = 0; i < remainingNumberString.length; i++)
+            {
+                remainingZeroString += '0'; 
+            }
+            
+            console.log('Remaining zero string:' + remainingZeroString);
+            
+            rightPlace = Number(rightPlace); 
+            console.log(typeof(rightPlace));
+            
+            if(rightPlace >= 5)
+            {
+                numberToRound += 1;
+                stringToRound = String(numberToRound); 
+            }
+            
+            console.log('Number to round: ' + numberToRound);
+            console.log('String to round: ' + stringToRound); 
+            
+            answerString = stringToRound + remainingZeroString;
+            
+            answer = Number(answerString);
+            
+            console.log('answer string: ' + answerString);
+            console.log('answer: ' + answer);
+            
+            
+            //add commas answer to create 'problem':
+            
+            if(answerString.length > 3)
+            {
+                
+                for(let i = 0; i < answerString.length; i++)
+                {
+                    characterArrayAnswer[i] = answerString[i];
+                }
+                
+                console.log(characterArrayAnswer);
+            
+                
+                for(let i = characterArrayAnswer.length - 1; i >= 0; i--)
+                {
+                    if(i === characterArrayAnswer.length - 4)
+                    {
+                        characterArrayCommasAnswer.unshift(','); 
+                    }
+                    characterArrayCommasAnswer.unshift(characterArrayAnswer[i]); 
+                }
+                
+                console.log(characterArrayCommasAnswer);
+                
+                //put the characterArrayCommasAnswer back into a string:
+                
+                for(let i = 0; i < characterArrayCommasAnswer.length; i++)
+                {
+                    answerStringCommas += characterArrayCommasAnswer[i]; 
+                }
+                
+                console.log('Answer String with Commas:' + answerStringCommas); 
+            }
+            
+            //if million
+            if(answer === 1000000)
+            {
+                answerString = '1000000';
+                answerStringCommas = '1,000,000';
+                console.log('Answer string with commas: ' + answerStringCommas); 
+            }
+            
+            problem = randomNumberStringCommas + ' rounded to the nearest ' + '<span style="text-decoration:underline;">' + place[randomPlace] + '</span>' + ' is ' + answerStringCommas + '.';
+            
+            console.log(problem); 
+            
+        }
+        
+        function checkAnswer() {
+            
+            let userInput = Number(continueVar.value);
+            
+            if(userInput === answer)
+            {
+                continueVar.style.backgroundColor = 'rgba(80,255,150,0.10)'; 
+                document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i></div>';
+                score += 1; 
+            }
+            else
+            {
+                document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i></div>';
+                continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+                document.getElementById('incorrect').innerHTML += problem + '<br>'; 
+            }
+            
+            document.getElementById('score').innerHTML = 'Problems Correct: ' + score;
+            
+            continueVar.value = ''; 
+            createProblem(); 
+            
+        }
+        
+        function resetGame() {
+            
+            score = 0;
+            answer = 0;
+            problem = '';
+            
+            resetGameVar.disabled = true;
+            resetGameVar.style.visibility = 'hidden'; 
+        
+            continueVar.disabled = true;
+            continueVar.style.visibility = 'hidden'; 
+            
+            startGameVar.disabled = false;
+            startGameVar.style.visibility = 'visible';
+            
+            document.querySelector('.score').style.color = 'black';
+            document.getElementById('score').innerHTML = 'Problems Correct: ';
+            
+            document.getElementById('incorrect').innerHTML = '';
+            
+            continueVar.style.visibility = 'hidden'; 
+            continueVar.disabled = true; //make ability to check answer disabled until start of game
+            
+            continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+            
+        }
+        
+    </script>
+    
+</html>

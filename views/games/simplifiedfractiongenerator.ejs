@@ -1,0 +1,196 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Simpifed/Reduced Fraction Generator</title>
+    
+    <body>
+        
+        <h1>Hanson Simplified/Reduced Fraction Generator</h1>
+        
+        <label for='numerator'>Numerator:</label>
+        <input id='numerator' class='numerator' type='number' placeholder=''>
+        <br>
+        <label for='denominator'>Denominator:</label>
+        <input id='denominator' class='denominator' type='number' placeholder=''>
+        <br>
+        <br>
+        
+        <input type='submit' value='Generate Simplified Fractions' class='getFractions'>
+        <br>
+        <br>
+        <input type='submit' value='Reset' class='reset'>
+        <br>
+        <p id='error'></p>
+
+        <p id='factors'>Common Factors: </p>
+        
+        <p id='gcf'>Greatest Common Factor: </p>
+        
+        <p id='simplified fractions'>Simplified Fractions: </p>
+        
+        
+        
+    </body>
+    
+    <script>
+        
+        let factors = []; 
+        let gcf = 1;
+        let simplifiedFractions = []; 
+        let numerator = 0;
+        let denominator = 0; 
+    
+        //constants/element variables
+        
+        const numeratorVar = document.querySelector('.numerator');
+        const denominatorVar = document.querySelector('.denominator'); 
+        const getFractionsVar = document.querySelector('.getFractions');
+        const resetVar = document.querySelector('.reset'); 
+        
+        //events
+        
+        getFractionsVar.addEventListener('click',generateFactors);
+        resetVar.addEventListener('click',resetFields);
+        
+        //functions
+        
+        function generateFactors() {
+            
+            factors = []; 
+            gcf = 1;
+            simplifiedFractions = [];
+            
+            document.getElementById('factors').innerHTML = 'Common Factors: '; 
+            document.getElementById('gcf').innerHTML = 'Greatest Common Factor: ';
+            document.getElementById('simplified fractions').innerHTML = 'Simplified Fractions:';
+            document.getElementById('error').innerHTML = '';
+            
+            numerator = numeratorVar.value;
+            denominator = denominatorVar.value;
+            
+            if(numerator > 99999999 || denominator > 99999999)
+            {
+                document.getElementById('error').innerHTML = 'Enter whole number values less than 100,000,000 (One Hundred Million)';
+                return 0; 
+            }
+            
+            if(numerator < 1 || denominator < 1)
+            {
+                document.getElementById('error').innerHTML = 'Enter whole number values greater than 0.';
+                return 0; 
+            }
+            
+            if(numerator.includes('.') || denominator.includes('.'))
+            {
+                document.getElementById('error').innerHTML = 'Enter whole number values greater than 0.';
+                return 0; 
+            }
+            
+            if(Number(numerator) > Number(denominator))
+            {
+                let tempContainer = numerator;
+                numerator = denominator;
+                denominator = tempContainer; 
+            }
+            
+            for(let thisNumber = numerator; thisNumber > 0; thisNumber--)
+            {
+                if(numerator % thisNumber === 0 && denominator % thisNumber === 0)
+                {
+                    factors.push(thisNumber);
+                }
+            }
+            
+            gcf = factors[0]; 
+            printFactors(factors);
+            generateFractions(factors);
+            printFractions(simplifiedFractions);
+            
+        }
+        
+        function printFactors(factors) {
+            
+            let factorString = '';
+            
+            for(let thisFactor = 0; thisFactor < factors.length; thisFactor++)
+            {
+                if(factors[thisFactor] === factors[factors.length - 1])
+                {
+                    factorString += factors[thisFactor] + ''; 
+                }
+                else
+                {
+                    factorString += factors[thisFactor] + ', ';
+                }
+            }
+            
+            document.getElementById('factors').innerHTML = 'Common Factors: ' + factorString; 
+            document.getElementById('gcf').innerHTML = 'Greatest Common Factor: ' + gcf;
+        }
+        
+        function generateFractions(factors) {
+            
+            numerator = Number(numeratorVar.value);
+            denominator = Number(denominatorVar.value);
+            
+            for(let thisFactor = 0; thisFactor < factors.length; thisFactor++)
+            {
+                let thisNumerator = numerator / factors[thisFactor];
+                let thisDenominator = denominator / factors[thisFactor];
+                
+                let thisFraction = thisNumerator + '/' + thisDenominator;
+                simplifiedFractions.push(thisFraction); 
+            }
+            
+        }
+        
+        function printFractions(fractions) {
+            
+            let fractionString = '';
+            
+            for(let thisFraction = 0; thisFraction < simplifiedFractions.length; thisFraction++)
+            {
+                fractionString += numerator + '/' + denominator + ' = ' + fractions[thisFraction] + '<br>';
+            }
+            
+            document.getElementById('simplified fractions').innerHTML = 'Simplified Fractions:' + '<br>' + fractionString;
+            
+        }
+        
+        
+        function resetFields() {
+            
+            numeratorVar.value = '';
+            denominatorVar.value = '';
+            
+            document.getElementById('factors').innerHTML = 'Common Factors: '; 
+            document.getElementById('gcf').innerHTML = 'Greatest Common Factor: ';
+            document.getElementById('simplified fractions').innerHTML = 'Simplified Fractions:';
+            document.getElementById('error').innerHTML = '';
+            
+            factors = []; 
+            gcf = 1;
+            simplifiedFractions = []; 
+            numerator = 0;
+            denominator = 0;
+             
+        }
+            
+        
+    </script>
+    
+</html>
