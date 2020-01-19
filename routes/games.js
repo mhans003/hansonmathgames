@@ -6,4 +6,8 @@ router.get("/", function(req, res) {
 	res.render("games/index"); 
 });
 
+router.get("/multiplication", function(req, res) {
+	res.render("games/multiplication");  
+}); 
+
 module.exports = router; 
