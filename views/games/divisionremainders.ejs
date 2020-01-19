@@ -1,0 +1,190 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Division Game</title>
+    
+    <body>
+        
+        <h1>Hanson Division Game</h1>
+        <h2 style='font-style: italic;'>With Remainders</h2>
+        
+        <input type='submit' value='START' class='startGame'>
+        <br>
+        <input type='submit' value='RESET' class='resetGame'>
+        
+        <h1 id='problem' class='problem'></h1>
+        
+        <label for='answer'>Answer:</label>
+        <input id='answer' class='answer' type='text' placeholder=''>
+        
+        <p id='score'>Current Score: </p>
+        
+        <h2>Problems to Practice:</h2>
+        <p id='show answer'></p>
+        
+        
+    </body>
+    
+    <script>
+        
+        let finalScore = 0; 
+        let problem = '';
+        let answer = 0;
+        let dividend = 0;
+        let remainder = 0;
+        let answerWithRemainder = '';
+    
+        //constants/element variables
+        
+        const startGameVar = document.querySelector('.startGame');
+        const resetGameVar = document.querySelector('.resetGame');
+        const continueVar = document.querySelector('.answer');
+        
+        //game start conditions
+        resetGameVar.disabled = true;
+        resetGameVar.style.visibility = 'hidden'; 
+        continueVar.disabled = true; //make ability to check answer disabled until start of game
+        
+        //events
+        
+        startGameVar.addEventListener('click',startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer(); 
+            }
+        });
+        
+        //functions
+        
+        function startGame() {
+            startGameVar.disabled = true;
+            startGameVar.style.visibility = 'hidden';
+            continueVar.disabled = false; //make it possible to check an answer
+            
+            setTimeout(function() {
+                //end game conditions
+                document.querySelector('body').style.backgroundColor = '#ffffff';
+                alert('Time\s Up!');
+                continueVar.disabled = true;
+                resetGameVar.disabled = false;
+                resetGameVar.style.visibility = 'visible';
+                
+                document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore;
+                document.querySelector('.problem').style.color = 'green';}, 60000);
+            createProblem(); //generate first problem
+        }
+        
+        function resetGame() {
+            finalScore = 0;
+            
+            resetGameVar.disabled = true;
+            resetGameVar.style.visibility = 'hidden'; 
+        
+            continueVar.disabled = true;
+            
+            startGameVar.disabled = false;
+            startGameVar.style.visibility = 'visible';
+            
+            document.getElementById('problem').innerHTML = '';
+            document.querySelector('.problem').style.color = 'black';
+            
+            document.getElementById('show answer').innerHTML = '';
+            document.getElementById('score').innerHTML = 'Current Score: '; 
+        }
+        
+        
+        function createProblem() {
+            //each time create problem is run, make it not possible to create another problem (aka enter will run check answer) 
+            answer = Math.floor(Math.random() * 11);
+            let divisor = Math.floor(Math.random() * 11 + 1);
+            dividend = (answer * divisor) + Math.floor(Math.random() * divisor);
+            
+            if(dividend < divisor && dividend !== 0)
+            {
+                let tempVar = dividend;
+                dividend = divisor;
+                divisor = tempVar;
+                answer = parseInt(dividend / divisor); 
+            }
+            
+            remainder = dividend % divisor;
+            
+            problem = dividend + ' &#247; ' + divisor + ' = ';
+            
+            document.getElementById('problem').innerHTML = problem;
+            
+            if(remainder === 0)
+            {
+                answerWithRemainder = answer;
+                console.log('output with remainder 0');
+                console.log(answerWithRemainder);
+            }
+            else
+            {
+                answerWithRemainder = answer + 'r' + remainder;
+                console.log('output with remainder');
+                console.log(answerWithRemainder);
+            }
+        }
+        
+        function checkAnswer() {
+            let rawInput = continueVar.value;
+            let userInput = rawInput.replace(' ','');
+            if(userInput.indexOf('r0') !== 0)
+            {
+                userInput = userInput.replace('r0','');
+            }
+            
+            if(userInput == answerWithRemainder)
+            {
+                if(answer === 0 && continueVar.value === '')
+                {
+                    document.querySelector('body').style.backgroundColor = '#ffebe6';
+                    finalScore -= 50;
+                    document.getElementById('show answer').innerHTML += problem + answer + 'r' + remainder + '<br>';
+                }
+                else
+                {
+                    document.querySelector('body').style.backgroundColor = '#ccffcc';
+                    finalScore += dividend;
+                }
+            }
+            else
+            {
+                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                finalScore -= dividend;
+                if(remainder === 0)
+                    {
+                        document.getElementById('show answer').innerHTML += problem + answer + '<br>';
+                    }
+                    else
+                    {
+                        document.getElementById('show answer').innerHTML += problem + answer + 'r' + remainder + '<br>';
+                    }
+                //document.getElementById('show answer').innerHTML += problem + answer + 'r' + remainder + '<br>';
+            }
+       
+            document.getElementById('score').innerHTML = 'Current Score: ' + finalScore;
+            
+            continueVar.value = ''; 
+            createProblem(); 
+        }
+        
+    </script>
+    
+</html>

@@ -1,0 +1,117 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Division Game</title>
+    
+    <body>
+        
+        <h1>Hanson Prime Numbers Generator</h1>
+
+        <label for='input'>How many prime numbers?</label>
+        <input id='input' class='input' type='number' placeholder=''>
+        
+        <input type='submit' value='Generate Prime Numbers' class='primeNumbers'>
+        <br>
+        <br>
+        
+        <input type='submit' value='RESET' class='resetGame'>
+        <br>
+        
+        <p id='show primes'></p>
+        
+        
+    </body>
+    
+    <script>
+        
+        let inputVar = document.querySelector('.input');
+        let primeNumbersVar = document.querySelector('.primeNumbers');
+        let resetGameVar = document.querySelector('.resetGame');
+        
+        resetGameVar.addEventListener('click', resetFields);
+        primeNumbersVar.addEventListener('click', generatePrimes);
+        
+        function resetFields() {
+            
+            inputVar.value = '';
+            document.getElementById('show primes').innerHTML = ''; 
+            
+        }
+        
+        function generatePrimes() {
+            
+            let numberOfPrimes = Number(inputVar.value);
+            
+            if(numberOfPrimes > 4999)
+            {
+                document.getElementById('show primes').innerHTML = 'Enter a number less than 5,000.';
+                return 0; 
+            }
+            
+            let primeList = [];
+            let currentNumber = 2;
+            let isPrime = true; 
+            
+            while(primeList.length <= numberOfPrimes - 1)
+            {
+                isPrime = true;
+                
+                for(let currentDivisor = currentNumber - 1; currentDivisor > 1; currentDivisor--)
+                {
+                    if(currentNumber % currentDivisor === 0)
+                    {
+                        isPrime = false; 
+                    }
+                }
+                
+                if(isPrime === true)
+                {
+                    primeList.push(currentNumber); 
+                }
+                
+                currentNumber++; 
+            }
+            
+            console.log(primeList);
+            
+            printPrimes(primeList); 
+            
+        }
+        
+        function printPrimes(primeList) {
+            
+            let primeString = ''; 
+            
+            for(let thisNumber = 0; thisNumber < primeList.length; thisNumber++)
+            {
+                if(thisNumber < primeList.length - 1)
+                {
+                    primeString += primeList[thisNumber] + ', '; 
+                }
+                else
+                {
+                    primeString += primeList[thisNumber] + '.'; 
+                }
+            }
+            
+            document.getElementById('show primes').innerHTML = 'The first ' + Number(inputVar.value) + ' prime numbers are: ' + primeString; 
+            
+        }
+        
+    </script>
+    
+</html>

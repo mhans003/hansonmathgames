@@ -1,0 +1,242 @@
+<html>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em;
+                padding-top: 5%; 
+            }
+            h1 {
+                border-style: groove; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Preparing for Long Division</title>
+    
+    <body>
+    
+        <h1>Preparing for Long Division</h1>
+        <h2>Understanding Division and Remainders</h2>
+        
+        <p id='problem' class='problem'></p>
+        
+        <div class='inputContainer' ng-app="labelApp" ng-controller="labelCtrl">
+            
+            <span id='quotientLabel' class='quotientLabel'></span>
+            <input id='quotientInput' class='quotientInput' type='number' placeholder='' ng-model="quot" ng-keydown="keyPress($event)">
+            <br>
+            
+            <span id='remainderLabel' class='remainderLabel'></span>
+            <input id='remainderInput' class='remainderInput' type='number' placeholder='' ng-model="rem" ng-keydown="keyPress($event)"> 
+            <br><br>
+            
+            <span id='outputSentence' class='outputSentence'>( {{quot}} ) times with a remainder of ( {{rem}} )</span>
+            <br>
+            
+            <input type='submit' value='CHECK' class='check' ng-click="resetValues()">
+            <br>
+            
+            <input type='submit' value='RESET' class='resetGame' ng-click="resetValues()">
+            <br>
+            
+        </div>
+        
+        <input type='submit' value='START' class='startGame'>
+        <br>
+        
+        <p id='score' class='score'></p>
+        <p id='incorrect' class='incorrect'></p>
+        
+    </body>
+    
+    <script>
+        
+        //Angular module
+        
+        let app = angular.module('labelApp', []);
+        app.controller('labelCtrl', function($scope) {
+            $scope.quot = null;
+            $scope.rem = null;
+            $scope.resetValues = function() {
+                $scope.quot = null;
+                $scope.rem = null;
+            };
+            $scope.keyPress = function(keyEvent) {
+                if (keyEvent.which === 13)
+                {
+                    //$scope.resetValues();
+                    $scope.quot = null;
+                    $scope.rem = null;
+                    console.log('Angular keyevent');
+                }
+            };
+        }); 
+        
+        //Plain JS
+        
+        const startGameVar = document.querySelector('.startGame');
+        const resetGameVar = document.querySelector('.resetGame');
+        const continueVar = document.querySelector('.check');
+        const quotientInputVar = document.querySelector('.quotientInput');
+        const remainderInputVar = document.querySelector('.remainderInput');
+        const inputContainerVar = document.querySelector('.inputContainer'); 
+        
+        let score = 0;
+        let quotient = 0;
+        let remainder = 0; 
+        let problem = '';
+        let answer = ''; 
+        
+        //game start conditions
+        resetGameVar.disabled = true;
+        resetGameVar.style.visibility = 'hidden';
+        continueVar.style.visibility = 'hidden'; 
+        continueVar.disabled = true; //make ability to check answer disabled until start of game
+        inputContainerVar.style.visibility = 'hidden'; 
+        
+        //events
+        
+        startGameVar.addEventListener('click',startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('click', checkAnswer);
+
+        quotientInputVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer();
+                console.log('Normal Javascript keyevent'); 
+            }
+        });
+        remainderInputVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer();
+                console.log('Normal Javascript keyevent'); 
+            }
+        });
+        
+        //functions
+        
+        function startGame() {
+            
+            startGameVar.disabled = true;
+            startGameVar.style.visibility = 'hidden';           
+            continueVar.style.visibility = 'visible'; 
+            continueVar.disabled = false; //make ability to check answer disabled until start of game
+            inputContainerVar.style.visibility = 'visible';
+            
+            quotientInputVar.disabled = false;
+            remainderInputVar.disabled = false;
+            
+            quotientInputVar.focus(); 
+            
+            document.getElementById('score').innerHTML = 'Problems Correct: '; 
+            
+            setTimeout(function() {
+                
+                //end game conditions
+                alert('Time\s Up!');
+                document.querySelector('body').style.backgroundColor = '#ffffff';
+                continueVar.disabled = true;
+                resetGameVar.disabled = false;
+                resetGameVar.style.visibility = 'visible';
+                quotientInputVar.disabled = true;
+                remainderInputVar.disabled = true; 
+                document.querySelector('.score').style.color = 'green';}, 60000);
+            
+            createProblem();
+            
+        }
+        
+        function createProblem() {
+            
+            
+            //create values
+            let randomDivisor = Math.floor(Math.random() * 8 + 2);
+            console.log('Random Divisor:' + randomDivisor);
+            
+            let randomMultiplier = Math.floor(Math.random() * 8 + 2);
+            console.log('Random Multiplier:' + randomMultiplier);
+            quotient = randomMultiplier; //store global quotient
+            
+            let randomRemainder = Math.floor(Math.random() * randomDivisor);
+            console.log('RandomRemainder:' + randomRemainder);
+            remainder = randomRemainder; //store global remainder
+            
+            let dividend = (randomDivisor * randomMultiplier) + randomRemainder;
+            
+            problem = 'How many times does ' + randomDivisor + ' go into ' + dividend + ' without going over?'; //store global problem
+            answer = randomDivisor + ' goes into ' + dividend + ' ' + '<span style="text-decoration:underline;">' + quotient +
+            '</span>' + ' times with a remainder of ' + '<span style="text-decoration:underline;">' + remainder + '</span>' +
+            '<br>' + '(' + randomDivisor + ' x ' + '<span style="text-decoration:underline;">' + quotient + '</span>' + ' = ' + (randomDivisor * quotient) + ';   ' +
+            (randomDivisor * quotient) + ' + ' + '<span style="text-decoration:underline;">' + remainder + '</span>' + ' = ' + dividend + ')' + '<br>'; //store global answer
+            
+            document.getElementById('problem').innerHTML = problem; //output problem
+            document.getElementById('quotientLabel').innerHTML = 'Quotient: ';
+            document.getElementById('remainderLabel').innerHTML = 'Remainder: '; 
+            
+        }
+        
+        function checkAnswer() {
+            
+            let quotientInput = Number(quotientInputVar.value);
+            let remainderInput = Number(remainderInputVar.value);
+            
+            if(quotientInput === quotient && remainderInput === remainder)
+            {
+                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                score += 1; 
+            }
+            else
+            {
+                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                document.getElementById('incorrect').innerHTML += answer + '<br>'; 
+            }
+    
+            document.getElementById('score').innerHTML = 'Problems Correct: ' + score;
+            
+            //quotientInputVar.value = '';
+            //remainderInputVar.value = '';
+            
+            quotientInputVar.focus(); 
+            
+            createProblem(); 
+            
+        }
+        
+        function resetGame() {
+            
+            score = 0;
+            answer = 0;
+            problem = '';
+            
+            resetGameVar.disabled = true;
+            resetGameVar.style.visibility = 'hidden';  
+            
+            startGameVar.disabled = false;
+            startGameVar.style.visibility = 'visible';
+            
+            inputContainerVar.style.visibility = 'hidden'; 
+            
+            document.querySelector('.score').style.color = 'black';
+            document.getElementById('score').innerHTML = '';
+            
+            document.getElementById('incorrect').innerHTML = '';
+            document.getElementById('problem').innerHTML = '';
+            
+            continueVar.style.visibility = 'hidden'; 
+            continueVar.disabled = true; //make ability to check answer disabled until start of game
+            
+        }
+        
+    </script>
+    
+</html>

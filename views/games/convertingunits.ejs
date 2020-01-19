@@ -1,0 +1,195 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Converting Units Game</title>
+    
+    <body>
+    
+        <h1>Hanson Converting Units Game</h1>  
+        
+        <span id='largerUnits' class='largerUnits'>larger units =</span>
+        <input id='input' class='input' type='text' placeholder=''>
+        <span id='smallerUnits' class='smallerUnits'>smaller units</span>
+        <br>
+        
+        <input type='submit' value='START' class='startGame'>
+        <br>
+        <input type='submit' value='RESET' class='resetGame'>
+        
+        <p id='score' class='score'></p>
+        <p id='incorrect' class='incorrect'></p>
+        
+    </body>
+    
+    <script>
+        
+        const startGameVar = document.querySelector('.startGame');
+        const resetGameVar = document.querySelector('.resetGame');
+        const continueVar = document.querySelector('.input');
+        const largerUnitsVar = document.querySelector('.largerUnits');
+        const smallerUnitsVar = document.querySelector('.smallerUnits');
+        
+        let score = 0;
+        let answer = 0;
+        let problem = ''; 
+        
+        /*
+        class conversions {
+            constructor(large, small, multiplier) {
+                this.large = large;
+                this.small = small; 
+                this.multiplier = multiplier; 
+            }
+        }
+        */
+        function Conversions(large, small, multiplier) {
+            this.large = large;
+            this.small = small;
+            this.multiplier = multiplier; 
+        }
+        
+        let conversionList = [new Conversions('Feet','Inches',12),
+                              new Conversions('Yards','Feet',3),
+                              new Conversions('Meters','Centimeters',100),
+                              new Conversions('Kilometers','Meters',1000),
+                              new Conversions('Centimeters','Millimeters',10),
+                              new Conversions('Kilograms','Grams',1000),
+                              new Conversions('Hours','Minutes',60),
+                              new Conversions('Minutes','Seconds',60),
+                              new Conversions('Gallons','Quarts',4),
+                              new Conversions('Quarts','Pints',2),
+                              new Conversions('Pints','Cups',2),
+                              new Conversions('Weeks','Days',7)];
+        
+        console.log(conversionList); 
+        
+        //game start conditions
+        resetGameVar.disabled = true;
+        resetGameVar.style.visibility = 'hidden';
+        largerUnitsVar.style.visibility = 'hidden';
+        smallerUnitsVar.style.visibility = 'hidden';
+        continueVar.style.visibility = 'hidden'; 
+        continueVar.disabled = true; //make ability to check answer disabled until start of game
+        
+        //events
+        
+        startGameVar.addEventListener('click',startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer(); 
+            }
+        }); 
+        
+        //functions
+        
+        function startGame() {
+            
+            startGameVar.disabled = true;
+            startGameVar.style.visibility = 'hidden';
+            continueVar.disabled = false; //make it possible to check an answer
+            
+            largerUnitsVar.style.visibility = 'visible';
+            smallerUnitsVar.style.visibility = 'visible';
+            continueVar.style.visibility = 'visible'; 
+            continueVar.disabled = false; //make ability to check answer disabled until start of game
+            
+            document.getElementById('score').innerHTML = 'Problems Correct: '; 
+            
+            setTimeout(function() {
+                
+                //end game conditions
+                alert('Time\s Up!');
+                document.querySelector('body').style.backgroundColor = '#ffffff';
+                continueVar.disabled = true;
+                resetGameVar.disabled = false;
+                resetGameVar.style.visibility = 'visible';
+                document.querySelector('.score').style.color = 'green';}, 60000);
+            
+            createProblem();
+            
+        }
+        
+        function createProblem() {
+            
+            let randomNumber = Math.floor(Math.random() * 9 + 2); 
+            
+            let randomIndex = Math.floor(Math.random() * conversionList.length);
+            
+            document.getElementById('largerUnits').innerHTML = randomNumber + ' ' + conversionList[randomIndex].large + ' = ';
+            document.getElementById('smallerUnits').innerHTML = conversionList[randomIndex].small; 
+            
+            answer = randomNumber * conversionList[randomIndex].multiplier;
+            
+            problem = randomNumber + ' ' + conversionList[randomIndex].large + ' = ' + answer + ' ' + conversionList[randomIndex].small;  
+            
+            console.log(answer);
+            console.log(problem); 
+            
+        }
+        
+        function checkAnswer() {
+            
+            let userInput = Number(continueVar.value);
+            
+            if(userInput === answer)
+            {
+                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                score += 1; 
+            }
+            else
+            {
+                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                document.getElementById('incorrect').innerHTML += problem + '<br>'; 
+            }
+            
+            document.getElementById('score').innerHTML = 'Problems Correct: ' + score;
+            
+            continueVar.value = ''; 
+            createProblem(); 
+            
+        }
+        
+        function resetGame() {
+            
+            score = 0;
+            answer = 0;
+            problem = '';
+            
+            resetGameVar.disabled = true;
+            resetGameVar.style.visibility = 'hidden'; 
+        
+            continueVar.disabled = true;
+            
+            startGameVar.disabled = false;
+            startGameVar.style.visibility = 'visible';
+            
+            document.querySelector('.score').style.color = 'black';
+            document.getElementById('score').innerHTML = 'Problems Correct: ';
+            
+            document.getElementById('incorrect').innerHTML = '';
+            
+            largerUnitsVar.style.visibility = 'hidden';
+            smallerUnitsVar.style.visibility = 'hidden';
+            continueVar.style.visibility = 'hidden'; 
+            continueVar.disabled = true; //make ability to check answer disabled until start of game
+            
+        }
+        
+    </script>
+    
+</html>

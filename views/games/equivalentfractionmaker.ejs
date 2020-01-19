@@ -1,0 +1,252 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em;
+                padding-top: 3%; 
+            }
+            h1 {
+                border-style: groove; 
+            }
+            table.fractionmodel {
+                border: solid; 
+                border-collapse: collapse;
+                width: 100%; 
+          
+            }
+            td.fractionpiece {
+                border: dashed;
+                border-width: medium; 
+                padding-top: 10%;
+                width: inherit; 
+            }
+            td.fractionpieceshaded {
+                border: dashed;
+                border-width: medium;
+                padding-top: 10%; 
+                background-color: #ccccee;
+                width: inherit;
+            }
+            .model {
+                text-align: center; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Equivalent Fraction Generator</title>
+    
+    <body onload='loadOptions();'>
+        
+        <h1>Hanson Equivalent Fraction Generator</h1>
+        
+        <div>
+            
+            <label for='selectnum'>Numerator:</label>
+            
+            <select class='selectnum' id='selectnum'>
+                
+            </select>
+            <br>
+            
+            <label for='selectden'>Denominator:</label>
+
+            <select class='selectden' id='selectden'>
+                
+            </select>
+            
+            <br>
+            <br>
+            <input type='submit' value='Generate Simplified Fractions' class='generateFraction'>
+            <br>
+            <br>
+            <span id='fraction'></span>
+            <br>
+            <br>
+            
+            <table class='fractionmodel'>
+                <tr class='model' id='model'>
+                    
+                </tr>
+            </table>
+            
+            <br>
+            
+            <div id='equivalentmodels'>
+                
+            </div>
+            
+        </div>
+        
+    </body>
+    
+    <script>
+  
+        let num = null;
+        let den = null;
+        let hasequivalent = false;
+        let commonfactors = []; 
+            
+        let generateFractionVar = document.querySelector('.generateFraction');
+        
+        //events
+        
+        generateFractionVar.addEventListener('click',generateFraction); 
+        
+        //functions
+        
+        function getValues() {
+            
+            num = Number(document.querySelector('.selectnum').value);
+            den = Number(document.querySelector('.selectden').value);
+            console.log(num + '/' + den);
+            
+        }
+        
+        function generateFraction() {
+            
+            getValues();
+            
+            clearField();
+            
+            document.getElementById('fraction').innerHTML = 'Fraction: ' + num + '/' + den; 
+            
+            if(num > den)
+            {
+                document.getElementById('model').innerHTML = 'No Improper Fractions. Numerator should be smaller than denominator.';
+                return 0; 
+            }
+            
+            if(num > 100 || den > 100)
+            {
+                document.getElementById('model').innerHTML = 'Enter values of 100 or less.';
+                return 0; 
+            }
+            
+            if(num < 1 || den < 1)
+            {
+                document.getElementById('model').innerHTML = 'Enter values greater than 0.';
+                return 0; 
+            }
+            
+            for(let i = 0; i < den; i++)
+                {
+                    if (i <= num)
+                    {
+                        if(i === num)
+                        {
+                            document.getElementById('model').innerHTML += '<td class="fractionpiece"></td>';
+                        }
+                        else
+                        {
+                            document.getElementById('model').innerHTML += '<td class="fractionpieceshaded"></td>';
+                        }
+                        
+                        if(num % i === 0 && den % i === 0 && i !== 1)
+                        {
+                            hasequivalent = true;
+                            commonfactors.push(i); 
+                        }
+                    }
+                    else
+                    {
+                        document.getElementById('model').innerHTML += '<td class="fractionpiece"></td>';
+                    }
+                }
+                
+            if(num === den && num !== 1)
+            {
+                hasequivalent = true;
+                
+                commonfactors.push(num); 
+            }
+            
+            if(hasequivalent === true)
+            {
+                document.getElementById('equivalentmodels').innerHTML = '<span style="font-weight: bold;">' + 'Equivalent Fractions:' + '</span>' + '<br><br>';
+                generateEquivalents(); 
+            }
+            else
+            {
+                document.getElementById('equivalentmodels').innerHTML = num + '/' + den + ' is in simplest form.';
+            }
+            
+        }
+        
+        function clearField() {
+           
+           hasequivalent = false;
+           commonfactors = []; 
+           document.getElementById('model').innerHTML = '';
+           document.getElementById('equivalentmodels').innerHTML = ''; 
+            
+        }
+        
+        function generateEquivalents() {
+            
+           console.log('common factors: ' + commonfactors);
+           
+           for(let i = 0; i < commonfactors.length; i++)
+           {
+                let thisnum = num / commonfactors[i];
+                let thisden = den / commonfactors[i];
+                let thismodel = i; 
+                
+                console.log(num + '/' + den + ' = ' + thisnum + '/' + thisden);
+                
+                document.getElementById('equivalentmodels').innerHTML += num + '/' + den + ' = ' + thisnum + '/' + thisden + '<br>';
+                createModel(thisnum, thisden, thismodel);
+           }
+           
+        }
+        
+        function createModel(num,den, modelid) {
+            
+            document.getElementById('equivalentmodels').innerHTML += '<table class="fractionmodel" id="equivalentmodels' + modelid + '"></table>';
+            document.getElementById('equivalentmodels' + modelid).innerHTML = '<tr class="model"' + ' id="model' + modelid + '"></tr>';
+            
+            for(let i = 0; i < den; i++)
+                {
+                    if (i <= num)
+                    {
+                        if(i === num)
+                        {
+                            document.getElementById('model' + modelid).innerHTML += '<td class="fractionpiece"></td>';
+                        }
+                        else
+                        {
+                            document.getElementById('model' + modelid).innerHTML += '<td class="fractionpieceshaded"></td>';
+                        }
+                        
+                    }
+                    else
+                    {
+                        document.getElementById('model' + modelid).innerHTML += '<td class="fractionpiece"></td>';
+                    }
+                }
+                
+            document.getElementById('equivalentmodels').innerHTML += '<br>'; 
+            
+        }
+        
+        function loadOptions() {
+            
+            for(let i = 1; i < 101; i++)
+            {
+                document.getElementById('selectnum').innerHTML += '<option value="' + i + '">' + i + '</option>';
+                
+                document.getElementById('selectden').innerHTML += '<option value="' + i + '">' + i + '</option>';
+            }
+            
+        }
+        
+    </script>
+    
+</html>
