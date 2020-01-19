@@ -1,0 +1,243 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <style>
+            
+            body {
+                text-align: center;
+                font-size: 1.5em; 
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Prime/Composite Numbers Game</title>
+    
+    <body>
+        
+        <h1>Hanson Prime/Composite Numbers Game</h1>
+        
+        <h1 id='problem' class='problem'></h1>
+        
+        <input type='submit' value='START - EASY' class='startEasy' onclick="makeEasy();">
+        <input type='submit' value='START - MEDIUM' class='startGame'>
+        <input type='submit' value='START - HARD' class='startHard' onclick="makeHard();">
+        <br>
+        <input type='submit' value='RESET' class='resetGame'>
+        <br>
+        <input type='submit' value='PRIME' class='primeNumber'>
+        <br>
+        <input type='submit' value='COMPOSITE' class='compositeNumber'>
+        
+        
+        <p id='score'>Current Score: </p>
+        
+        <h2>Prime Numbers:</h2>
+        <p id='show prime'></p>
+        
+        <h2>Composite Numbers:</h2>
+        <p id='show composite'></p>
+        
+        
+    </body>
+    
+    <script>
+        
+        let finalScore = 0;
+        let numberCorrect = 0;
+        let numberIncorrect = 0; 
+        let problem = '';
+        let isPrime = true;
+        let isEasy = false;
+        let isHard = false; 
+        
+        //constants/element variables
+        
+        const startGameVar = document.querySelector('.startGame');
+        const startGameEasyVar = document.querySelector('.startEasy');
+        const startGameHardVar = document.querySelector('.startHard');
+        const resetGameVar = document.querySelector('.resetGame');
+        const primeNumber = document.querySelector('.primeNumber');
+        const compositeNumber = document.querySelector('.compositeNumber');
+        
+        //game start conditions
+        resetGameVar.disabled = true;
+        resetGameVar.style.visibility = 'hidden';
+        primeNumber.disabled = true;
+        primeNumber.style.visibility = 'hidden';
+        compositeNumber.disabled = true;
+        compositeNumber.style.visibility = 'hidden';
+        
+        //events
+        
+        startGameVar.addEventListener('click',startGame);
+        startGameEasyVar.addEventListener('click',startGame);
+        startGameHardVar.addEventListener('click',startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        primeNumber.addEventListener('click', checkPrime);
+        compositeNumber.addEventListener('click', checkComposite); 
+        
+        //functions
+        
+        function startGame() {
+            startGameVar.disabled = true;
+            startGameVar.style.visibility = 'hidden';
+            startGameEasyVar.disabled = true;
+            startGameEasyVar.style.visibility = 'hidden';
+            startGameHardVar.disabled = true;
+            startGameHardVar.style.visibility = 'hidden';
+            primeNumber.disabled = false;
+            primeNumber.style.visibility = 'visible';
+            compositeNumber.disabled = false;
+            compositeNumber.style.visibility = 'visible'; 
+            
+            setTimeout(function() {
+                //end game conditions
+                document.querySelector('body').style.backgroundColor = '#ffffff';
+                alert('Time\s Up!');
+                resetGameVar.disabled = false;
+                resetGameVar.style.visibility = 'visible';
+                primeNumber.disabled = true;
+                primeNumber.style.visibility = 'hidden';
+                compositeNumber.disabled = true;
+                compositeNumber.style.visibility = 'hidden'; 
+                
+                document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore +
+                '<br>' + 'Number Correct: ' + numberCorrect + '<br>' + '<span style="color:red">' +
+                'Number Incorrect: ' + numberIncorrect + '</span>' + '<br>' + 'Rate Correct: ' +
+                (Math.round(numberCorrect / (numberCorrect + numberIncorrect) * 100)) + '%';
+                document.querySelector('.problem').style.color = 'green';}, 60000);
+            createProblem(); //generate first problem
+        }
+        
+        function resetGame() {
+            finalScore = 0;
+            numberCorrect = 0;
+            numberIncorrect = 0; 
+            let randomNumber = 0;
+            
+            isEasy = false;
+            isHard = false; 
+            
+            resetGameVar.disabled = true;
+            resetGameVar.style.visibility = 'hidden';
+            
+            primeNumber.disabled = true;
+            primeNumber.style.visibility = 'hidden';
+            
+            compositeNumber.disabled = true;
+            compositeNumber.style.visibility = 'hidden';
+            
+            startGameVar.disabled = false;
+            startGameVar.style.visibility = 'visible';
+            
+            startGameEasyVar.disabled = false;
+            startGameEasyVar.style.visibility = 'visible';
+            
+            startGameHardVar.disabled = false;
+            startGameHardVar.style.visibility = 'visible';
+            
+            document.getElementById('problem').innerHTML = '';
+            document.querySelector('.problem').style.color = 'black';
+            
+            document.getElementById('show prime').innerHTML = '';
+            document.getElementById('show composite').innerHTML = '';
+            
+            document.getElementById('score').innerHTML = 'Current Score: ';
+        }
+        
+        
+        function createProblem() {
+             
+            if(isEasy === true)
+            {
+                randomNumber = Math.floor(Math.random() * 19 + 2);
+            }
+            else if(isHard === true)
+            {
+                randomNumber = Math.floor(Math.random() * 98 + 2);
+            }
+            else
+            {
+                randomNumber = Math.floor(Math.random() * 49 + 2);
+            }
+            
+            isPrime = true; 
+            
+            for (let currentNumber = 2; currentNumber <= randomNumber - 1; currentNumber++)
+            {
+                if (randomNumber % currentNumber === 0)
+                {
+                    isPrime = false;
+                    break; 
+                }
+            }
+            
+            document.getElementById('problem').innerHTML = randomNumber;
+            
+            console.log(isPrime); 
+        }
+        
+        function checkPrime() {
+            
+            if(isPrime === true)
+            {
+                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                finalScore += randomNumber;
+                numberCorrect++; 
+                document.getElementById('show prime').innerHTML += randomNumber + '<br>';
+            }
+            else
+            {
+                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                finalScore -= randomNumber * 5;
+                numberIncorrect++; 
+                document.getElementById('show composite').innerHTML += randomNumber + '<br>';
+            }
+            
+            document.getElementById('score').innerHTML = 'Current Score: ' + finalScore;
+            
+            createProblem(); 
+        }
+        
+        function checkComposite() {
+            
+            if(isPrime === false)
+            {
+                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                finalScore += randomNumber;
+                numberCorrect++; 
+                document.getElementById('show composite').innerHTML += randomNumber + '<br>';
+            }
+            else
+            {
+                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                finalScore -= randomNumber * 5;
+                numberIncorrect++; 
+                document.getElementById('show prime').innerHTML += randomNumber + '<br>';
+            }
+            
+            document.getElementById('score').innerHTML = 'Current Score: ' + finalScore;
+            
+            createProblem(); 
+        }
+        
+        function makeEasy() {
+            
+            isEasy = true; 
+            
+        }
+        
+        function makeHard() {
+            
+            isHard = true;
+            
+        }
+        
+    </script>
+    
+</html>
