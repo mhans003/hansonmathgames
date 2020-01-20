@@ -38,5 +38,16 @@ router.post("/register", function(req, res) {
 	}); 
 }); 
 
+//login
+router.get("/login", function(req, res) {
+	res.render("login"); //inc. - see reference
+}); 
+
+router.post("/login", passport.authenticate("local", 
+	{
+		successRedirect: "/games",
+		failureRedirect: "/login"
+	}), function(req, res) {
+}); 
 
 module.exports = router; 
