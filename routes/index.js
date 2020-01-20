@@ -50,4 +50,11 @@ router.post("/login", passport.authenticate("local",
 	}), function(req, res) {
 }); 
 
+//logout 
+router.get("/logout", function(req, res) {
+	req.logout(); 
+	//req.flash("success", "Logged Out"); 
+	res.redirect("/games"); 
+});
+
 module.exports = router; 
