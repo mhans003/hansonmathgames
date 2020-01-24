@@ -24,6 +24,11 @@ router.post("/register", function(req, res) {
 		email:req.body.email
 	});
 	
+	if(req.body.adminCode === "secretcode123")
+		{
+			newUser.isAdmin = true; 
+		}
+	
 	//add admin manually into database later
 	
 	User.register(newUser, req.body.password, function(err, user) {
