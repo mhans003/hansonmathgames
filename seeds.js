@@ -19,6 +19,14 @@ var starterUsers = [
 		firstName: "Michael",
 		lastName: "Hanson",
 		email: "tester@email.com"
+    },
+	{
+        username: "test", 
+        password: "test",
+		isAdmin: true,
+		firstName: "test",
+		lastName: "test",
+		email: "test@test.com"
     }
 ]; 
 
