@@ -52,14 +52,16 @@ router.get("/login", function(req, res) {
 router.post("/login", passport.authenticate("local", 
 	{
 		successRedirect: "/games",
-		failureRedirect: "/login"
+		failureRedirect: "/login",
+		successFlash: "Successfully logged in",
+		failureFlash: true
 	}), function(req, res) {
 }); 
 
 //logout 
 router.get("/logout", function(req, res) {
 	req.logout(); 
-	//req.flash("success", "Logged Out"); 
+	req.flash("success", "Logged Out"); 
 	res.redirect("/games"); 
 });
 
