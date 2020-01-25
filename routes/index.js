@@ -35,9 +35,10 @@ router.post("/register", function(req, res) {
 		if(err)
 			{
 				console.log(err); 
-				return res.render("register"); 
+				return res.render("register", {error: err.message});
 			}
 		passport.authenticate("local")(req, res, function() {
+			req.flash("success", "Successfully Signed Up! Nice to meet you, " + req.body.username);
 			res.redirect("/games"); 
 		});
 	}); 
