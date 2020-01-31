@@ -1,5 +1,7 @@
 var express = require("express"); 
 var router = express.Router(); 
+var passport = require("passport"); 
+var Score = require("../models/score"); //correct path? 
 
 //index
 router.get("/", function(req, res) {
@@ -61,6 +63,11 @@ router.get("/submit", function(req, res) {
 }); 
 
 router.post("/submit", function(req, res) {
+	var newScore = new Score({
+		value:req.body.value
+	});
+	newScore.save(); 
+	console.log(newScore.value); 
 	res.send("this is the post route"); 
 }); 
 

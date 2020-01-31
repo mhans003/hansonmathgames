@@ -14,6 +14,6 @@ var ScoreSchema = new mongoose.Schema({
 	game: String
 });
 
-UserSchema.plugin(passportLocalMongoose); //adds methods into score 
+ScoreSchema.plugin(passportLocalMongoose); //adds methods into score 
 
 module.exports = mongoose.model("Score", ScoreSchema); 
