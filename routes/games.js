@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router(); 
 var passport = require("passport"); 
 var Score = require("../models/score"); //correct path? 
+var User = require("../models/user"); //may need for score association
 
 //index
 router.get("/", function(req, res) {
@@ -63,12 +64,46 @@ router.get("/submit", function(req, res) {
 }); 
 
 router.post("/submit", function(req, res) {
+	//var score = req.body.score; 
+	/*
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	}; 
+	*/
+	//var newScore = {score:score, author:author}; 
+	var newScore = new Score({
+		score:req.body.score,
+		author:{
+			id: req.user._id,
+			username:req.user.username
+		},
+		game:req.body.game
+	});
+	//newScore.save(); 
+	//console.log(newScore.value); 
+	//res.send("this is the post route"); 
+	//console.log("value: " + score); 
+	//console.log("newScore: " + newScore); 
+	//console.log("author: " + author.id + "," + author.username); 
+	Score.create(newScore, function(err, createdScore) {
+		if(err)
+			{
+				console.log(err); 
+				req.flash("error", err.message); 
+				return res.redirect("back"); 
+			}
+		req.flash("success", "New Score Logged"); 
+		res.redirect("back"); 
+	});
+	/*
 	var newScore = new Score({
 		value:req.body.value
 	});
 	newScore.save(); 
 	console.log(newScore.value); 
 	res.send("this is the post route"); 
+	*/
 }); 
 
 module.exports = router; 

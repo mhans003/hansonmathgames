@@ -1,6 +1,7 @@
 var mongoose = require("mongoose"); 
 
 var User = require("./models/user"); 
+var Score = require("./models/score"); 
 
 
 var starterUsers = [
@@ -77,7 +78,8 @@ function seedDB() {
 
 //newer/shorter syntax 
 async function seedDB() {
-	await User.deleteMany({}); 
+	await User.deleteMany({});
+	await Score.deleteMany({}); 
 	
 	for(const starterUser of starterUsers) 
 		{
