@@ -120,6 +120,13 @@
         
             <h1>Hanson Multiplication Game</h1>
             <hr>
+			
+			<div>
+				<h3>High Scores</h3>
+				<% scores.forEach(function(score) { %>
+					<h6><strong><%= score.author.username %>: </strong><%= score.score %></h6>
+				<% }); %>
+			</div>
         
             <!--<input type='submit' value='START' class='startGame'>-->
             <button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
@@ -159,8 +166,10 @@
         </div>
         
     </body>
+	
+	
     
-    <script>
+    <script> 
         
         let finalScore = 0; 
         let problem = '';

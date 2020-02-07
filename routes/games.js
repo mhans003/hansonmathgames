@@ -11,11 +11,35 @@ router.get("/", function(req, res) {
 
 //games
 router.get("/multiplication", function(req, res) {
-	res.render("games/multiplication");  
+	Score.find({game:"Hanson Multiplication Game"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				req.flash("error", "No Scores"); 
+				res.redirect("games/multiplication"); 
+			}
+		else
+			{
+				res.render("games/multiplication", {scores:allscores}); 
+			}
+	});
+	//res.render("games/multiplication");  
 }); 
 
 router.get("/division", function(req, res) {
-	res.render("games/division");  
+	Score.find({game:"Hanson Division Game"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				req.flash("error", "No Scores Yet"); 
+				res.redirect("games/division"); 
+			}
+		else
+			{
+				res.render("games/division", {scores:allscores}); 
+			}
+	});
+	//res.render("games/division");  
 }); 
 
 router.get("/rounding", function(req, res) {
