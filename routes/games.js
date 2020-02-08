@@ -11,7 +11,10 @@ router.get("/", function(req, res) {
 
 //games
 router.get("/multiplication", function(req, res) {
-	Score.find({game:"Hanson Multiplication Game"}, function(err, allscores) {
+	//Score.find({game:"Hanson Multiplication Game"}, function(err, allscores) {
+	//Score.findOne({game:"Hanson Multiplication Game", "score":$max}, function(err, allscores) {
+	//Score.find({$query:{game:"Hanson Multiplication Game"}, $orderby:{score:-1}}, function(err, allscores) {
+	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
 				console.log(err);
@@ -20,6 +23,7 @@ router.get("/multiplication", function(req, res) {
 			}
 		else
 			{
+				console.log(allscores); 
 				res.render("games/multiplication", {scores:allscores}); 
 			}
 	});
