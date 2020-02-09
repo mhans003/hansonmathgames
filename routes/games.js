@@ -4,13 +4,15 @@ var passport = require("passport");
 var Score = require("../models/score"); //correct path? 
 var User = require("../models/user"); //may need for score association
 
+var middleware = require("../middleware");
+
 //index
-router.get("/", function(req, res) {
+router.get("/", middleware.isLoggedIn, function(req, res) {
 	res.render("games/index"); 
 });
 
 //games
-router.get("/multiplication", function(req, res) {
+router.get("/multiplication", middleware.isLoggedIn, function(req, res) {
 	//Score.find({game:"Hanson Multiplication Game"}, function(err, allscores) {
 	//Score.findOne({game:"Hanson Multiplication Game", "score":$max}, function(err, allscores) {
 	//Score.find({$query:{game:"Hanson Multiplication Game"}, $orderby:{score:-1}}, function(err, allscores) {
@@ -29,7 +31,7 @@ router.get("/multiplication", function(req, res) {
 	//res.render("games/multiplication");  
 }); 
 
-router.get("/division", function(req, res) {
+router.get("/division", middleware.isLoggedIn, function(req, res) {
 	//Score.find({game:"Hanson Division Game"}, function(err, allscores) {
 	Score.find({game:"Hanson Division Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
@@ -46,7 +48,7 @@ router.get("/division", function(req, res) {
 	//res.render("games/division");  
 }); 
 
-router.get("/rounding", function(req, res) {
+router.get("/rounding", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Rounding Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
@@ -61,7 +63,7 @@ router.get("/rounding", function(req, res) {
 	}); 
 }); 
 
-router.get("/convertingunits", function(req, res) {
+router.get("/convertingunits", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Converting Units Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
@@ -76,31 +78,31 @@ router.get("/convertingunits", function(req, res) {
 	}); 
 }); 
 
-router.get("/wordform", function(req, res) {
+router.get("/wordform", middleware.isLoggedIn, function(req, res) {
 	res.render("games/wordform");  
 }); 
 
-router.get("/primecomposite", function(req, res) {
+router.get("/primecomposite", middleware.isLoggedIn, function(req, res) {
 	res.render("games/primecomposite");  
 }); 
 
-router.get("/primenumbergenerator", function(req, res) {
+router.get("/primenumbergenerator", middleware.isLoggedIn, function(req, res) {
 	res.render("games/primenumbergenerator");  
 }); 
 
-router.get("/equivalentfractionmaker", function(req, res) {
+router.get("/equivalentfractionmaker", middleware.isLoggedIn, function(req, res) {
 	res.render("games/equivalentfractionmaker");  
 }); 
 
-router.get("/simplifiedfractiongenerator", function(req, res) {
+router.get("/simplifiedfractiongenerator", middleware.isLoggedIn, function(req, res) {
 	res.render("games/simplifiedfractiongenerator");  
 }); 
 
-router.get("/preparelongdivision", function(req, res) {
+router.get("/preparelongdivision", middleware.isLoggedIn, function(req, res) {
 	res.render("games/preparelongdivision");  
 }); 
 
-router.get("/divisionremainders", function(req, res) {
+router.get("/divisionremainders", middleware.isLoggedIn, function(req, res) {
 	res.render("games/divisionremainders");  
 }); 
 
