@@ -24,6 +24,10 @@
 		<%- include("../partials/navbaronly") %>
     
         <h1>Hanson Converting Units Game</h1>  
+		
+		<%- include ("../partials/highscores.ejs") %>
+		
+		<div class="container scoreform" id="submitscore"></div>
         
         <span id='largerUnits' class='largerUnits'>larger units =</span>
         <input id='input' class='input' type='text' placeholder=''>
@@ -122,7 +126,13 @@
                 continueVar.disabled = true;
                 resetGameVar.disabled = false;
                 resetGameVar.style.visibility = 'visible';
-                document.querySelector('.score').style.color = 'green';}, 60000);
+                document.querySelector('.score').style.color = 'green';
+			
+				document.getElementById("submitscore").innerHTML += "<div class='row'><div><form class='form-signin' action='/games/submit' method='POST'><h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1><div class='form-group'><label for='inputUsername' class='sr-only'>Username</label><input type='text' id='inputUsername' class='form-control' name='username' value='<%= currentUser.username %>' readonly></div><div class='form-group'><label for='inputGame' class='sr-only'>Game</label><input type='text' id='inputGame' class='form-control' name='game' value='Hanson Converting Units Game' readonly></div><div class='form-group'><label for='inputScore' class='sr-only'>Score</label><input type='number' id='inputScore' class='form-control' name='score' readonly></div><div class='form-group'><button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button></div></form></div></div>";
+
+				document.getElementById("inputScore").value = score; 
+			
+			}, 8000);
             
             createProblem();
             

@@ -18,8 +18,7 @@ router.get("/multiplication", function(req, res) {
 		if(err)
 			{
 				console.log(err);
-				req.flash("error", "No Scores"); 
-				res.redirect("games/multiplication"); 
+				res.redirect("back"); 
 			}
 		else
 			{
@@ -31,15 +30,16 @@ router.get("/multiplication", function(req, res) {
 }); 
 
 router.get("/division", function(req, res) {
-	Score.find({game:"Hanson Division Game"}, function(err, allscores) {
+	//Score.find({game:"Hanson Division Game"}, function(err, allscores) {
+	Score.find({game:"Hanson Division Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
 				console.log(err);
-				req.flash("error", "No Scores Yet"); 
-				res.redirect("games/division"); 
+				res.redirect("back"); 
 			}
 		else
 			{
+				console.log(allscores);
 				res.render("games/division", {scores:allscores}); 
 			}
 	});
@@ -47,11 +47,33 @@ router.get("/division", function(req, res) {
 }); 
 
 router.get("/rounding", function(req, res) {
-	res.render("games/rounding");  
+	Score.find({game:"Hanson Rounding Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err); 
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/rounding", {scores:allscores}); 
+			}
+	}); 
 }); 
 
 router.get("/convertingunits", function(req, res) {
-	res.render("games/convertingunits");  
+	Score.find({game:"Hanson Converting Units Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/convertingunits", {scores:allscores}); 
+			}
+	}); 
 }); 
 
 router.get("/wordform", function(req, res) {
