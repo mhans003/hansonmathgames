@@ -121,12 +121,7 @@
             <h1>Hanson Multiplication Game</h1>
             <hr>
 			
-			<div>
-				<h3>High Scores</h3>
-				<% for(var i = scores.length - 1; i > scores.length - 4; i--) { %>
-					<h6><strong><%= scores[i].author.username %>: </strong><%= scores[i].score %></h6>
-				<% } %>
-			</div>
+			<%- include ("../partials/highscores.ejs") %>
         
             <!--<input type='submit' value='START' class='startGame'>-->
             <button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
