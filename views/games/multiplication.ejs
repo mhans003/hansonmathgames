@@ -122,7 +122,7 @@
             <hr>
 			
 			<%- include ("../partials/highscores.ejs") %>
-        
+			
             <!--<input type='submit' value='START' class='startGame'>-->
             <button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
@@ -222,16 +222,19 @@
                 document.querySelector('.problem').style.color = 'green';
 				
 				//create new score 
-				
-			
+						
 				document.getElementById("submitscore").innerHTML += "<div class='row'><div><form class='form-signin' action='/games/submit' method='POST'><h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1><div class='form-group'><label for='inputUsername' class='sr-only'>Username</label><input type='text' id='inputUsername' class='form-control' name='username' value='<%= currentUser.username %>' readonly></div><div class='form-group'><label for='inputGame' class='sr-only'>Game</label><input type='text' id='inputGame' class='form-control' name='game' value='Hanson Multiplication Game' readonly></div><div class='form-group'><label for='inputScore' class='sr-only'>Score</label><input type='number' id='inputScore' class='form-control' name='score' readonly></div><div class='form-group'><button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button></div></form></div></div>";
+				//figure out how to get this to work when "correctly" writing with \' on every ' and still work. Won't show up or allow game to even work when done correctly and can only write this way without the currentUser variable. 
 
 				document.getElementById("inputScore").value = finalScore; 
+				
+			}, 15000);
+			
 				//document.getElementById("inputUsername").value = currentUser.username; 
 				
 				//'<span><a href="/games/submit">Submit Final Score</a></span>'; 
 				//document.getElementById("submitscore").innerHTML += scoreform; 
-			}, 10000); //this won't work, needs to be in HTML
+			 
             
             createProblem(); //generate first problem
         }
