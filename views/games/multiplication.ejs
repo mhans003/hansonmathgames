@@ -134,27 +134,6 @@
             <div class='problemContainer problem' id='problem'>
                 
             </div>
-            
-            <div class='answerContainer' id='answerContainer'>
-                <br>
-                <div id = 'popup'> </div>
-                <br>
-                <h2>Answer</h2>
-                
-                <input id='answer' class='answer' type='text' placeholder=''>
-                
-            </div>
-            
-            <br>
-            
-            <div class='scoreContainer'>
-                
-                <p id='score'>Current Score: </p>
-            
-                <h3>Problems to Practice:</h3>
-                <p id='show answer'></p>
-                
-            </div>
 			
 			<div class="container scoreform" id="submitscore">
 				<div class='row'>
@@ -181,6 +160,29 @@
 				</div>
 			</div>
             
+            <div class='answerContainer' id='answerContainer'>
+                <br>
+                <div id = 'popup'> </div>
+                <br>
+                <h2>Answer</h2>
+                
+                <input id='answer' class='answer' type='text' placeholder=''>
+                
+            </div>
+            
+            <br>
+            
+            <div class='scoreContainer'>
+                
+                <p id='score'>Current Score: </p>
+            
+                <h3>Problems to Practice:</h3>
+                <p id='show answer'></p>
+                
+            </div>
+			
+
+            
         </div>
         
     </body>
@@ -205,7 +207,7 @@
         resetGameVar.style.visibility = 'hidden'; 
         continueVar.disabled = true; //make ability to check answer disabled until start of game
         problemContainerVar.style.visibility = 'hidden'; 
-		document.getElementById("submitscore").style.visibility = "hidden"; 
+		document.getElementById("submitscore").style.display = "none"; 
         
         //events
         
@@ -249,7 +251,7 @@
 				
 				console.log("High Score: " + <%= scores[scores.length - 1].score %> + "; Current Score: " + finalScore); 
 						
-				document.getElementById("submitscore").style.visibility = "visible"; 
+				document.getElementById("submitscore").style.display = "block"; 
 				//figure out how to get this to work when "correctly" writing with \' on every ' and still work. Won't show up or allow game to even work when done correctly and can only write this way without the currentUser variable. 
 
 				document.getElementById("inputScore").value = finalScore; 
@@ -287,7 +289,7 @@
             
             continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
 			
-			document.getElementById("submitscore").style.visibility = "hidden"; 
+			document.getElementById("submitscore").style.display = "none"; 
             
         }
         
