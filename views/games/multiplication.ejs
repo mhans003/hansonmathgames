@@ -71,7 +71,7 @@
             
             #popup {
                 font-size: 2.5em;
-                color: rgba(255,255,255,1); 
+                color: rgba(255,255,255,1);
             }
             
             @-webkit-keyframes correct {
@@ -178,17 +178,17 @@
             
                 <h3>Problems to Practice:</h3>
                 <p id='show answer'></p>
-                
+				
             </div>
 			
-
+			<form class='form-signin' id='showPracticeProblems' action='' method='POST'>
+				<button class="btn btn-lg btn-success btn-inline" type="submit">View Problems</button>
+			</form>
             
         </div>
         
     </body>
 	
-	
-    
     <script> 
         
         let finalScore = 0; 
@@ -200,13 +200,15 @@
         const startGameVar = document.querySelector('.startGame');
         const resetGameVar = document.querySelector('.resetGame');
         const continueVar = document.querySelector('.answer');
-        const problemContainerVar = document.querySelector('.problemContainer');
+        const problemContainerVar = document.querySelector('.problemContainer'); 
+		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
         
         //game start conditions
-        resetGameVar.disabled = true;
-        resetGameVar.style.visibility = 'hidden'; 
-        continueVar.disabled = true; //make ability to check answer disabled until start of game
-        problemContainerVar.style.visibility = 'hidden'; 
+        resetGameVar.disabled = true; 
+		continueVar.disabled = true; //make ability to check answer disabled until start of game
+		resetGameVar.style.display = 'none'; 
+		problemContainerVar.style.display = 'none';
+		showPracticeProblemsVar.style.display = 'none'; 
 		document.getElementById("submitscore").style.display = "none"; 
         
         //events
@@ -225,74 +227,60 @@
         function startGame() {
             
             startGameVar.disabled = true;
-            startGameVar.style.visibility = 'hidden';
+			startGameVar.style.display = 'none';
             continueVar.disabled = false; //make it possible to check an answer
-            problemContainerVar.style.visibility = 'visible';
+			problemContainerVar.style.display = 'block';
             continueVar.focus();
             startGameVar.style.display = 'none';
             resetGameVar.style.display = 'none'; 
-            
-            setTimeout(function() {
-                
-                //end game conditions
-				
-                document.querySelector('body').style.backgroundColor = '#ffffff';
-                alert('Time\'s Up!');
-                continueVar.disabled = true;
-                resetGameVar.disabled = false;
-                resetGameVar.style.visibility = 'visible';
-                startGameVar.style.display = 'initial';
-                resetGameVar.style.display = 'initial'; 
-                 
-                document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore;
-                document.querySelector('.problem').style.color = 'green';
-				
-				//create new score 
-				
-				console.log("High Score: " + <%= scores[scores.length - 1].score %> + "; Current Score: " + finalScore); 
-						
-				document.getElementById("submitscore").style.display = "block"; 
-				//figure out how to get this to work when "correctly" writing with \' on every ' and still work. Won't show up or allow game to even work when done correctly and can only write this way without the currentUser variable. 
-
-				document.getElementById("inputScore").value = finalScore; 
-				
-			}, 25000);
 			
-				//document.getElementById("inputUsername").value = currentUser.username; 
-				
-				//'<span><a href="/games/submit">Submit Final Score</a></span>'; 
-				//document.getElementById("submitscore").innerHTML += scoreform; 
-			 
+			setTimeout(timeout, 5000);
             
             createProblem(); //generate first problem
         }
+		
+		function timeout() {
+			
+		//end game conditions
+				
+            document.querySelector('body').style.backgroundColor = '#ffffff';
+            alert('Time\'s Up!');
+            continueVar.disabled = true;
+            resetGameVar.disabled = false;
+            startGameVar.style.display = 'initial';
+            resetGameVar.style.display = 'initial'; 
+			showPracticeProblemsVar.style.display = 'block'; 
+                 
+            document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore;
+            document.querySelector('.problem').style.color = 'green';
+				
+			//create new score 
+					
+			document.getElementById("submitscore").style.display = "block"; 
+			document.getElementById("inputScore").value = finalScore; 	
+			
+		}
         
         function resetGame() {
             
             finalScore = 0;
             
-            resetGameVar.disabled = true;
-            resetGameVar.style.visibility = 'hidden'; 
-        
+            resetGameVar.disabled = true; 
+			resetGameVar.style.display = 'none';
             continueVar.disabled = true;
-            
             startGameVar.disabled = false;
-            startGameVar.style.visibility = 'visible';
+			startGameVar.style.display = 'initial';
+			problemContainerVar.style.display = 'none';
+			showPracticeProblemsVar.style.display = 'none';
+			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
             
             document.getElementById('problem').innerHTML = '';
             document.querySelector('.problem').style.color = 'black';
-            
             document.getElementById('show answer').innerHTML = '';
             document.getElementById('score').innerHTML = 'Current Score: ';
-            
-            problemContainerVar.style.visibility = 'hidden';
-            
-            continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
-			
 			document.getElementById("submitscore").style.display = "none"; 
-            
+          
         }
-        
         
         function createProblem() {
             
