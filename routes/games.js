@@ -82,6 +82,10 @@ router.get("/wordform", middleware.isLoggedIn, function(req, res) {
 	res.render("games/wordform");  
 }); 
 
+router.get("/wordformtraditional", middleware.isLoggedIn, function(req, res) {
+	res.render("games/wordformtraditional");  
+}); 
+
 router.get("/primecomposite", middleware.isLoggedIn, function(req, res) {
 	res.render("games/primecomposite");  
 }); 
