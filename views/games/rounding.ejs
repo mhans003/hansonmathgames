@@ -180,10 +180,6 @@
             
             let randomPlace = Math.floor(Math.random() * (randomNumberString.length - 1));
             
-            console.log('random place: ' + randomPlace);
-            console.log('random number: ' + randomNumber);
-            console.log(String(randomNumberString.length));
-            
             let characterArray = [];
             let characterArrayCommas = [];
             
@@ -199,9 +195,6 @@
                     characterArray[i] = randomNumberString[i];
                 }
                 
-                console.log(characterArray);
-            
-                
                 for(let i = characterArray.length - 1; i >= 0; i--)
                 {
                     if(i === characterArray.length - 4)
@@ -210,8 +203,6 @@
                     }
                     characterArrayCommas.unshift(characterArray[i]); 
                 }
-                
-                console.log(characterArrayCommas);
                 
                 //put the characterArrayCommas back into a string:
                 
@@ -224,39 +215,22 @@
             problem = 'Round the number ' + randomNumberStringCommas + ' to the nearest ' + '<span style="text-decoration:underline;">' + place[randomPlace] + '</span>' + ':';
             document.getElementById('problem').innerHTML = problem; 
             
-            console.log(problem);
-            
             //CREATE ANSWER BELOW:
             
             let rightPlace = characterArray[characterArray.length - 1 - place.indexOf(place[randomPlace])];
             
-            console.log(rightPlace);
-            
             stringToRound = randomNumberString.substr(0, randomNumberString.length - 1 - place.indexOf(place[randomPlace])); 
-
-            console.log('String to round: ' + stringToRound);
             
             numberToRound = Number(stringToRound); 
             
-            console.log(typeof(stringToRound)); 
-            
-            console.log('Number to round: ' + numberToRound);
-            
-            console.log(typeof(numberToRound));
-            
             remainingNumberString = randomNumberString.substr(randomNumberString.length - 1 - place.indexOf(place[randomPlace]), randomNumberString.length);
-            
-            console.log('Remaining number string:' + remainingNumberString);
             
             for(let i = 0; i < remainingNumberString.length; i++)
             {
                 remainingZeroString += '0'; 
             }
             
-            console.log('Remaining zero string:' + remainingZeroString);
-            
             rightPlace = Number(rightPlace); 
-            console.log(typeof(rightPlace));
             
             if(rightPlace >= 5)
             {
@@ -264,17 +238,10 @@
                 stringToRound = String(numberToRound); 
             }
             
-            console.log('Number to round: ' + numberToRound);
-            console.log('String to round: ' + stringToRound); 
-            
             answerString = stringToRound + remainingZeroString;
             
             answer = Number(answerString);
-            
-            console.log('answer string: ' + answerString);
-            console.log('answer: ' + answer);
-            
-            
+         
             //add commas answer to create 'problem':
             
             if(answerString.length > 3)
@@ -283,10 +250,7 @@
                 for(let i = 0; i < answerString.length; i++)
                 {
                     characterArrayAnswer[i] = answerString[i];
-                }
-                
-                console.log(characterArrayAnswer);
-            
+                }        
                 
                 for(let i = characterArrayAnswer.length - 1; i >= 0; i--)
                 {
@@ -297,8 +261,6 @@
                     characterArrayCommasAnswer.unshift(characterArrayAnswer[i]); 
                 }
                 
-                console.log(characterArrayCommasAnswer);
-                
                 //put the characterArrayCommasAnswer back into a string:
                 
                 for(let i = 0; i < characterArrayCommasAnswer.length; i++)
@@ -306,7 +268,6 @@
                     answerStringCommas += characterArrayCommasAnswer[i]; 
                 }
                 
-                console.log('Answer String with Commas:' + answerStringCommas); 
             }
             
             //if million
@@ -314,12 +275,9 @@
             {
                 answerString = '1000000';
                 answerStringCommas = '1,000,000';
-                console.log('Answer string with commas: ' + answerStringCommas); 
             }
             
             problem = randomNumberStringCommas + ' rounded to the nearest ' + '<span style="text-decoration:underline;">' + place[randomPlace] + '</span>' + ' is ' + answerStringCommas + '.';
-            
-            console.log(problem); 
             
         }
         
