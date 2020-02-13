@@ -7,31 +7,9 @@
         <%- include("../partials/sharedstyles") %>
         
         <style>
-            
-            hr {
-                border: 0;
-                height: 1px;
-                background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-            }
-            
-            .container {
-                margin-top: 4%; 
-            }
-            
-            .problemContainer {
-                width: 250px;
-                margin: auto auto;
-                padding: 10px; 
-                border-style: solid;
-                border-radius: 10px;
-                border-width: 3px;
-                border-color: rgba(100, 100, 120, 0.7);
-                background-color: white; 
+			
+			.problemContainer {
                 font-size: 2.5em;
-            }
-            
-            .problem {
-            
             }
             
             .correctAnswer {
@@ -98,24 +76,6 @@
     <title>Hanson Division Game</title>
     
     <body>
-        
-        <!--
-        <h1>Hanson Division Game</h1>
-        
-        <input type='submit' value='START' class='startGame'>
-        <br>
-        <input type='submit' value='RESET' class='resetGame'>
-        
-        <h1 id='problem' class='problem'></h1>
-        
-        <label for='answer'>Answer:</label>
-        <input id='answer' class='answer' type='text' placeholder=''>
-        
-        <p id='score'>Current Score: </p>
-        
-        <h2>Problems to Practice:</h2>
-        <p id='show answer'></p>
-        -->
 		
 		<%- include("../partials/navbaronly") %>
         
@@ -126,10 +86,8 @@
 			
 			<%- include ("../partials/highscores.ejs") %>
         
-            <!--<input type='submit' value='START' class='startGame'>-->
             <button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
-            <!--<input type='submit' value='RESET' class='resetGame'>-->
             <button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
             <br>
             <br> 

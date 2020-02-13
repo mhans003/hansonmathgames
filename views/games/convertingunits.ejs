@@ -9,7 +9,58 @@
 		<%- include("../partials/sharedstyles") %>
         
         <style>
+        	#popup {
+                color: rgba(255,255,255,1);
+                font-size: 1.5em; 
+            }
             
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
+            
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 45px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:45px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:45px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:45px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
         </style>
     
     </head>
@@ -21,15 +72,20 @@
 		<%- include("../partials/navbaronly") %>
     
         <h1>Hanson Converting Units Game</h1>  
+		<hr>
 		
 		<%- include ("../partials/highscores.ejs") %>
 		
-		<div class="container scoreform" id="submitscore"></div>
+		<div id = 'popup'><br></div>
+		
+		<br>
         
         <span id='largerUnits' class='largerUnits'>larger units =</span>
         <input id='input' class='input' type='text' placeholder=''>
         <span id='smallerUnits' class='smallerUnits'>smaller units</span>
         <br>
+		
+		<div class="container scoreform" id="submitscore"></div>
         
         <input type='submit' value='START' class='startGame'>
         <br>
@@ -129,7 +185,7 @@
 
 				document.getElementById("inputScore").value = score; 
 			
-			}, 8000);
+			}, 14000);
             
             createProblem();
             
@@ -159,12 +215,16 @@
             
             if(userInput === answer)
             {
-                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                //document.querySelector('body').style.backgroundColor = '#ccffcc';
+				continueVar.style.backgroundColor = 'rgba(80,255,150,0.10)';
+				document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i></div>';
                 score += 1; 
             }
             else
             {
-                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                //document.querySelector('body').style.backgroundColor = '#ffebe6';
+				continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+				document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i></div>';
                 document.getElementById('incorrect').innerHTML += problem + '<br>'; 
             }
             
