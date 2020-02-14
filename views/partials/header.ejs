@@ -12,50 +12,6 @@
 	<body> <!--closed in footer-->
 		
 		<!--nav bar-->
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-	    	<a class="navbar-brand" href="/">Hanson Math Games</a>
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-		    </button>
-			<div class="collapse navbar-collapse" id="navbarCollapse">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item <%= typeof page !== 'undefined' && page === 'games' ? 'active' : '' %>">
-						<a href="/games" class="nav-link">Games</a>
-				    </li>
-				</ul>
-				<ul class="navbar-nav">
-					<% if(!currentUser) { %>
-						<li class="nav-item">
-							  <a href="/login" class="nav-link">Login</a>
-						</li>
-						<li class="nav-item">
-							<a href="/register" class="nav-link">Sign Up</a>
-						</li>
-					<% } else { %>
-						<li class="nav-item">
-							<a href="#" class="nav-link">
-								Signed in as <%= currentUser.username %>
-								<% if(currentUser && currentUser.isAdmin) { %>
-									- Administrator
-								<% } %>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="/logout" class="nav-link">Logout</a>
-						</li>
-					<% } %>
-				</ul>
-			</div>
-		</nav>
-		
-		<div class="container">
-			 <% if(error && error.length > 0) { %>
-			   <div class="alert alert-danger"><p><%=error %></p></div>
-			 <% } %>
-
-			 <% if(success && success.length > 0) { %>
-			   <div class="alert alert-success"><p><%= success %></p></div>
-			 <% } %>
-  		</div>
+		<%- include("../partials/navbaronly") %>
 		
 		<div class="container"> <!--container for page; closed in footer-->

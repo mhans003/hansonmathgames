@@ -87,7 +87,18 @@ router.get("/wordformtraditional", middleware.isLoggedIn, function(req, res) {
 }); 
 
 router.get("/primecomposite", middleware.isLoggedIn, function(req, res) {
-	res.render("games/primecomposite");  
+	Score.find({game:"Hanson Prime/Composite Numbers Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/primecomposite", {scores:allscores}); 
+			}
+	}); 
 }); 
 
 router.get("/primenumbergenerator", middleware.isLoggedIn, function(req, res) {
@@ -107,7 +118,18 @@ router.get("/preparelongdivision", middleware.isLoggedIn, function(req, res) {
 }); 
 
 router.get("/divisionremainders", middleware.isLoggedIn, function(req, res) {
-	res.render("games/divisionremainders");  
+	Score.find({game:"Hanson Division Game With Remainders"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/divisionremainders", {scores:allscores}); 
+			}
+	}); 
 }); 
 
 //get score form

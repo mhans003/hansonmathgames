@@ -7,13 +7,13 @@
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item <%= typeof page !== 'undefined' && page === 'games' ? 'active' : '' %>">
-						<a href="/games" class="nav-link">Games</a>
+						<a href="/games" class="nav-link">View All Games</a>
 				    </li>
 				</ul>
 				<ul class="navbar-nav">
 					<% if(!currentUser) { %>
 						<li class="nav-item">
-							  <a href="/login" class="nav-link">Login</a>
+							  <a href="/login" class="nav-link">Log In</a>
 						</li>
 						<li class="nav-item">
 							<a href="/register" class="nav-link">Sign Up</a>
@@ -28,7 +28,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="/logout" class="nav-link">Logout</a>
+							<a href="/logout" class="nav-link">Sign Out</a>
 						</li>
 					<% } %>
 				</ul>
@@ -44,5 +44,3 @@
 			   <div class="alert alert-success"><p><%= success %></p></div>
 			 <% } %>
   		</div>
-
-<script src="/scripts/gamevariables.js"></script>

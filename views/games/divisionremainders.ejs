@@ -1,8 +1,6 @@
 <html>
     
     <head>
-		
-		<%- include("../partials/bootstrap") %>
         
         <meta charset="utf-8">
 		
@@ -87,6 +85,8 @@
 			<h2 style='font-style: italic;'>With Remainders</h2>
 			<hr>
 			
+			<%- include ("../partials/highscores.ejs") %>
+			
 			<button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
             <button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
@@ -96,6 +96,31 @@
 			<div class='problemContainer problem' id='problem'>
                 
             </div>
+			
+			<div class="container scoreform" id="submitscore">
+				<div class='row justify-content-center'>
+					<div class="col-xsm-4">
+						<form class='form-signin' action='/games/submit' method='POST'>
+							<h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1>
+							<div class='form-group'>
+								<label for='inputUsername' class='sr-only'>Username</label>
+								<input type='text' id='inputUsername' class='form-control' name='username' value=<%= currentUser.username %> readonly>
+							</div>
+							<div class='form-group'>
+								<label for='inputGame' class='sr-only'>Game</label>
+								<input type='text' id='inputGame' class='form-control' name='game' value='Hanson Division Game With Remainders' readonly>
+							</div>
+							<div class='form-group'>
+								<label for='inputScore' class='sr-only'>Score</label>
+								<input type='number' id='inputScore' class='form-control' name='score' readonly>
+							</div>
+							<div class='form-group'>
+								<button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 			
 			<div class='answerContainer' id='answerContainer'>
                 <br>
@@ -139,8 +164,9 @@
         
         //game start conditions
         resetGameVar.disabled = true;
-        resetGameVar.style.visibility = 'hidden'; 
+        resetGameVar.style.display = 'none'; 
         continueVar.disabled = true; //make ability to check answer disabled until start of game
+		document.getElementById("submitscore").style.display = "none"; 
         
         //events
         
@@ -156,38 +182,48 @@
         
         function startGame() {
             startGameVar.disabled = true;
-            startGameVar.style.visibility = 'hidden';
+            startGameVar.style.display = 'none';
             continueVar.disabled = false; //make it possible to check an answer
+			continueVar.focus();
             
-            setTimeout(function() {
-                //end game conditions
-                document.querySelector('body').style.backgroundColor = '#ffffff';
-                alert('Time\s Up!');
-                continueVar.disabled = true;
-                resetGameVar.disabled = false;
-                resetGameVar.style.visibility = 'visible';
-                
-                document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore;
-                document.querySelector('.problem').style.color = 'green';}, 60000);
+            setTimeout(timeout, 6000);
+			
             createProblem(); //generate first problem
         }
+		
+		function timeout() {
+			
+			//end game conditions
+            document.querySelector('body').style.backgroundColor = '#ffffff';
+            alert('Time\s Up!');
+            continueVar.disabled = true;
+            resetGameVar.disabled = false;
+            resetGameVar.style.display = 'initial';
+                
+			document.getElementById("submitscore").style.display = "block"; 
+			document.getElementById("inputScore").value = finalScore; 
+				
+            document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore;
+            document.querySelector('.problem').style.color = 'green';
+			
+		}
         
         function resetGame() {
             finalScore = 0;
             
             resetGameVar.disabled = true;
-            resetGameVar.style.visibility = 'hidden'; 
-        
+            resetGameVar.style.display = 'none'; 
             continueVar.disabled = true;
-            
+			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
             startGameVar.disabled = false;
-            startGameVar.style.visibility = 'visible';
+            startGameVar.style.display = 'initial';
             
             document.getElementById('problem').innerHTML = '';
-            document.querySelector('.problem').style.color = 'black';
-            
+			document.getElementById("submitscore").style.display = "none"; 
             document.getElementById('show answer').innerHTML = '';
             document.getElementById('score').innerHTML = 'Current Score: '; 
+			
+			document.querySelector('.problem').style.color = 'black';
         }
         
         
