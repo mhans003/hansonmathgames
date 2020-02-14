@@ -1,15 +1,68 @@
 <html>
     
     <head>
-		
-		<%- include("../partials/bootstrap") %>
         
         <meta charset="utf-8">
 		
 		<%- include("../partials/sharedstyles") %>
         
         <style>
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
             
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+            
+            #score {
+                font-size: 1.2em; 
+            }
+            
+            #popup {
+                font-size: 2.5em;
+                color: rgba(255,255,255,1);
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: -100px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-100px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-90px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-90px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
         </style>
     
     </head>
@@ -19,31 +72,66 @@
     <body>
 		
 		<%- include("../partials/navbaronly") %>
-        
-        <h1>Hanson Prime/Composite Numbers Game</h1>
-		<hr>
-        
-        <h1 id='problem' class='problem'></h1>
-        
-        <input type='submit' value='START - EASY' class='startEasy' onclick="makeEasy();">
-        <input type='submit' value='START - MEDIUM' class='startGame'>
-        <input type='submit' value='START - HARD' class='startHard' onclick="makeHard();">
-        <br>
-        <input type='submit' value='RESET' class='resetGame'>
-        <br>
-        <input type='submit' value='PRIME' class='primeNumber'>
-        <br>
-        <input type='submit' value='COMPOSITE' class='compositeNumber'>
-        
-        
-        <p id='score'>Current Score: </p>
-        
-        <h2>Prime Numbers:</h2>
-        <p id='show prime'></p>
-        
-        <h2>Composite Numbers:</h2>
-        <p id='show composite'></p>
-        
+		
+		<div class="container">
+			
+			<h1>Hanson Prime/Composite Numbers Game</h1>
+			<hr>
+			
+			<%- include ("../partials/highscores.ejs") %>
+
+			<h1 id='problem' class='problem'></h1>
+
+			<!--<input type='submit' value='START - EASY' class='startEasy' onclick="makeEasy();">-->
+			<button type="button" class="btn btn-success startEasy" onclick="makeEasy();">START - EASY <i class="fas fa-play-circle"></i></button>
+			<!--<input type='submit' value='START - MEDIUM' class='startGame'>-->
+			<button type="button" class="btn btn-warning startGame">START - MEDIUM <i class="fas fa-play-circle"></i></button>
+			<!--<input type='submit' value='START - HARD' class='startHard' onclick="makeHard();">-->
+			<button type="button" class="btn btn-danger startHard" onclick="makeHard();">START - HARD <i class="fas fa-play-circle"></i></button>
+			<br>
+			<!--<input type='submit' value='RESET' class='resetGame'>-->
+			<button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+			<br>
+			<input type='submit' value='PRIME' class='primeNumber'>
+			<br>
+			<input type='submit' value='COMPOSITE' class='compositeNumber'>
+
+			<p id='score'>Current Score: </p>
+			
+			<div id = 'popup'> </div>
+			
+			<div class="container scoreform" id="submitscore">
+				<div class='row justify-content-center'>
+					<div class="col-xsm-4">
+						<form class='form-signin' action='/games/submit' method='POST'>
+							<h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1>
+							<div class='form-group'>
+								<label for='inputUsername' class='sr-only'>Username</label>
+								<input type='text' id='inputUsername' class='form-control' name='username' value=<%= currentUser.username %> readonly>
+							</div>
+							<div class='form-group'>
+								<label for='inputGame' class='sr-only'>Game</label>
+								<input type='text' id='inputGame' class='form-control' name='game' value='Hanson Prime/Composite Numbers Game' readonly>
+							</div>
+							<div class='form-group'>
+								<label for='inputScore' class='sr-only'>Score</label>
+								<input type='number' id='inputScore' class='form-control' name='score' readonly>
+							</div>
+							<div class='form-group'>
+								<button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<h2>Prime Numbers:</h2>
+			<p id='show prime'></p>
+
+			<h2>Composite Numbers:</h2>
+			<p id='show composite'></p>
+			
+		</div>
         
     </body>
     
@@ -73,6 +161,7 @@
         primeNumber.style.visibility = 'hidden';
         compositeNumber.disabled = true;
         compositeNumber.style.visibility = 'hidden';
+		document.getElementById("submitscore").style.display = "none"; 
         
         //events
         
@@ -97,24 +186,33 @@
             compositeNumber.disabled = false;
             compositeNumber.style.visibility = 'visible'; 
             
-            setTimeout(function() {
-                //end game conditions
-                document.querySelector('body').style.backgroundColor = '#ffffff';
-                alert('Time\s Up!');
-                resetGameVar.disabled = false;
-                resetGameVar.style.visibility = 'visible';
-                primeNumber.disabled = true;
-                primeNumber.style.visibility = 'hidden';
-                compositeNumber.disabled = true;
-                compositeNumber.style.visibility = 'hidden'; 
-                
-                document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore +
-                '<br>' + 'Number Correct: ' + numberCorrect + '<br>' + '<span style="color:red">' +
-                'Number Incorrect: ' + numberIncorrect + '</span>' + '<br>' + 'Rate Correct: ' +
-                (Math.round(numberCorrect / (numberCorrect + numberIncorrect) * 100)) + '%';
-                document.querySelector('.problem').style.color = 'green';}, 60000);
+            setTimeout(timeout, 6000);
+			
             createProblem(); //generate first problem
         }
+		
+		function timeout() {
+			
+			//end game conditions
+            document.querySelector('body').style.backgroundColor = '#ffffff';
+            alert('Time\s Up!');
+            resetGameVar.disabled = false;
+            resetGameVar.style.visibility = 'visible';
+            primeNumber.disabled = true;
+            primeNumber.style.visibility = 'hidden';
+            compositeNumber.disabled = true;
+            compositeNumber.style.visibility = 'hidden'; 
+				
+			document.getElementById("submitscore").style.display = "block"; 
+			document.getElementById("inputScore").value = finalScore; 	
+                
+            document.getElementById('problem').innerHTML = 'Final Score: ' + finalScore +
+            '<br>' + 'Number Correct: ' + numberCorrect + '<br>' + '<span style="color:red">' +
+            'Number Incorrect: ' + numberIncorrect + '</span>' + '<br>' + 'Rate Correct: ' +
+            (Math.round(numberCorrect / (numberCorrect + numberIncorrect) * 100)) + '%';
+            document.querySelector('.problem').style.color = 'green';
+			
+		}
         
         function resetGame() {
             finalScore = 0;
@@ -150,6 +248,8 @@
             document.getElementById('show composite').innerHTML = '';
             
             document.getElementById('score').innerHTML = 'Current Score: ';
+			
+			document.getElementById("submitscore").style.display = "none"; 
         }
         
         
@@ -188,14 +288,16 @@
             
             if(isPrime === true)
             {
-                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                //document.querySelector('body').style.backgroundColor = '#ccffcc';
+				document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + '</div>';
                 finalScore += randomNumber;
                 numberCorrect++; 
                 document.getElementById('show prime').innerHTML += randomNumber + '<br>';
             }
             else
             {
-                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                //document.querySelector('body').style.backgroundColor = '#ffebe6';
+				document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + '</div>';
                 finalScore -= randomNumber * 5;
                 numberIncorrect++; 
                 document.getElementById('show composite').innerHTML += randomNumber + '<br>';
@@ -210,14 +312,16 @@
             
             if(isPrime === false)
             {
-                document.querySelector('body').style.backgroundColor = '#ccffcc';
+                //document.querySelector('body').style.backgroundColor = '#ccffcc';
+				document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + '</div>';
                 finalScore += randomNumber;
                 numberCorrect++; 
                 document.getElementById('show composite').innerHTML += randomNumber + '<br>';
             }
             else
             {
-                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                //document.querySelector('body').style.backgroundColor = '#ffebe6';
+				document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + '</div>';
                 finalScore -= randomNumber * 5;
                 numberIncorrect++; 
                 document.getElementById('show prime').innerHTML += randomNumber + '<br>';

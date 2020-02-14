@@ -1,4 +1,0 @@
-//for the score form:
-/*
-var scoreform = '<div class="row"><div class=""><form class="form-signin" action="/games/submit" method="POST"><h1 class="h3 credentialsheading mb-3 font-weight-normal">Submit High Score</h1><div class="form-group"><label for="inputUsername" class="sr-only">Username</label><input type="text" id="inputUsername" class="form-control" name="username" placeholder=""  required autofocus></div><div class="form-group"><label for="inputScore" class="sr-only">Score</label><input type="number" id="inputScore" class="form-control" name="score" required></div><div class="form-group"><button class="btn btn-lg btn-primary btn-block" type="submit">Submit Score</button></div></form></div></div>';
-*/
