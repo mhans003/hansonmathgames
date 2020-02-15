@@ -36,7 +36,7 @@
             }
             
             @-webkit-keyframes correct {
-                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 75px;}
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 50px;}
           
                 90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -44,7 +44,7 @@
             }
           
             @keyframes correct {
-              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:75px;}
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:50px;}
       
               90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -52,7 +52,7 @@
             }
             
             @-webkit-keyframes incorrect {
-                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:75px;}
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:50px;}
           
                 90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -60,7 +60,7 @@
             }
           
             @keyframes incorrect {
-              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:75px;}
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:50px;}
       
               90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -84,7 +84,30 @@
         
         <p id='problem' class='problem'></p>
 		
-		<div class="container scoreform" id="submitscore"></div>
+		<div class="container scoreform" id="submitscore">
+				<div class='row justify-content-center'>
+					<div class="col-xsm-4">
+						<form class='form-signin' action='/games/submit' method='POST'>
+							<h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1>
+							<div class='form-group'>
+								<label for='inputUsername' class='sr-only'>Username</label>
+								<input type='text' id='inputUsername' class='form-control' name='username' value=<%= currentUser.username %> readonly>
+							</div>
+							<div class='form-group'>
+								<label for='inputGame' class='sr-only'>Game</label>
+								<input type='text' id='inputGame' class='form-control' name='game' value='Hanson Rounding Game' readonly>
+							</div>
+							<div class='form-group'>
+								<label for='inputScore' class='sr-only'>Score</label>
+								<input type='number' id='inputScore' class='form-control' name='score' readonly>
+							</div>
+							<div class='form-group'>
+								<button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
          
         <div id = 'popup'> </div>
         <br>
@@ -115,9 +138,10 @@
         
         //game start conditions
         resetGameVar.disabled = true;
-        resetGameVar.style.visibility = 'hidden';
-        continueVar.style.visibility = 'hidden'; 
+        resetGameVar.style.display = 'none';
+        continueVar.style.display = 'none'; 
         continueVar.disabled = true; //make ability to check answer disabled until start of game
+		document.getElementById("submitscore").style.display = "none"; 
         
         //events
         
@@ -134,32 +158,36 @@
         function startGame() {
             
             startGameVar.disabled = true;
-            startGameVar.style.visibility = 'hidden';
+            startGameVar.style.display = 'none';
             continueVar.disabled = false; //make it possible to check an answer            
-            continueVar.style.visibility = 'visible'; 
+            continueVar.style.display = 'initial'; 
             continueVar.disabled = false; //make ability to check answer disabled until start of game
             
             document.getElementById('score').innerHTML = 'Problems Correct: '; 
             
-            setTimeout(function() {
-                
-                //end game conditions
-                alert('Time\s Up!');
-                document.querySelector('body').style.backgroundColor = '#ffffff';
-                continueVar.disabled = true;
-                resetGameVar.disabled = false;
-                resetGameVar.style.visibility = 'visible';
-                document.querySelector('.score').style.color = 'green';
-			
-				document.getElementById("submitscore").innerHTML += "<div class='row'><div><form class='form-signin' action='/games/submit' method='POST'><h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1><div class='form-group'><label for='inputUsername' class='sr-only'>Username</label><input type='text' id='inputUsername' class='form-control' name='username' value='<%= currentUser.username %>' readonly></div><div class='form-group'><label for='inputGame' class='sr-only'>Game</label><input type='text' id='inputGame' class='form-control' name='game' value='Hanson Rounding Game' readonly></div><div class='form-group'><label for='inputScore' class='sr-only'>Score</label><input type='number' id='inputScore' class='form-control' name='score' readonly></div><div class='form-group'><button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button></div></form></div></div>";
-
-				document.getElementById("inputScore").value = score; 
-			
-			}, 8000);
+            setTimeout(timeout, 60000);
             
             createProblem();
             
         }
+		
+		function timeout() {
+			
+			//end game conditions
+			
+            alert('Time\s Up!');
+            document.querySelector('body').style.backgroundColor = '#ffffff';
+            continueVar.disabled = true;
+            resetGameVar.disabled = false;
+            resetGameVar.style.display = 'initial';
+            document.querySelector('.score').style.color = 'green';
+				
+			//create new score
+				
+			document.getElementById("submitscore").style.display = "block"; 
+			document.getElementById("inputScore").value = score;
+			
+		}
         
         function createProblem() {
             
@@ -312,23 +340,24 @@
             problem = '';
             
             resetGameVar.disabled = true;
-            resetGameVar.style.visibility = 'hidden'; 
+            resetGameVar.style.display = 'none'; 
         
             continueVar.disabled = true;
-            continueVar.style.visibility = 'hidden'; 
+            continueVar.style.display = 'none'; 
             
             startGameVar.disabled = false;
-            startGameVar.style.visibility = 'visible';
+            startGameVar.style.display = 'initial';
             
             document.querySelector('.score').style.color = 'black';
             document.getElementById('score').innerHTML = 'Problems Correct: ';
             
             document.getElementById('incorrect').innerHTML = '';
             
-            continueVar.style.visibility = 'hidden'; 
-            continueVar.disabled = true; //make ability to check answer disabled until start of game
-            
             continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+			
+			document.getElementById("submitscore").style.display = "none"; 
+			document.getElementById('score').innerHTML = '';
+			document.getElementById('problem').innerHTML = ''; 
             
         }
         
