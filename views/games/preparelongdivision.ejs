@@ -11,7 +11,62 @@
 		<%- include("../partials/sharedstyles") %>
         
         <style>
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
             
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+            
+            #score {
+                font-size: 1.2em; 
+            }
+            
+            #popup {
+                font-size: 2.5em;
+                color: rgba(255,255,255,1);
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: -100px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-100px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-90px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-90px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
         </style>
     
     </head>
@@ -25,35 +80,75 @@
         <h1>Preparing for Long Division</h1>
         <h2>Understanding Division and Remainders</h2>
 		<hr>
+		
+		<%- include ("../partials/highscores.ejs") %>
+		
+		<div class="container">
+			
+			<p id='problem' class='problem'></p>
         
-        <p id='problem' class='problem'></p>
-        
-        <div class='inputContainer' ng-app="labelApp" ng-controller="labelCtrl">
-            
-            <span id='quotientLabel' class='quotientLabel'></span>
-            <input id='quotientInput' class='quotientInput' type='number' placeholder='' ng-model="quot" ng-keydown="keyPress($event)">
-            <br>
-            
-            <span id='remainderLabel' class='remainderLabel'></span>
-            <input id='remainderInput' class='remainderInput' type='number' placeholder='' ng-model="rem" ng-keydown="keyPress($event)"> 
-            <br><br>
-            
-            <span id='outputSentence' class='outputSentence'>( {{quot}} ) times with a remainder of ( {{rem}} )</span>
-            <br>
-            
-            <input type='submit' value='CHECK' class='check' ng-click="resetValues()">
-            <br>
-            
-            <input type='submit' value='RESET' class='resetGame' ng-click="resetValues()">
-            <br>
-            
-        </div>
-        
-        <input type='submit' value='START' class='startGame'>
-        <br>
-        
-        <p id='score' class='score'></p>
-        <p id='incorrect' class='incorrect'></p>
+			<div class='inputContainer' ng-app="labelApp" ng-controller="labelCtrl">
+				<div>
+					<span id='quotientLabel' class='quotientLabel'></span>
+					<input id='quotientInput' class='quotientInput' type='number' placeholder='' ng-model="quot" ng-keydown="keyPress($event)">
+					<br>
+					<br>
+				</div>
+				
+				<div>
+					<span id='remainderLabel' class='remainderLabel'></span>
+					<input id='remainderInput' class='remainderInput' type='number' placeholder='' ng-model="rem" ng-keydown="keyPress($event)"> 
+					<br>
+					<br>
+				</div>
+				
+				<div id = 'popup'> </div>
+
+				<span id='outputSentence' class='outputSentence'>( {{quot}} ) times with a remainder of ( {{rem}} )</span>
+				<br>
+				<br>
+
+				<button type="button" class="btn btn-primary check">CHECK</button>
+				<br>
+
+				<button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+				<br>
+				<br>
+
+			</div>
+
+			<div class="container scoreform" id="submitscore">
+					<div class='row justify-content-center'>
+						<div class="col-xsm-4">
+							<form class='form-signin' action='/games/submit' method='POST'>
+								<h1 class='h3 credentialsheading mb-3 font-weight-normal'>Submit Score</h1>
+								<div class='form-group'>
+									<label for='inputUsername' class='sr-only'>Username</label>
+									<input type='text' id='inputUsername' class='form-control' name='username' value=<%= currentUser.username %> readonly>
+								</div>
+								<div class='form-group'>
+									<label for='inputGame' class='sr-only'>Game</label>
+									<input type='text' id='inputGame' class='form-control' name='game' value='Hanson Preparing for Long Division Game' readonly>
+								</div>
+								<div class='form-group'>
+									<label for='inputScore' class='sr-only'>Score</label>
+									<input type='number' id='inputScore' class='form-control' name='score' readonly>
+								</div>
+								<div class='form-group'>
+									<button class='btn btn-lg btn-primary btn-block' type='submit'>Submit Score</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			<button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
+			<br>
+
+			<p id='score' class='score'></p>
+			<p id='incorrect' class='incorrect'></p>
+			
+		</div>
         
     </body>
     
@@ -97,14 +192,14 @@
         
         //game start conditions
         resetGameVar.disabled = true;
-        resetGameVar.style.visibility = 'hidden';
-        continueVar.style.visibility = 'hidden'; 
+        resetGameVar.style.display = 'none';
+        continueVar.style.display = 'none'; 
         continueVar.disabled = true; //make ability to check answer disabled until start of game
-        inputContainerVar.style.visibility = 'hidden'; 
+        inputContainerVar.style.display = 'none'; 
+		document.getElementById("submitscore").style.display = "none"; 
         
-        //events
-        
-        startGameVar.addEventListener('click',startGame);
+        //events 
+        startGameVar.addEventListener('click', startGame);
         resetGameVar.addEventListener('click', resetGame);
         continueVar.addEventListener('click', checkAnswer);
 
@@ -126,10 +221,10 @@
         function startGame() {
             
             startGameVar.disabled = true;
-            startGameVar.style.visibility = 'hidden';           
-            continueVar.style.visibility = 'visible'; 
+            startGameVar.style.display = 'none';           
+            continueVar.style.display = 'none'; 
             continueVar.disabled = false; //make ability to check answer disabled until start of game
-            inputContainerVar.style.visibility = 'visible';
+            inputContainerVar.style.display = 'initial';
             
             quotientInputVar.disabled = false;
             remainderInputVar.disabled = false;
@@ -138,24 +233,29 @@
             
             document.getElementById('score').innerHTML = 'Problems Correct: '; 
             
-            setTimeout(function() {
-                
-                //end game conditions
-                alert('Time\s Up!');
-                document.querySelector('body').style.backgroundColor = '#ffffff';
-                continueVar.disabled = true;
-                resetGameVar.disabled = false;
-                resetGameVar.style.visibility = 'visible';
-                quotientInputVar.disabled = true;
-                remainderInputVar.disabled = true; 
-                document.querySelector('.score').style.color = 'green';}, 60000);
+            setTimeout(timeout, 6000);
             
             createProblem();
             
         }
+		
+		function timeout() {
+			
+			//end game conditions
+            alert('Time\s Up!');
+            document.querySelector('body').style.backgroundColor = '#ffffff';
+            continueVar.disabled = true;
+            resetGameVar.disabled = false;
+            resetGameVar.style.display = 'initial';
+            quotientInputVar.disabled = true;
+            remainderInputVar.disabled = true; 
+			document.getElementById("submitscore").style.display = "block"; 
+			document.getElementById("inputScore").value = score; 
+            document.querySelector('.score').style.color = 'green';
+			
+		}
         
         function createProblem() {
-            
             
             //create values
             let randomDivisor = Math.floor(Math.random() * 8 + 2);
@@ -190,12 +290,12 @@
             
             if(quotientInput === quotient && remainderInput === remainder)
             {
-                document.querySelector('body').style.backgroundColor = '#ccffcc';
+				document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + '</div>';
                 score += 1; 
             }
             else
             {
-                document.querySelector('body').style.backgroundColor = '#ffebe6';
+                document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + '</div>';
                 document.getElementById('incorrect').innerHTML += answer + '<br>'; 
             }
     
@@ -211,27 +311,31 @@
         }
         
         function resetGame() {
-            
-            score = 0;
-            answer = 0;
-            problem = '';
+			
+			score = 0;
+			quotient = 0;
+			remainder = 0; 
+			problem = '';
+			answer = ''; 
             
             resetGameVar.disabled = true;
-            resetGameVar.style.visibility = 'hidden';  
+            resetGameVar.style.display = 'none'; 
             
             startGameVar.disabled = false;
-            startGameVar.style.visibility = 'visible';
+            startGameVar.style.display = 'initial';
             
-            inputContainerVar.style.visibility = 'hidden'; 
+            inputContainerVar.style.display = 'none'; 
             
             document.querySelector('.score').style.color = 'black';
             document.getElementById('score').innerHTML = '';
             
             document.getElementById('incorrect').innerHTML = '';
             document.getElementById('problem').innerHTML = '';
+			
+			document.getElementById("submitscore").style.display = "none"; 
             
-            continueVar.style.visibility = 'hidden'; 
-            continueVar.disabled = true; //make ability to check answer disabled until start of game
+            continueVar.style.display = 'none'; 
+        	continueVar.disabled = true; //make ability to check answer disabled until start of game
             
         }
         
