@@ -80,7 +80,7 @@
 			
 			<%- include ("../partials/highscores.ejs") %>
 
-			<h1 id='problem' class='problem'></h1>
+			<div id='problem' class='problem'></div>
 
 			<!--<input type='submit' value='START - EASY' class='startEasy' onclick="makeEasy();">-->
 			<button type="button" class="btn btn-success startEasy" onclick="makeEasy();">START - EASY <i class="fas fa-play-circle"></i></button>
@@ -92,9 +92,12 @@
 			<!--<input type='submit' value='RESET' class='resetGame'>-->
 			<button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
 			<br>
-			<input type='submit' value='PRIME' class='primeNumber'>
+			<button type="button" class="btn btn-primary primeNumber">PRIME</button>
 			<br>
-			<input type='submit' value='COMPOSITE' class='compositeNumber'>
+			<br>
+			<button type="button" class="btn btn-primary compositeNumber">COMPOSITE</button>
+			<br>
+			<br>
 
 			<p id='score'>Current Score: </p>
 			
@@ -156,11 +159,11 @@
         
         //game start conditions
         resetGameVar.disabled = true;
-        resetGameVar.style.visibility = 'hidden';
+        resetGameVar.style.display = 'none';
         primeNumber.disabled = true;
-        primeNumber.style.visibility = 'hidden';
+        primeNumber.style.display = 'none';
         compositeNumber.disabled = true;
-        compositeNumber.style.visibility = 'hidden';
+        compositeNumber.style.display = 'none';
 		document.getElementById("submitscore").style.display = "none"; 
         
         //events
@@ -175,20 +178,22 @@
         //functions
         
         function startGame() {
+			
             startGameVar.disabled = true;
-            startGameVar.style.visibility = 'hidden';
+            startGameVar.style.display = 'none';
             startGameEasyVar.disabled = true;
-            startGameEasyVar.style.visibility = 'hidden';
+            startGameEasyVar.style.display = 'none';
             startGameHardVar.disabled = true;
-            startGameHardVar.style.visibility = 'hidden';
+            startGameHardVar.style.display = 'none';
             primeNumber.disabled = false;
-            primeNumber.style.visibility = 'visible';
+            primeNumber.style.display = 'initial';
             compositeNumber.disabled = false;
-            compositeNumber.style.visibility = 'visible'; 
+            compositeNumber.style.display = 'initial'; 
             
             setTimeout(timeout, 6000);
 			
             createProblem(); //generate first problem
+			
         }
 		
 		function timeout() {
@@ -197,11 +202,11 @@
             document.querySelector('body').style.backgroundColor = '#ffffff';
             alert('Time\s Up!');
             resetGameVar.disabled = false;
-            resetGameVar.style.visibility = 'visible';
+            resetGameVar.style.display = 'initial';
             primeNumber.disabled = true;
-            primeNumber.style.visibility = 'hidden';
+            primeNumber.style.display = 'none';
             compositeNumber.disabled = true;
-            compositeNumber.style.visibility = 'hidden'; 
+            compositeNumber.style.display = 'none'; 
 				
 			document.getElementById("submitscore").style.display = "block"; 
 			document.getElementById("inputScore").value = finalScore; 	
@@ -210,6 +215,7 @@
             '<br>' + 'Number Correct: ' + numberCorrect + '<br>' + '<span style="color:red">' +
             'Number Incorrect: ' + numberIncorrect + '</span>' + '<br>' + 'Rate Correct: ' +
             (Math.round(numberCorrect / (numberCorrect + numberIncorrect) * 100)) + '%';
+			
             document.querySelector('.problem').style.color = 'green';
 			
 		}
@@ -224,22 +230,22 @@
             isHard = false; 
             
             resetGameVar.disabled = true;
-            resetGameVar.style.visibility = 'hidden';
+            resetGameVar.style.display = 'none';
             
             primeNumber.disabled = true;
-            primeNumber.style.visibility = 'hidden';
+            primeNumber.style.display = 'none';
             
             compositeNumber.disabled = true;
-            compositeNumber.style.visibility = 'hidden';
+            compositeNumber.style.display = 'none';
             
             startGameVar.disabled = false;
-            startGameVar.style.visibility = 'visible';
+            startGameVar.style.display = 'initial';
             
             startGameEasyVar.disabled = false;
-            startGameEasyVar.style.visibility = 'visible';
+            startGameEasyVar.style.display = 'initial';
             
             startGameHardVar.disabled = false;
-            startGameHardVar.style.visibility = 'visible';
+            startGameHardVar.style.display = 'initial';
             
             document.getElementById('problem').innerHTML = '';
             document.querySelector('.problem').style.color = 'black';
@@ -251,7 +257,6 @@
 			
 			document.getElementById("submitscore").style.display = "none"; 
         }
-        
         
         function createProblem() {
              

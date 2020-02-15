@@ -19,22 +19,26 @@
     <body>
 		
 		<%- include("../partials/navbaronly") %>
-        
-        <h1>Hanson Prime Numbers Generator</h1>
-		<hr>
+		
+		<div class="container">
+			
+			<h1>Hanson Prime Numbers Generator</h1>
+			<hr>
 
-        <label for='input'>How many prime numbers?</label>
-        <input id='input' class='input' type='number' placeholder=''>
-        
-        <input type='submit' value='Generate Prime Numbers' class='primeNumbers'>
-        <br>
-        <br>
-        
-        <input type='submit' value='RESET' class='resetGame'>
-        <br>
-        
-        <p id='show primes'></p>
-        
+			<label for='input'>How many prime numbers do you want to generate?</label>
+			<input id='input' class='input' type='number' placeholder=''>
+
+			<button type="button" class="btn btn-primary primeNumbers">Generate Prime Numbers <i class="fas fa-play-circle"></i></button>
+			<br>
+			<br>
+
+			<button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+			<br>
+			<br>
+
+			<p id='show primes'></p>
+			
+		</div>
         
     </body>
     
