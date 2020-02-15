@@ -1,10 +1,16 @@
 body {
 	font-family: 'Varela Round', sans-serif;  
 	text-align: center; 
+	background-color:  rgba(230,230,255,0.15); 
+	font-size: 1.25em; 
+}
+
+nav {
+	font-size: 0.75em; 
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.5em;
     font-weight: 700;
     text-shadow: 0px 4px 3px rgba(0,0,0,0.1),
 				 0px 8px 13px rgba(0,0,0,0.1),
@@ -36,6 +42,6 @@ hr {
 }
 
 #highscores {
-	color: rgba(150, 150, 175, 0.8); 
+	color: rgba(110, 110, 140, 0.8); 
 }
 
