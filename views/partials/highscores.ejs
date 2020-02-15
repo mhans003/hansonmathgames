@@ -1,8 +1,9 @@
-<div>
+<div id="highscores">
 	<% if(scores.length > 0) { %>
 		<h3>High Score</h3>
 		<% for(var i = scores.length; i > scores.length - 1; i--) { %>
 			<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
 		<% } %>
 	<% } %>
+	<br>
 </div>
