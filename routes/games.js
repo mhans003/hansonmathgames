@@ -114,7 +114,18 @@ router.get("/simplifiedfractiongenerator", middleware.isLoggedIn, function(req, 
 }); 
 
 router.get("/preparelongdivision", middleware.isLoggedIn, function(req, res) {
-	res.render("games/preparelongdivision");  
+	Score.find({game:"Hanson Preparing for Long Division Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/preparelongdivision", {scores:allscores}); 
+			}
+	});  
 }); 
 
 router.get("/divisionremainders", middleware.isLoggedIn, function(req, res) {
