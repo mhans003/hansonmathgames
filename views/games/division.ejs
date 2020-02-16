@@ -85,6 +85,8 @@
             <hr>
 			
 			<%- include ("../partials/highscores.ejs") %>
+			
+			<div id="timer"></div>
         
             <button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
@@ -154,6 +156,9 @@
         let problem = '';
         let answer = 0;
         let dividend = 0; 
+		
+		let startTime = 60; 
+		let setTimer = ''; 
     
         //constants/element variables
         
@@ -161,6 +166,8 @@
         const resetGameVar = document.querySelector('.resetGame');
         const continueVar = document.querySelector('.answer');
         const problemContainerVar = document.querySelector('.problemContainer');
+		
+		var timerVar = document.querySelector("#timer"); 
         
         //game start conditions
         resetGameVar.disabled = true;
@@ -170,6 +177,8 @@
         //problemContainerVar.style.visibility = 'hidden'; 
 		problemContainerVar.style.display = 'none';
 		document.getElementById("submitscore").style.display = "none"; 
+		
+		timerVar.style.display = "none"; 
         
         //events
         
@@ -193,14 +202,41 @@
 			continueVar.focus();
 			startGameVar.style.display = 'none';
             resetGameVar.style.display = 'none'; 
-            
-            setTimeout(timeout, 60000);
+			
+			//timer 
+			timerVar.style.display = "block"; 
+			timerVar.innerHTML = '01:00'; 
+			setTimer = setInterval(countDown, 1000); 
+            //setTimeout(timeout, 60000);
 			
             createProblem(); //generate first problem
         }
+		
+		function countDown() {
+			
+			startTime--; 
+			
+			if(startTime > 9)
+				{
+					timerVar.innerHTML = '00:' + startTime; 
+				}
+			else
+				{
+					timerVar.innerHTML = '00:0' + startTime; 
+				}
+			if(startTime < 1)
+				{
+					timeout(); 
+				}
+			
+		}
         
         function timeout() {
             //end game conditions
+			
+			//stop screen timer
+			clearInterval(setTimer); 
+			
             document.querySelector('body').style.backgroundColor = '#ffffff';
             alert('Time\s Up!');
             continueVar.disabled = true;
@@ -220,6 +256,8 @@
         
         function resetGame() {
 			
+			startTime = 60;
+			
             finalScore = 0;
             
             resetGameVar.disabled = true;
@@ -231,6 +269,8 @@
 			startGameVar.style.display = 'initial';
 			problemContainerVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+			
+			timerVar.style.display = "none";
             
             document.getElementById('problem').innerHTML = '';
             document.querySelector('.problem').style.color = 'black';

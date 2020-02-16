@@ -87,6 +87,8 @@
 			
 			<%- include ("../partials/highscores.ejs") %>
 			
+			<div id="timer"></div>
+			
 			<button type="button" class="btn btn-primary startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
             <button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
@@ -155,18 +157,25 @@
         let dividend = 0;
         let remainder = 0;
         let answerWithRemainder = '';
+		
+		let startTime = 60; 
+		let setTimer = ''; 
     
         //constants/element variables
         
         const startGameVar = document.querySelector('.startGame');
         const resetGameVar = document.querySelector('.resetGame');
         const continueVar = document.querySelector('.answer');
+		
+		var timerVar = document.querySelector("#timer"); 
         
         //game start conditions
         resetGameVar.disabled = true;
         resetGameVar.style.display = 'none'; 
         continueVar.disabled = true; //make ability to check answer disabled until start of game
 		document.getElementById("submitscore").style.display = "none"; 
+		
+		timerVar.style.display = "none"; 
         
         //events
         
@@ -186,14 +195,41 @@
             continueVar.disabled = false; //make it possible to check an answer
 			continueVar.focus();
             
-            setTimeout(timeout, 60000);
+			//timer 
+			timerVar.style.display = "block"; 
+			timerVar.innerHTML = '01:00'; 
+			setTimer = setInterval(countDown, 1000); 
+            //setTimeout(timeout, 60000);
 			
             createProblem(); //generate first problem
         }
 		
+		function countDown() {
+			
+			startTime--; 
+			
+			if(startTime > 9)
+				{
+					timerVar.innerHTML = '00:' + startTime; 
+				}
+			else
+				{
+					timerVar.innerHTML = '00:0' + startTime; 
+				}
+			if(startTime < 1)
+				{
+					timeout(); 
+				}
+			
+		}
+		
 		function timeout() {
 			
 			//end game conditions
+			
+			//stop screen timer
+			clearInterval(setTimer);
+			
             document.querySelector('body').style.backgroundColor = '#ffffff';
             alert('Time\s Up!');
             continueVar.disabled = true;
@@ -209,7 +245,10 @@
 		}
         
         function resetGame() {
+			
             finalScore = 0;
+			
+			startTime = 60; 
             
             resetGameVar.disabled = true;
             resetGameVar.style.display = 'none'; 
@@ -217,6 +256,8 @@
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
             startGameVar.disabled = false;
             startGameVar.style.display = 'initial';
+			
+			timerVar.style.display = "none"; 
             
             document.getElementById('problem').innerHTML = '';
 			document.getElementById("submitscore").style.display = "none"; 
@@ -224,6 +265,7 @@
             document.getElementById('score').innerHTML = 'Current Score: '; 
 			
 			document.querySelector('.problem').style.color = 'black';
+			
         }
         
         
