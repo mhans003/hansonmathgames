@@ -76,6 +76,8 @@
 		
 		<%- include ("../partials/highscores.ejs") %>
 		
+		<div id="timer"></div>
+		
 		<div class="container">
 			
 			<div id = 'popup'><br></div>
@@ -135,10 +137,15 @@
         const continueVar = document.querySelector('.input');
         const largerUnitsVar = document.querySelector('.largerUnits');
         const smallerUnitsVar = document.querySelector('.smallerUnits');
+		
+		var timerVar = document.querySelector("#timer"); 
         
         let score = 0;
         let answer = 0;
         let problem = ''; 
+		
+		let startTime = 60; 
+		let setTimer = ''; 
         
         /*
         class conversions {
@@ -178,6 +185,8 @@
         continueVar.style.display = 'none'; 
         continueVar.disabled = true; //make ability to check answer disabled until start of game
 		document.getElementById("submitscore").style.display = "none"; 
+		
+		timerVar.style.display = "none"; 
         
         //events
         
@@ -203,27 +212,56 @@
             continueVar.disabled = false; //make ability to check answer disabled until start of game
             
             document.getElementById('score').innerHTML = 'Problems Correct: '; 
-            
-            setTimeout(function() {
-                
-                //end game conditions
-                alert('Time\s Up!');
-                document.querySelector('body').style.backgroundColor = '#ffffff';
-                continueVar.disabled = true;
-                resetGameVar.disabled = false;
-                resetGameVar.style.display = 'initial';
-                document.querySelector('.score').style.color = 'green';
-				
-				//create new score
-				
-				document.getElementById("submitscore").style.display = "block";
-				document.getElementById("inputScore").value = score; 
 			
-			}, 60000);
+			//timer 
+			timerVar.style.display = "block"; 
+			timerVar.innerHTML = '01:00'; 
+			setTimer = setInterval(countDown, 1000); 
+			//setTimeout(timeout, 60000);
             
             createProblem();
             
         }
+		
+		function countDown() {
+			
+			startTime--; 
+			
+			if(startTime > 9)
+				{
+					timerVar.innerHTML = '00:' + startTime; 
+				}
+			else
+				{
+					timerVar.innerHTML = '00:0' + startTime; 
+				}
+			if(startTime < 1)
+				{
+					timeout(); 
+				}
+			
+		}
+		
+		function timeout() {
+			
+			//end game conditions
+			
+			//stop screen timer
+			clearInterval(setTimer); 
+			
+            alert('Time\s Up!');
+            document.querySelector('body').style.backgroundColor = '#ffffff';
+            continueVar.disabled = true;
+            resetGameVar.disabled = false;
+            resetGameVar.style.display = 'initial';
+            document.querySelector('.score').style.color = 'green';
+				
+			//create new score
+				
+			document.getElementById("submitscore").style.display = "block";
+			document.getElementById("inputScore").value = score;
+			
+		}
         
         function createProblem() {
             
@@ -274,6 +312,8 @@
             score = 0;
             answer = 0;
             problem = '';
+			
+			startTime = 60; 
             
             resetGameVar.disabled = true;
             resetGameVar.style.display = 'none'; 
@@ -293,6 +333,8 @@
             smallerUnitsVar.style.display = 'none';
             continueVar.style.display = 'none'; 
             continueVar.disabled = true; //make ability to check answer disabled until start of game
+			
+			timerVar.style.display = "none"; 
             
         }
         
