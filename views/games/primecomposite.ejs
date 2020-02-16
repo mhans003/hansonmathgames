@@ -79,8 +79,12 @@
 			<hr>
 			
 			<%- include ("../partials/highscores.ejs") %>
+			
+			<div id="timer"></div>
+			
+			<br>
 
-			<div id='problem' class='problem'></div>
+			<h2 id='problem' class='problem'></h2>
 
 			<!--<input type='submit' value='START - EASY' class='startEasy' onclick="makeEasy();">-->
 			<button type="button" class="btn btn-success startEasy" onclick="makeEasy();">START - EASY <i class="fas fa-play-circle"></i></button>
@@ -147,6 +151,9 @@
         let isPrime = true;
         let isEasy = false;
         let isHard = false; 
+		
+		let startTime = 60; 
+		let setTimer = ''; 
         
         //constants/element variables
         
@@ -156,6 +163,8 @@
         const resetGameVar = document.querySelector('.resetGame');
         const primeNumber = document.querySelector('.primeNumber');
         const compositeNumber = document.querySelector('.compositeNumber');
+		
+		var timerVar = document.querySelector("#timer"); 
         
         //game start conditions
         resetGameVar.disabled = true;
@@ -165,6 +174,8 @@
         compositeNumber.disabled = true;
         compositeNumber.style.display = 'none';
 		document.getElementById("submitscore").style.display = "none"; 
+		
+		timerVar.style.display = "none"; 
         
         //events
         
@@ -190,13 +201,39 @@
             compositeNumber.disabled = false;
             compositeNumber.style.display = 'initial'; 
             
-            setTimeout(timeout, 60000);
+			//timer 
+			timerVar.style.display = "block"; 
+			timerVar.innerHTML = '01:00'; 
+			setTimer = setInterval(countDown, 1000); 
+            //setTimeout(timeout, 60000);
 			
             createProblem(); //generate first problem
 			
         }
 		
+		function countDown() {
+			
+			startTime--; 
+			
+			if(startTime > 9)
+				{
+					timerVar.innerHTML = '00:' + startTime; 
+				}
+			else
+				{
+					timerVar.innerHTML = '00:0' + startTime; 
+				}
+			if(startTime < 1)
+				{
+					timeout(); 
+				}
+			
+		}
+		
 		function timeout() {
+			
+			//stop screen timer
+			clearInterval(setTimer); 
 			
 			//end game conditions
             document.querySelector('body').style.backgroundColor = '#ffffff';
@@ -225,9 +262,13 @@
             numberCorrect = 0;
             numberIncorrect = 0; 
             let randomNumber = 0;
+			
+			startTime = 60; 
             
             isEasy = false;
             isHard = false; 
+			
+			timerVar.style.display = "none"; 
             
             resetGameVar.disabled = true;
             resetGameVar.style.display = 'none';
