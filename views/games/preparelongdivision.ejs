@@ -83,6 +83,10 @@
 		
 		<%- include ("../partials/highscores.ejs") %>
 		
+		<div id="timer"></div>
+		
+		<br>
+		
 		<div class="container">
 			
 			<p id='problem' class='problem'></p>
@@ -183,12 +187,17 @@
         const quotientInputVar = document.querySelector('.quotientInput');
         const remainderInputVar = document.querySelector('.remainderInput');
         const inputContainerVar = document.querySelector('.inputContainer'); 
+		
+		var timerVar = document.querySelector("#timer");
         
         let score = 0;
         let quotient = 0;
         let remainder = 0; 
         let problem = '';
         let answer = ''; 
+		
+		let startTime = 60; 
+		let setTimer = ''; 
         
         //game start conditions
         resetGameVar.disabled = true;
@@ -197,6 +206,8 @@
         continueVar.disabled = true; //make ability to check answer disabled until start of game
         inputContainerVar.style.display = 'none'; 
 		document.getElementById("submitscore").style.display = "none"; 
+		
+		timerVar.style.display = "none";
         
         //events 
         startGameVar.addEventListener('click', startGame);
@@ -233,15 +244,43 @@
             
             document.getElementById('score').innerHTML = 'Problems Correct: '; 
             
-            setTimeout(timeout, 60000);
+			
+			//timer 
+			timerVar.style.display = "block"; 
+			timerVar.innerHTML = '01:00'; 
+			setTimer = setInterval(countDown, 1000); 
+            //setTimeout(timeout, 60000);
             
             createProblem();
             
         }
 		
+		function countDown() {
+			
+			startTime--; 
+			
+			if(startTime > 9)
+				{
+					timerVar.innerHTML = '00:' + startTime; 
+				}
+			else
+				{
+					timerVar.innerHTML = '00:0' + startTime; 
+				}
+			if(startTime < 1)
+				{
+					timeout(); 
+				}
+			
+		}
+		
 		function timeout() {
 			
 			//end game conditions
+			
+			//stop screen timer
+			clearInterval(setTimer); 
+			
             alert('Time\s Up!');
             document.querySelector('body').style.backgroundColor = '#ffffff';
             continueVar.disabled = true;
@@ -317,12 +356,16 @@
 			remainder = 0; 
 			problem = '';
 			answer = ''; 
+			
+			startTime = 60; 
             
             resetGameVar.disabled = true;
             resetGameVar.style.display = 'none'; 
             
             startGameVar.disabled = false;
             startGameVar.style.display = 'initial';
+			
+			timerVar.style.display = "none"; 
             
             inputContainerVar.style.display = 'none'; 
             
