@@ -195,4 +195,15 @@ router.post("/submit", function(req, res) {
 	*/
 }); 
 
+router.post("/problems", function(req, res) {
+	var problemList = []; 
+	for(var i = 0; i < req.body.numberOfProblems; i++)
+		{
+			problemList.push(req.body.problem[i]); 
+		}
+	//problemList = req.body.problemList;
+	console.log(problemList); 
+	res.render("partials/problemlist", {problemList:problemList}); 
+}); 
+
 module.exports = router; 
