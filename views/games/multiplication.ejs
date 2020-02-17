@@ -146,7 +146,8 @@
 				
             </div>
 			
-			<form class='form-signin' id='showPracticeProblems' action='' method='POST'>
+			<form class='form-signin' id='showPracticeProblems' action='/games/problems' method='POST'>
+				<!--<input name="problemList" id="practiceProblemsInput">-->
 				<button class="btn btn-lg btn-success btn-inline" type="submit">View Problems</button>
 			</form>
             
@@ -162,6 +163,16 @@
 		
 		let startTime = 60; 
 		let setTimer = ''; 
+		
+		//variables for problem list
+		
+		let problemList = []; 
+		
+		function Problem(problem, answer) {
+            this.problem = problem;
+            this.answer = answer;
+			this.numbersentence = problem + ' = ' + answer; 
+        }
          
         //constants/element variables
         
@@ -259,6 +270,35 @@
 			document.getElementById("submitscore").style.display = "block"; 
 			document.getElementById("inputScore").value = finalScore; 	
 			
+			
+			//populate practice problems
+			
+			var numberOfProblems = 0;
+			
+			for(var i = 0; i < problemList.length; i++)
+				{
+					var thisInput =  document.createElement("input");
+					document.getElementById('showPracticeProblems').appendChild(thisInput);
+					thisInput.name = 'problem'; 
+					thisInput.value = problemList[i]; 
+					thisInput.placeholder = problemList[i]; 
+					thisInput.style.display = 'none'; 
+					console.log(thisInput); 
+					numberOfProblems++; 
+					//document.getElementById('practiceProblemsInput').value += '<h2>' + problemList[i][0] + ' = ' + problemList[i][1] + '</h2>' + '<br>';  
+				}
+			
+			//determine number of problems to be passed into post route 
+			var numberOfProblemsInput = document.createElement("input"); 
+			document.getElementById('showPracticeProblems').appendChild(numberOfProblemsInput); 
+			numberOfProblemsInput.name = 'numberOfProblems';
+			numberOfProblemsInput.type = 'number';
+			numberOfProblemsInput.value = numberOfProblems; 
+			numberOfProblemsInput.placeholder = numberOfProblems; 
+			numberOfProblemsInput.style.display = 'none'; 
+			
+			
+			//document.getElementById('practiceProblemsInput').value = problemList; 
 		}
         
         function resetGame() {
@@ -266,6 +306,8 @@
             finalScore = 0;
 			
 			startTime = 60; 
+			
+			problemList = []; 
             
             resetGameVar.disabled = true; 
 			resetGameVar.style.display = 'none';
@@ -283,6 +325,15 @@
             document.getElementById('show answer').innerHTML = '';
             document.getElementById('score').innerHTML = 'Current Score: ';
 			document.getElementById("submitscore").style.display = "none"; 
+			
+			//clear practice problems, take form inputs out and put button back
+			
+			document.getElementById('showPracticeProblems').innerHTML = ''; 
+			var newButton = document.createElement("button");
+			document.getElementById('showPracticeProblems').appendChild(newButton);
+			newButton.class = "btn btn-lg btn-success btn-inline"; 
+			newButton.type = "submit"; 
+			newButton.innerHTML = "View Problems"; 
           
         }
         
@@ -309,6 +360,9 @@
                     continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)'; 
                     finalScore -= 50;
                     document.getElementById('show answer').innerHTML += problem + ' = ' + answer + '<br>';
+					//problemList.push([problem,answer]); 
+					var thisProblem = new Problem(problem, answer); 
+					problemList.push(thisProblem.numbersentence); 
                 }
                 else
                 {
@@ -323,6 +377,9 @@
                 continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
                 finalScore -= answer;
                 document.getElementById('show answer').innerHTML += problem + ' = ' + answer + '<br>';
+				//problemList.push([problem,answer]); 
+				var thisProblem = new Problem(problem, answer); 
+				problemList.push(thisProblem.numbersentence); 
             }
        
             document.getElementById('score').innerHTML = 'Current Score: ' + finalScore;
