@@ -184,16 +184,6 @@
 		
 		var timerVar = document.querySelector("#timer"); 
         
-        //game start conditions
-        resetGameVar.disabled = true; 
-		continueVar.disabled = true; //make ability to check answer disabled until start of game
-		resetGameVar.style.display = 'none'; 
-		problemContainerVar.style.display = 'none';
-		showPracticeProblemsVar.style.display = 'none'; 
-		document.getElementById("submitscore").style.display = "none"; 
-		
-		timerVar.style.display = "none"; 
-        
         //events
         
         startGameVar.addEventListener('click',startGame);
@@ -204,8 +194,24 @@
             }
             
         });
+		
+		setUp(); 
         
         //functions
+		
+		function setUp() {
+			
+			//game start conditions
+			resetGameVar.disabled = true; 
+			continueVar.disabled = true; //make ability to check answer disabled until start of game
+			resetGameVar.style.display = 'none'; 
+			problemContainerVar.style.display = 'none';
+			showPracticeProblemsVar.style.display = 'none'; 
+			document.getElementById("submitscore").style.display = "none"; 
+
+			timerVar.style.display = "none"; 
+			
+		}
         
         function startGame() {
             
