@@ -13,9 +13,6 @@ router.get("/", middleware.isLoggedIn, function(req, res) {
 
 //games
 router.get("/multiplication", middleware.isLoggedIn, function(req, res) {
-	//Score.find({game:"Hanson Multiplication Game"}, function(err, allscores) {
-	//Score.findOne({game:"Hanson Multiplication Game", "score":$max}, function(err, allscores) {
-	//Score.find({$query:{game:"Hanson Multiplication Game"}, $orderby:{score:-1}}, function(err, allscores) {
 	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
@@ -28,7 +25,21 @@ router.get("/multiplication", middleware.isLoggedIn, function(req, res) {
 				res.render("games/multiplication", {scores:allscores}); 
 			}
 	});
-	//res.render("games/multiplication");  
+}); 
+
+router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores); 
+				res.render("games/refactors/multiplicationrefactored", {scores:allscores}); 
+			}
+	});
 }); 
 
 router.get("/division", middleware.isLoggedIn, function(req, res) {
