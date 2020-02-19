@@ -68,12 +68,12 @@
                 
               100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
             }
-        
+            
         </style>
     
     </head>
     
-    <title>Hanson Multiplication Game</title>
+    <title>Hanson Division Game</title>
     
     <body>
 		
@@ -81,33 +81,32 @@
         
         <div class="container">
         
-            <h1>Hanson Multiplication Game</h1>
+            <h1>Hanson Division Game</h1>
             <hr>
 			
 			<%- include ("../../partials/highscores.ejs") %>
 			
 			<div id="timer"></div>
-			
-            <!--<input type='submit' value='START' class='startGame'>-->
+        
             <button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
-            <!--<input type='submit' value='RESET' class='resetGame'>-->
             <button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
             <br>
             <br> 
-			
+          
             <div id='problemContainer'>
                 
             </div>
 			
 			<%- include ("../../partials/scoreform.ejs") %>
+			
+			<div class="container scoreform" id="submitscore"></div>
             
             <div class='answerContainer' id='answerContainer'>
-				
                 <br>
                 <div id = 'popup'> </div>
                 <br>
-                <h3>Answer</h3>
+                <h2>Answer</h2>
                 
                 <input id='answer' type='text' placeholder=''>
                 
@@ -115,13 +114,13 @@
             
             <br>
             
-            <div class>
+            <div class='scoreContainer'>
                 
                 <p id='score'>Current Score: </p>
             
                 <h3>Problems to Practice:</h3>
                 <p id='showAnswer'></p>
-				
+                
             </div>
 			
 			<%- include ("../../partials/showpracticeproblems.ejs") %>
@@ -129,13 +128,12 @@
         </div>
         
     </body>
-	
-    <script> 
+    
+    <script>
+
+		let dividend = 0;
+		let gameName = "Hanson Division Game";  
 		
-		//VARIABLES
-        
-		let gameName = "Hanson Multiplication Game"; 
-        
 		const scoreVar = document.querySelector('#score'); 
 		const continueVar = document.querySelector('#answer');
         const startGameVar = document.querySelector('#startGame');
@@ -145,7 +143,7 @@
         const problemContainerVar = document.querySelector('#problemContainer'); 
 		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
-		var timerVar = document.querySelector("#timer"); 
+		var timerVar = document.querySelector("#timer");  
         
         //EVENTS
         
@@ -155,7 +153,6 @@
             if(event.keyCode === 13 && startGameVar.disabled == true) {
                 checkAnswer(); 
             }
-            
         });
 		
 		//INITIALIZE
@@ -187,9 +184,9 @@
             createProblem(); 
 			
         }
-		
-		function timeout() {
-			
+        
+        function timeout() {
+            
 			endTimer(); 
 			
 			//alert('Time\'s Up!');
@@ -207,11 +204,11 @@
 			
 			//populate problems
 			populatePracticeProblems(); 
-
-		}
+			
+            }
         
         function resetGame() {
-             
+			
 			problemList = []; 
 			
        		startOn(); 
@@ -230,22 +227,24 @@
 			problemContainerVar.style.color = 'black'; 
 			showPracticeProblemsVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
-
+			
         }
         
         function createProblem() {
+   
+            answer = Math.floor(Math.random() * 13);
+            let divisor = Math.floor(Math.random() * 12 + 1);
+            dividend = answer * divisor;
+			//problem = dividend + ' &#247; ' + divisor; 
+			//problem = dividend +  ' &div; '  + divisor; 
+			problem = dividend +  ' ÷ '  + divisor; 
             
-            let factor1 = Math.floor(Math.random() * 13);
-            let factor2 = Math.floor(Math.random() * 13);
-            problem = factor1 + ' x ' + factor2; 
-            answer = factor1 * factor2;
-       
 			problemContainerVar.innerHTML = problem; 
             
         }
         
         function checkAnswer() {
-            
+			
             let userInput = Number(continueVar.value);
             
             if(userInput === answer)
@@ -260,23 +259,23 @@
                 }
                 else
                 {
-					correctAnswer(answer); 
+					correctAnswer(dividend); 
                 }
             }
             else
             {
-				wrongAnswer(answer); 
-				showAnswer(); 
+    			wrongAnswer(dividend); 
+				showAnswer();
 				
 				var thisProblem = new Problem(problem, answer); 
 				problemList.push(thisProblem.numbersentence); 
             }
        
-			showCurrentScore(); 
+            showCurrentScore(); 
             
             continueVar.value = ''; 
             createProblem();
-            
+			
         }
         
     </script>
