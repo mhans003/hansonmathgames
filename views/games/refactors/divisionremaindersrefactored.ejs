@@ -3,8 +3,8 @@
     <head>
         
         <meta charset="utf-8">
-        
-        <%- include("../../partials/sharedstyles") %>
+		
+		<%- include("../../partials/sharedstyles") %>
         
         <style>
             
@@ -68,74 +68,75 @@
                 
               100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
             }
-        
+            
         </style>
     
     </head>
     
-    <title>Hanson Multiplication Game</title>
+    <title>Hanson Division Game</title>
     
     <body>
 		
 		<%- include("../../partials/navbaronly") %>
-        
-        <div class="container">
-        
-            <h1>Hanson Multiplication Game</h1>
-            <hr>
+		
+		<div class="container">
+
+			<h1>Hanson Division Game</h1>
+			<h2 style='font-style: italic;'>With Remainders</h2>
+			<hr>
 			
 			<%- include ("../../partials/highscores.ejs") %>
 			
 			<div id="timer"></div>
 			
-            <!--<input type='submit' value='START' class='startGame'>-->
-            <button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
+			<button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
-            <!--<input type='submit' value='RESET' class='resetGame'>-->
             <button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
             <br>
             <br> 
 			
-            <div id='problemContainer'>
+			<div id='problemContainer'>
                 
             </div>
 			
 			<%- include ("../../partials/scoreform.ejs") %>
-            
-            <div class='answerContainer' id='answerContainer'>
-				
+			
+			<div class="container scoreform" id="submitscore"></div>
+			
+			<div class='answerContainer' id='answerContainer'>
                 <br>
                 <div id = 'popup'> </div>
                 <br>
-                <h3>Answer</h3>
+                <h2>Answer</h2>
                 
                 <input id='answer' type='text' placeholder=''>
                 
             </div>
-            
-            <br>
-            
-            <div class>
+			
+			<br>
+			
+			 <div class='scoreContainer'>
                 
                 <p id='score'>Current Score: </p>
             
                 <h3>Problems to Practice:</h3>
                 <p id='showAnswer'></p>
-				
+                
             </div>
 			
 			<%- include ("../../partials/showpracticeproblems.ejs") %>
-            
-        </div>
+			
+		</div>
         
     </body>
-	
-    <script> 
+    
+    <script>
 		
-		//VARIABLES
-        
-		let gameName = "Hanson Multiplication Game"; 
-        
+        let dividend = 0; 
+        let remainder = 0;
+        let answerWithRemainder = '';
+		let gameName = "Hanson Division Game With Remainders"; 
+		
 		const scoreVar = document.querySelector('#score'); 
 		const continueVar = document.querySelector('#answer');
         const startGameVar = document.querySelector('#startGame');
@@ -145,7 +146,7 @@
         const problemContainerVar = document.querySelector('#problemContainer'); 
 		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
-		var timerVar = document.querySelector("#timer"); 
+		var timerVar = document.querySelector("#timer");  
         
         //EVENTS
         
@@ -155,7 +156,6 @@
             if(event.keyCode === 13 && startGameVar.disabled == true) {
                 checkAnswer(); 
             }
-            
         });
 		
 		//INITIALIZE
@@ -189,7 +189,7 @@
         }
 		
 		function timeout() {
-			
+            
 			endTimer(); 
 			
 			//alert('Time\'s Up!');
@@ -207,11 +207,11 @@
 			
 			//populate problems
 			populatePracticeProblems(); 
-
-		}
+			
+            }
         
         function resetGame() {
-             
+			
 			problemList = []; 
 			
        		startOn(); 
@@ -230,53 +230,96 @@
 			problemContainerVar.style.color = 'black'; 
 			showPracticeProblemsVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
-
+			
         }
         
+        
         function createProblem() {
+   
+            answer = Math.floor(Math.random() * 11);
+            let divisor = Math.floor(Math.random() * 11 + 1);
+            dividend = (answer * divisor) + Math.floor(Math.random() * divisor);
             
-            let factor1 = Math.floor(Math.random() * 13);
-            let factor2 = Math.floor(Math.random() * 13);
-            problem = factor1 + ' x ' + factor2; 
-            answer = factor1 * factor2;
-       
+            if(dividend < divisor && dividend !== 0)
+            {
+                let tempVar = dividend;
+                dividend = divisor;
+                divisor = tempVar;
+                answer = parseInt(dividend / divisor); 
+            }
+            
+            remainder = dividend % divisor;
+			
+			//problem = dividend + ' &#247; ' + divisor; 
+			//problem = dividend +  ' &div; '  + divisor; 
+			problem = dividend +  ' ÷ '  + divisor; 
+            
 			problemContainerVar.innerHTML = problem; 
             
+            if(remainder === 0)
+            {
+                answerWithRemainder = answer;
+            }
+            else
+            {
+                answerWithRemainder = answer + 'r' + remainder;
+            }
+			
         }
         
         function checkAnswer() {
+			
+            let rawInput = continueVar.value;
+            let userInput = rawInput.replace(' ','');
+            if(userInput.indexOf('r0') !== 0)
+            {
+                userInput = userInput.replace('r0','');
+            }
             
-            let userInput = Number(continueVar.value);
-            
-            if(userInput === answer)
+            if(userInput == answerWithRemainder)
             {
                 if(answer === 0 && continueVar.value === '')
                 {
 					wrongAnswer(50); 
-					showAnswer(); 
 					
-					var thisProblem = new Problem(problem, answer); 
-					problemList.push(thisProblem.numbersentence); 
+					if(remainder === 0)
+                    {
+						showAnswer();
+                    }
+                    else
+                    {
+						showAnswerWithRemainder();
+                    }
+					
+					var thisProblem = new Problem(problem, answerWithRemainder); 
+					problemList.push(thisProblem.numbersentence);
                 }
                 else
                 {
-					correctAnswer(answer); 
+					correctAnswer(dividend); 
                 }
             }
             else
             {
-				wrongAnswer(answer); 
-				showAnswer(); 
+				wrongAnswer(dividend); 
+
+                if(remainder === 0)
+                    {
+						showAnswer();
+                    }
+                    else
+                    {
+						showAnswerWithRemainder();
+                    }
 				
-				var thisProblem = new Problem(problem, answer); 
-				problemList.push(thisProblem.numbersentence); 
+				var thisProblem = new Problem(problem, answerWithRemainder); 
+				problemList.push(thisProblem.numbersentence);
             }
        
 			showCurrentScore(); 
             
             continueVar.value = ''; 
-            createProblem();
-            
+            createProblem(); 
         }
         
     </script>

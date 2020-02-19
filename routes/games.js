@@ -43,7 +43,6 @@ router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res
 }); 
 
 router.get("/division", middleware.isLoggedIn, function(req, res) {
-	//Score.find({game:"Hanson Division Game"}, function(err, allscores) {
 	Score.find({game:"Hanson Division Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
@@ -56,7 +55,21 @@ router.get("/division", middleware.isLoggedIn, function(req, res) {
 				res.render("games/division", {scores:allscores}); 
 			}
 	});
-	//res.render("games/division");  
+}); 
+
+router.get("/divisionrefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Division Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/refactors/divisionrefactored", {scores:allscores}); 
+			}
+	});
 }); 
 
 router.get("/rounding", middleware.isLoggedIn, function(req, res) {
@@ -150,6 +163,21 @@ router.get("/divisionremainders", middleware.isLoggedIn, function(req, res) {
 			{
 				console.log(allscores);
 				res.render("games/divisionremainders", {scores:allscores}); 
+			}
+	}); 
+}); 
+
+router.get("/divisionremaindersrefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Division Game With Remainders"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/refactors/divisionremaindersrefactored", {scores:allscores}); 
 			}
 	}); 
 }); 
