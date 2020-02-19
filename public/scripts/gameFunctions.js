@@ -117,6 +117,12 @@ function showAnswer() {
 	
 }
 
+function showAnswerWithRemainder() {
+	
+	document.getElementById('showAnswer').innerHTML += problem + ' = ' + answer + 'r' + remainder + '<br>';
+	
+}
+
 function showCurrentScore() {
 	
 	document.getElementById('score').innerHTML = 'Current Score: ' + finalScore;
@@ -127,7 +133,7 @@ function createNewScore() {
 	
 	document.getElementById("inputGame").value = gameName; 
 	document.getElementById("inputScore").value = finalScore; 
-	document.getElementById("submitscore").style.display = "block"; 
+	document.getElementById("submitScore").style.display = "block"; 
 	
 }
 
