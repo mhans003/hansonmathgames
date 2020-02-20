@@ -102,6 +102,21 @@ router.get("/convertingunits", middleware.isLoggedIn, function(req, res) {
 	}); 
 }); 
 
+router.get("/convertingunitsrefactor", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Converting Units Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/refactors/convertingunitsrefactor", {scores:allscores}); 
+			}
+	}); 
+}); 
+
 router.get("/wordform", middleware.isLoggedIn, function(req, res) {
 	res.render("games/wordform");  
 }); 
