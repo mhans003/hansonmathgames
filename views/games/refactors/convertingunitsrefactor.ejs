@@ -3,10 +3,15 @@
     <head>
         
         <meta charset="utf-8">
-        
-        <%- include("../../partials/sharedstyles") %>
+		
+		<%- include("../../partials/sharedstyles") %>
         
         <style>
+			
+        	#popup {
+                color: rgba(230,230,255,0.15);
+                font-size: 1.5em; 
+            }
             
             .correctAnswer {
                 position: relative; 
@@ -24,21 +29,8 @@
                 animation-duration: 2s;
             }
             
-            #score {
-                font-size: 1.2em; 
-            }
-            
-            #popup {
-                font-size: 2.5em;
-                color: rgba(230,230,255,0.15);
-            }
-			
-			#problemContainer {
-                font-size: 2.5em;
-            }
-            
             @-webkit-keyframes correct {
-                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 110px;}
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 45px;}
           
                 90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -46,7 +38,7 @@
             }
           
             @keyframes correct {
-              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:110px;}
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:45px;}
       
               90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -54,7 +46,7 @@
             }
             
             @-webkit-keyframes incorrect {
-                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:110px;}
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:45px;}
           
                 90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
@@ -62,88 +54,108 @@
             }
           
             @keyframes incorrect {
-              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:110px;}
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:45px;}
       
               90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
               100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
             }
-            
+			
         </style>
     
     </head>
     
-    <title>Hanson Division Game</title>
+    <title>Hanson Converting Units Game</title>
     
     <body>
 		
 		<%- include("../../partials/navbaronly") %>
-        
-        <div class="container">
-        
-            <h1>Hanson Division Game</h1>
-            <hr>
+    
+		<div class="container">
+			
+			<h1>Hanson Converting Units Game</h1>  
+			<hr>
 			
 			<%- include ("../../partials/highscores.ejs") %>
 			
 			<div id="timer"></div>
-        
-            <button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
-            <br>
-            <button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
-            <br>
-            <br> 
-          
-            <div id='problemContainer'>
-                
-            </div>
 			
+			<div id = 'popup'><br></div>
+		
+			<br>
+
+			<div>
+				
+				<span id='largerUnits'>larger units =</span>
+				<input id='answer' type='text' placeholder=''>
+				<span id='smallerUnits'>smaller units</span>
+				<br>
+				<br>
+				
+			</div>
+
 			<%- include ("../../partials/scoreform.ejs") %>
-			
-			<div class="container scoreform" id="submitscore"></div>
-            
-            <div class='answerContainer' id='answerContainer'>
-                <br>
-                <div id = 'popup'> </div>
-                <br>
-                <h2>Answer</h2>
-                
-                <input id='answer' type='text' placeholder=''>
-                
-            </div>
-            
-            <br>
-            
-            <div class='scoreContainer'>
-                
-                <p id='score'>Current Score: </p>
-            
-                <h3>Problems to Practice:</h3>
-                <p id='showAnswer'></p>
-                
-            </div>
+
+			<div>
+				
+				<button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
+				<br>
+				<button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+				<br>
+				<p id='score'></p>
+				<p id='showAnswer'></p>
+				
+			</div>
 			
 			<%- include ("../../partials/showpracticeproblems.ejs") %>
-            
-        </div>
+			
+		</div>
         
     </body>
     
     <script>
-
-		let dividend = 0;
-		let gameName = "Hanson Division Game";  
 		
+		//VARIABLES
+		
+		let gameName = "Hanson Converting Units Game"; 
+        
 		const scoreVar = document.querySelector('#score'); 
 		const continueVar = document.querySelector('#answer');
         const startGameVar = document.querySelector('#startGame');
         const resetGameVar = document.querySelector('#resetGame');
         const showAnswerVar = document.querySelector('#showAnswer'); 
 		const submitScoreVar = document.querySelector('#submitScore'); 
-        const problemContainerVar = document.querySelector('#problemContainer'); 
 		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
-		var timerVar = document.querySelector("#timer");  
+		var timerVar = document.querySelector("#timer"); 
+		
+		//GAME SPECIFIC VARIABLES
+        
+		let answerWithUnits = ''; 
+        const largerUnitsVar = document.querySelector('#largerUnits');
+        const smallerUnitsVar = document.querySelector('#smallerUnits');
+		
+		function Conversions(large, small, multiplier) {
+			
+            this.large = large;
+            this.small = small;
+            this.multiplier = multiplier; 
+			
+        }
+        
+        let conversionList = [new Conversions('Feet','Inches',12),
+                              new Conversions('Yards','Feet',3),
+                              new Conversions('Meters','Centimeters',100),
+                              new Conversions('Kilometers','Meters',1000),
+                              new Conversions('Centimeters','Millimeters',10),
+                              new Conversions('Kilograms','Grams',1000),
+                              new Conversions('Hours','Minutes',60),
+                              new Conversions('Minutes','Seconds',60),
+                              new Conversions('Gallons','Quarts',4),
+                              new Conversions('Quarts','Pints',2),
+                              new Conversions('Pints','Cups',2),
+                              new Conversions('Weeks','Days',7)];
+
         
         //EVENTS
         
@@ -153,10 +165,10 @@
             if(event.keyCode === 13 && startGameVar.disabled == true) {
                 checkAnswer(); 
             }
-        });
+        }); 
 		
 		//INITIALIZE
-		setUp(); 
+		setUp();  
         
         //FUNCTIONS
 		
@@ -164,39 +176,43 @@
 			
 			resetOff();
 			continueOff(); 
-			problemContainerOff(); 
 			
 			timerVar.style.display = "none"; 
 			submitScoreVar.style.display = 'none'; 
 			showPracticeProblemsVar.style.display = 'none'; 
 			
+			largerUnitsVar.style.display = 'none';
+       		smallerUnitsVar.style.display = 'none';
+			
 		}
         
         function startGame() {
-            
+			
 			startOff(); 
 			resetOff(); 
 			continueOn(); 
-			problemContainerOn(); 
 			
 			setUpTimer();
 			
-            createProblem(); 
-			
-        }
-        
-        function timeout() {
+			//GAME-SPECIFIC
             
-			endTimer(); 
+            largerUnitsVar.style.display = 'initial';
+            smallerUnitsVar.style.display = 'initial';
+       		scoreVar.innerHTML = 'Current Score: '; 
+            
+            createProblem();
+            
+        }
+		
+		function timeout() {
 			
-			//alert('Time\'s Up!');
+			endTimer(); 
 			
 			resetOn();
 			continueOff(); 
 			
-			problemContainerVar.style.color = 'green';
+			scoreVar.style.color = 'green'; 
 			showPracticeProblemsVar.style.display = 'block'; 
-			problemContainerVar.innerHTML = 'Final Score: ' + finalScore; 
             
 			//create new score 
 			
@@ -205,9 +221,9 @@
 			//populate problems
 			populatePracticeProblems(); 
 			
-            }
-        
-        function resetGame() {
+		}
+		
+		function resetGame() {
 			
 			problemList = []; 
 			
@@ -216,66 +232,62 @@
 			clearTimer(); 
 			continueOff(); 
 			resetVariables();
-			problemContainerOff(); 
 			createPracticeProblemsButton(); 
 			
 			continueVar.value = ''; 
+			scoreVar.innerHTML = ''; 
 			showAnswerVar.innerHTML = ''; 
-			problemContainerVar.innerHTML = ''; 
+			scoreVar.style.color = 'black';  
 			submitScoreVar.style.display = 'none'; 
-			scoreVar.innerHTML = 'Current Score: '; 
-			problemContainerVar.style.color = 'black'; 
 			showPracticeProblemsVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
 			
+			largerUnitsVar.style.display = 'none';
+            smallerUnitsVar.style.display = 'none';
+            
         }
         
         function createProblem() {
-   
-            answer = Math.floor(Math.random() * 13);
-            let divisor = Math.floor(Math.random() * 12 + 1);
-            dividend = answer * divisor;
-			//problem = dividend + ' &#247; ' + divisor; 
-			//problem = dividend +  ' &div; '  + divisor; 
-			problem = dividend +  ' รท '  + divisor; 
             
-			problemContainerVar.innerHTML = problem; 
+            let randomNumber = Math.floor(Math.random() * 9 + 2); 
+            
+            let randomIndex = Math.floor(Math.random() * conversionList.length);
+            
+            largerUnitsVar.innerHTML = randomNumber + ' ' + conversionList[randomIndex].large + ' = ';
+            smallerUnitsVar.innerHTML = conversionList[randomIndex].small; 
+            
+            answer = randomNumber * conversionList[randomIndex].multiplier;
+			
+			problem = randomNumber + ' ' + conversionList[randomIndex].large;
+			
+			answerWithUnits = answer + ' ' + conversionList[randomIndex].small;
             
         }
         
         function checkAnswer() {
-			
+            
             let userInput = Number(continueVar.value);
             
             if(userInput === answer)
             {
-                if(answer === 0 && continueVar.value === '')
-                {
-					wrongAnswer(50); 
-					showAnswer(); 
-					
-					var thisProblem = new Problem(problem, answer); 
-					problemList.push(thisProblem.numbersentence); 
-                }
-                else
-                {
-					correctAnswer(dividend); 
-                }
+				correctAnswer(1); 
             }
             else
             {
-    			wrongAnswer(dividend); 
-				showAnswer();
+				wrongAnswerNoScore(); 
+				//wrongAnswer(0); 
 				
-				var thisProblem = new Problem(problem, answer); 
+				showAnswerVar.innerHTML += problem + ' = ' + answerWithUnits + '<br>';
+				
+				var thisProblem = new Problem(problem, answerWithUnits); 
 				problemList.push(thisProblem.numbersentence); 
             }
-       
-            showCurrentScore(); 
+			
+			showCurrentScore(); 
             
             continueVar.value = ''; 
-            createProblem();
-			
+            createProblem(); 
+            
         }
         
     </script>
