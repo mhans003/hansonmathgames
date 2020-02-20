@@ -1,0 +1,372 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+		
+		<%- include("../../partials/sharedstyles") %>
+        
+        <style>
+            
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
+            
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+			
+			#popup {
+                color: rgba(230,230,255,0.15);
+                font-size: 1.5em; 
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 50px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:50px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:50px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:50px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+        </style>
+    
+    </head>
+    
+    <title>Hanson Rounding Game</title>
+    
+    <body>
+		
+		<%- include("../../partials/navbaronly") %>
+		
+		<div class="container">
+			
+			<h1>Hanson Rounding Game</h1>
+			<hr>
+
+			<%- include ("../../partials/highscores.ejs") %>
+
+			<div id="timer"></div>
+
+			<br>
+
+			<p id='problemContainer'></p>
+
+			<%- include ("../../partials/scoreform.ejs") %>
+
+			<div id='popup'> </div>
+			<br>
+
+			<input id='answer' type='number' placeholder=''>
+			<br>
+			<br>
+
+			<button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
+			<br>
+			<button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+
+			<p id='score'></p>
+			<p id='showAnswer'></p>
+
+			<%- include ("../../partials/showpracticeproblems.ejs") %>
+			
+		</div>
+        
+    </body>
+    
+    <script>
+        
+		//VARIABLES
+        
+		let gameName = "Hanson Rounding Game"; 
+        
+		const scoreVar = document.querySelector('#score'); 
+		const continueVar = document.querySelector('#answer');
+        const startGameVar = document.querySelector('#startGame');
+        const resetGameVar = document.querySelector('#resetGame');
+        const showAnswerVar = document.querySelector('#showAnswer'); 
+		const submitScoreVar = document.querySelector('#submitScore'); 
+        const problemContainerVar = document.querySelector('#problemContainer'); 
+		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
+		
+		var timerVar = document.querySelector("#timer");
+		
+		//GAME-SPECIFIC VARIABLES
+
+		let answerOnly = ''; 
+		let problemOnly = ''; 
+        let answerString = '';
+        let answerStringCommas = '';
+		
+		//EVENTS
+        
+        startGameVar.addEventListener('click', startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer(); 
+            }
+        }); 
+		
+		//INITIALIZE
+		setUp();     
+        
+        //FUNCTIONS
+		
+		function setUp() {
+			
+			resetOff();
+			continueOff(); 
+			problemContainerOff(); 
+			
+			timerVar.style.display = "none"; 
+			submitScoreVar.style.display = 'none'; 
+			showPracticeProblemsVar.style.display = 'none'; 
+			
+		}
+        
+        function startGame() {
+			
+			startOff(); 
+			resetOff(); 
+			continueOn(); 
+			problemContainerOn(); 
+			
+			setUpTimer();
+			
+			scoreVar.innerHTML = 'Current Score: '; 
+            
+            createProblem();
+            
+        }
+		
+		function timeout() {
+			
+			endTimer(); 
+			
+			//alert('Time\'s Up!');
+			
+			resetOn();
+			continueOff(); 
+			
+			scoreVar.style.color = 'green'; 
+			problemContainerVar.style.color = 'green';
+			showPracticeProblemsVar.style.display = 'block'; 
+			problemContainerVar.innerHTML = 'Final Score: ' + finalScore; 
+            
+			//create new score 
+			
+			createNewScore(); 
+			
+			//populate problems
+			populatePracticeProblems(); 
+			
+		}
+		
+		function resetGame() {
+			
+			problemList = []; 
+			
+       		startOn(); 
+			resetOff(); 
+			clearTimer(); 
+			continueOff(); 
+			resetVariables();
+			problemContainerOff(); 
+			createPracticeProblemsButton(); 
+			
+			continueVar.value = ''; 
+			scoreVar.innerHTML = ''; 
+			showAnswerVar.innerHTML = ''; 
+			scoreVar.style.color = 'black'; 
+			problemContainerVar.innerHTML = ''; 
+			submitScoreVar.style.display = 'none'; 
+			problemContainerVar.style.color = 'black'; 
+			showPracticeProblemsVar.style.display = 'none';
+			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+            
+        }
+        
+        function createProblem() {
+            
+            answerString = '';
+            answerStringCommas = ''; 
+            
+            let place = ['ten','hundred','thousand','ten thousand','hundred thousand'];
+            
+            let randomNumber = Math.floor(Math.random() * 998999 + 1000);
+            
+            let randomNumberString = String(randomNumber);
+            let randomNumberStringCommas = '';
+            
+            let stringToRound = '';
+            let numberToRound = 0;
+            let remainingNumberString = '';
+            let remainingZeroString = '';
+            
+            let randomPlace = Math.floor(Math.random() * (randomNumberString.length - 1));
+            
+            let characterArray = [];
+            let characterArrayCommas = [];
+            
+            let characterArrayAnswer = [];
+            let characterArrayCommasAnswer = []; 
+            
+            //Add a comma to randomNumberString:
+            if(randomNumberString.length > 3)
+            {
+                
+                for(let i = 0; i < randomNumberString.length; i++)
+                {
+                    characterArray[i] = randomNumberString[i];
+                }
+                
+                for(let i = characterArray.length - 1; i >= 0; i--)
+                {
+                    if(i === characterArray.length - 4)
+                    {
+                        characterArrayCommas.unshift(','); 
+                    }
+                    characterArrayCommas.unshift(characterArray[i]); 
+                }
+                
+                //Put the characterArrayCommas back into a string:
+                
+                for(let i = 0; i < characterArrayCommas.length; i++)
+                {
+                    randomNumberStringCommas += characterArrayCommas[i]; 
+                }
+            }
+            
+            problem = 'Round the number ' + randomNumberStringCommas + ' to the nearest ' + place[randomPlace] + ':';
+			problemContainerVar.innerHTML = problem; 
+            
+            //CREATE ANSWER BELOW:
+            
+            let rightPlace = characterArray[characterArray.length - 1 - place.indexOf(place[randomPlace])];
+            
+            stringToRound = randomNumberString.substr(0, randomNumberString.length - 1 - place.indexOf(place[randomPlace])); 
+            
+            numberToRound = Number(stringToRound); 
+            
+            remainingNumberString = randomNumberString.substr(randomNumberString.length - 1 - place.indexOf(place[randomPlace]), randomNumberString.length);
+            
+            for(let i = 0; i < remainingNumberString.length; i++)
+            {
+                remainingZeroString += '0'; 
+            }
+            
+            rightPlace = Number(rightPlace); 
+            
+            if(rightPlace >= 5)
+            {
+                numberToRound += 1;
+                stringToRound = String(numberToRound); 
+            }
+            
+            answerString = stringToRound + remainingZeroString;
+            
+            answer = Number(answerString);
+         
+            //add commas answer to create 'problem':
+            
+            if(answerString.length > 3)
+            {
+                
+                for(let i = 0; i < answerString.length; i++)
+                {
+                    characterArrayAnswer[i] = answerString[i];
+                }        
+                
+                for(let i = characterArrayAnswer.length - 1; i >= 0; i--)
+                {
+                    if(i === characterArrayAnswer.length - 4)
+                    {
+                        characterArrayCommasAnswer.unshift(','); 
+                    }
+                    characterArrayCommasAnswer.unshift(characterArrayAnswer[i]); 
+                }
+                
+                //put the characterArrayCommasAnswer back into a string:
+                
+                for(let i = 0; i < characterArrayCommasAnswer.length; i++)
+                {
+                    answerStringCommas += characterArrayCommasAnswer[i]; 
+                }
+                
+            }
+            
+            //if million
+            if(answer === 1000000)
+            {
+                answerString = '1000000';
+                answerStringCommas = '1,000,000';
+            }
+            
+			answerOnly = answerStringCommas; 
+			problemOnly = randomNumberStringCommas + ' rounded to the nearest ' + place[randomPlace]; 
+            problem = problemOnly + ' is ' + answerOnly + '.';
+			
+            
+        }
+        
+        function checkAnswer() {
+            
+            let userInput = Number(continueVar.value);
+            
+            if(userInput === answer)
+            {
+				correctAnswer(1); 
+            }
+            else
+            {
+				wrongAnswerNoScore(); 
+
+				showAnswerVar.innerHTML += problem + '<br>';
+				
+				var thisProblem = new Problem(problemOnly, answerOnly); 
+				problemList.push(thisProblem.numbersentence); 
+            }
+            
+            showCurrentScore(); 
+            
+            continueVar.value = ''; 
+            createProblem(); 
+            
+        }
+        
+    </script>
+    
+</html>
