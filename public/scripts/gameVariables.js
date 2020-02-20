@@ -4,6 +4,6 @@ let answer = 0;
 
 //TIMER 
 
-let startTime = 5; 
+let startTime = 15; 
 let setTimer = ''; 
 

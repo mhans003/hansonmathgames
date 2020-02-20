@@ -5,6 +5,7 @@ function Problem(problem, answer) {
     this.problem = problem;
     this.answer = answer;
 	this.numbersentence = problem + ' = ' + answer; 
+	
 }
 
 function populatePracticeProblems() {

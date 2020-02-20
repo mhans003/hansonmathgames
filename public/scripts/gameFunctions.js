@@ -103,6 +103,13 @@ function wrongAnswer(amount) {
 	
 }
 
+function wrongAnswerNoScore() {
+	
+	continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+	document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' ' + '</div>';
+	
+}
+
 function correctAnswer(amount) {
 	
 	finalScore += amount;
@@ -140,7 +147,7 @@ function createNewScore() {
 function resetVariables() {
 	
 	finalScore = 0;
-	startTime = 5; 
+	startTime = 15; 
 	
 }
 
