@@ -270,8 +270,7 @@
 			resetVariables();
 			problemContainerOff(); 
 			//createPracticeProblemsButton(); 
-			
-			//continueVar.value = ''; 
+			 
 			showAnswerVar.innerHTML = ''; 
 			problemContainerVar.innerHTML = ''; 
 			submitScoreVar.style.display = 'none'; 
@@ -279,7 +278,6 @@
 			inputContainerVar.style.display = 'none';
 			problemContainerVar.style.color = 'black'; 
 			//showPracticeProblemsVar.style.display = 'none';
-			//continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
 			
 			quotient = 0;
 			remainder = 0; 
@@ -318,17 +316,12 @@
             
             if(quotientInput === quotient && remainderInput === remainder)
             {
-				//document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + '</div>';
-                //score += 1;  
 				finalScore += 1;
 				document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + ' +1' + '</div>';
             }
             else
             {
 				document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' ' + '</div>';
-                //document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + '</div>';
-                //document.getElementById('incorrect').innerHTML += answer + '<br>'; 
-				//showAnswer(); 
 				document.getElementById('showAnswer').innerHTML += answer + '<br>';
 				
 				//var thisProblem = new Problem(problem, answer); 
@@ -336,10 +329,6 @@
             }
     
 			showCurrentScore(); 
-            //document.getElementById('score').innerHTML = 'Problems Correct: ' + score;
-            
-            //quotientInputVar.value = '';
-            //remainderInputVar.value = '';
             
             quotientInputVar.focus(); 
             
