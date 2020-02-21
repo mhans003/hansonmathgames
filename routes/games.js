@@ -155,6 +155,21 @@ router.get("/primecomposite", middleware.isLoggedIn, function(req, res) {
 	}); 
 }); 
 
+router.get("/primecompositerefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Prime/Composite Numbers Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/refactors/primecompositerefactored", {scores:allscores}); 
+			}
+	}); 
+}); 
+
 router.get("/primenumbergenerator", middleware.isLoggedIn, function(req, res) {
 	res.render("games/primenumbergenerator");  
 }); 
