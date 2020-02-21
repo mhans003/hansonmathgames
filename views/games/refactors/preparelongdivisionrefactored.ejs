@@ -1,0 +1,352 @@
+<html>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    
+    <head>
+        
+        <meta charset="utf-8">
+		
+		<%- include("../../partials/sharedstyles") %>
+        
+        <style>
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
+            
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+            
+            #score {
+                font-size: 1.2em; 
+            }
+            
+            #popup {
+                font-size: 2.5em;
+                color: rgba(230,230,255,0.15);
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: -100px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-100px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-90px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:-90px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+        </style>
+    
+    </head>
+    
+    <title>Preparing for Long Division</title>
+    
+    <body>
+		
+		<%- include("../../partials/navbaronly") %>
+		
+		<div class="container">
+			
+			<h1>Preparing for Long Division</h1>
+        	<h3>Understanding Division and Remainders</h3>
+			<hr>
+		
+			<%- include ("../../partials/highscores.ejs") %>
+		
+			<div id="timer"></div>
+		
+			<br>
+			
+			<p id='problemContainer'></p>
+        
+			<div id='inputContainer' ng-app="labelApp" ng-controller="labelCtrl">
+				<div>
+					<span id='quotientLabel'></span>
+					<input id='quotientInput' type='number' placeholder='' ng-model="quot" ng-keydown="keyPress($event)">
+					<br>
+					<br>
+				</div>
+				
+				<div>
+					<span id='remainderLabel'></span>
+					<input id='remainderInput' type='number' placeholder='' ng-model="rem" ng-keydown="keyPress($event)"> 
+					<br>
+					<br>
+				</div>
+				
+				<div id ='popup'> </div>
+
+				<span id='outputSentence'>( {{quot}} ) times with a remainder of ( {{rem}} )</span>
+				<br>
+				<br>
+
+				<button type="button" class="btn btn-primary" id="check">CHECK</button>
+				<br>
+				<br>
+
+				<button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+				<br>
+				<br>
+
+			</div>
+
+			<%- include ("../../partials/scoreform.ejs") %>
+
+			<button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
+			<br>
+
+			<p id='score'></p>
+			<p id='showAnswer'></p>
+			
+		</div>
+        
+    </body>
+    
+    <script>
+        
+        //ANGULAR MODULE
+        
+        let app = angular.module('labelApp', []);
+        app.controller('labelCtrl', function($scope) {
+            $scope.quot = null;
+            $scope.rem = null;
+            $scope.resetValues = function() {
+                $scope.quot = null;
+                $scope.rem = null;
+            };
+            $scope.keyPress = function(keyEvent) {
+                if (keyEvent.which === 13)
+                {
+                    $scope.quot = null;
+                    $scope.rem = null;
+                }
+            };
+        }); 
+        
+        //VARIABLES
+		
+		let gameName = "Hanson Preparing for Long Division Game"; 
+        
+		const scoreVar = document.querySelector('#score'); 
+		const continueVar = document.querySelector('#check');
+        const startGameVar = document.querySelector('#startGame');
+        const resetGameVar = document.querySelector('#resetGame');
+        const showAnswerVar = document.querySelector('#showAnswer'); 
+		const submitScoreVar = document.querySelector('#submitScore'); 
+        const problemContainerVar = document.querySelector('#problemContainer'); 
+		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
+		
+		var timerVar = document.querySelector("#timer"); 
+		
+		//GAME-SPECIFIC VARIABLES 
+      
+        const quotientInputVar = document.querySelector('#quotientInput');
+		const quotientLabelVar = document.querySelector('#quotientLabel'); 
+        const remainderInputVar = document.querySelector('#remainderInput');
+		const remainderLabelVar = document.querySelector('#remainderLabel'); 
+        const inputContainerVar = document.querySelector('#inputContainer'); 
+		
+        let quotient = 0;
+        let remainder = 0; 
+		
+		//EVENTS 
+		
+        startGameVar.addEventListener('click', startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('click', checkAnswer);
+
+        quotientInputVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer();
+            }
+        });
+		
+        remainderInputVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer();
+            }
+        });
+		
+		//INITIALIZE
+		setUp(); 
+        
+        //FUNCTIONS
+		
+		function setUp() {
+			
+			resetOff();
+			continueOff(); 
+			problemContainerOff(); 
+			
+			timerVar.style.display = "none"; 
+			submitScoreVar.style.display = 'none'; 
+			inputContainerVar.style.display = 'none'; 
+			//showPracticeProblemsVar.style.display = 'none'; 
+			
+		}
+        
+        function startGame() {
+			
+			startOff(); 
+			resetOff(); 
+			continueOn(); 
+			problemContainerOn(); 
+			
+			setUpTimer();
+            
+            quotientInputVar.disabled = false;
+            remainderInputVar.disabled = false;
+			inputContainerVar.style.display = 'initial';
+			
+			quotientInputVar.focus(); 
+            
+            createProblem();
+            
+        }
+		
+		function timeout() {
+			
+			endTimer(); 
+			
+			//alert('Time\'s Up!');
+			
+			resetOn();
+			continueOff(); 
+			
+			quotientInputVar.disabled = true;
+            remainderInputVar.disabled = true; 
+			
+			problemContainerVar.style.color = 'green';
+			//showPracticeProblemsVar.style.display = 'block'; 
+			problemContainerVar.innerHTML = 'Final Score: ' + finalScore; 
+            
+			//create new score 
+			
+			createNewScore(); 
+			
+			//populate problems
+			//populatePracticeProblems(); 
+			
+		}
+		
+		function resetGame() {
+			
+			problemList = []; 
+			
+       		startOn(); 
+			resetOff(); 
+			clearTimer(); 
+			continueOff(); 
+			resetVariables();
+			problemContainerOff(); 
+			//createPracticeProblemsButton(); 
+			
+			//continueVar.value = ''; 
+			showAnswerVar.innerHTML = ''; 
+			problemContainerVar.innerHTML = ''; 
+			submitScoreVar.style.display = 'none'; 
+			scoreVar.innerHTML = ''; 
+			inputContainerVar.style.display = 'none';
+			problemContainerVar.style.color = 'black'; 
+			//showPracticeProblemsVar.style.display = 'none';
+			//continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+			
+			quotient = 0;
+			remainder = 0; 
+            
+        }
+        
+        function createProblem() {
+            
+            //create values
+            let randomDivisor = Math.floor(Math.random() * 8 + 2);
+            
+            let randomMultiplier = Math.floor(Math.random() * 8 + 2);
+            quotient = randomMultiplier; //store global quotient
+            
+            let randomRemainder = Math.floor(Math.random() * randomDivisor);
+            remainder = randomRemainder; //store global remainder
+            
+            let dividend = (randomDivisor * randomMultiplier) + randomRemainder;
+            
+            problem = 'How many times does ' + randomDivisor + ' go into ' + dividend + ' without going over?'; //store global problem
+            answer = randomDivisor + ' goes into ' + dividend + ' ' + '<span style="text-decoration:underline;">' + quotient +
+            '</span>' + ' times with a remainder of ' + '<span style="text-decoration:underline;">' + remainder + '</span>' +
+            '<br>' + '(' + randomDivisor + ' x ' + '<span style="text-decoration:underline;">' + quotient + '</span>' + ' = ' + (randomDivisor * quotient) + ';   ' +
+            (randomDivisor * quotient) + ' + ' + '<span style="text-decoration:underline;">' + remainder + '</span>' + ' = ' + dividend + ')' + '<br>'; //store global answer
+            
+            problemContainerVar.innerHTML = problem; //output problem
+            quotientLabelVar.innerHTML = 'Quotient: ';
+            remainderLabelVar.innerHTML = 'Remainder: '; 
+            
+        }
+        
+        function checkAnswer() {
+            
+            let quotientInput = Number(quotientInputVar.value);
+            let remainderInput = Number(remainderInputVar.value);
+            
+            if(quotientInput === quotient && remainderInput === remainder)
+            {
+				//document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + '</div>';
+                //score += 1;  
+				finalScore += 1;
+				document.getElementById('popup').innerHTML = '<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + ' +1' + '</div>';
+            }
+            else
+            {
+				document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' ' + '</div>';
+                //document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + '</div>';
+                //document.getElementById('incorrect').innerHTML += answer + '<br>'; 
+				//showAnswer(); 
+				document.getElementById('showAnswer').innerHTML += answer + '<br>';
+				
+				//var thisProblem = new Problem(problem, answer); 
+				//problemList.push(thisProblem.numbersentence);
+            }
+    
+			showCurrentScore(); 
+            //document.getElementById('score').innerHTML = 'Problems Correct: ' + score;
+            
+            //quotientInputVar.value = '';
+            //remainderInputVar.value = '';
+            
+            quotientInputVar.focus(); 
+            
+            createProblem(); 
+            
+        }
+        
+    </script>
+    
+</html>
