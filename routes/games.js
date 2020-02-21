@@ -182,6 +182,21 @@ router.get("/preparelongdivision", middleware.isLoggedIn, function(req, res) {
 	});  
 }); 
 
+router.get("/preparelongdivisionrefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Preparing for Long Division Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores);
+				res.render("games/refactors/preparelongdivisionrefactored", {scores:allscores}); 
+			}
+	});  
+}); 
+
 router.get("/divisionremainders", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Division Game With Remainders"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
