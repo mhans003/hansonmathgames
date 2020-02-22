@@ -124,7 +124,7 @@
 				
             </div>
 			
-			<%- include ("../../partials/showpracticeproblems.ejs") %>
+			<!--include "../../partials/showpracticeproblems.ejs" here-->
             
         </div>
         
@@ -143,7 +143,7 @@
         const showAnswerVar = document.querySelector('#showAnswer'); 
 		const submitScoreVar = document.querySelector('#submitScore'); 
         const problemContainerVar = document.querySelector('#problemContainer'); 
-		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
+		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
 		var timerVar = document.querySelector("#timer"); 
         
@@ -171,7 +171,7 @@
 			
 			timerVar.style.display = "none"; 
 			submitScoreVar.style.display = 'none'; 
-			showPracticeProblemsVar.style.display = 'none'; 
+			//showPracticeProblemsVar.style.display = 'none'; 
 			
 		}
         
@@ -198,7 +198,7 @@
 			continueOff(); 
 			
 			problemContainerVar.style.color = 'green';
-			showPracticeProblemsVar.style.display = 'block'; 
+			//showPracticeProblemsVar.style.display = 'block'; 
 			problemContainerVar.innerHTML = 'Final Score: ' + finalScore; 
             
 			//create new score 
@@ -206,13 +206,13 @@
 			createNewScore(); 
 			
 			//populate problems
-			populatePracticeProblems(); 
+			//populatePracticeProblems(); 
 
 		}
         
         function resetGame() {
              
-			problemList = []; 
+			//problemList = []; 
 			
        		startOn(); 
 			resetOff(); 
@@ -220,7 +220,7 @@
 			continueOff(); 
 			resetVariables();
 			problemContainerOff(); 
-			createPracticeProblemsButton(); 
+			//createPracticeProblemsButton(); 
 			
 			continueVar.value = ''; 
 			showAnswerVar.innerHTML = ''; 
@@ -228,7 +228,7 @@
 			submitScoreVar.style.display = 'none'; 
 			scoreVar.innerHTML = 'Current Score: '; 
 			problemContainerVar.style.color = 'black'; 
-			showPracticeProblemsVar.style.display = 'none';
+			//showPracticeProblemsVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
 
         }
@@ -255,8 +255,8 @@
 					wrongAnswer(50); 
 					showAnswer(); 
 					
-					var thisProblem = new Problem(problem, answer); 
-					problemList.push(thisProblem.numbersentence); 
+					//var thisProblem = new Problem(problem, answer); 
+					//problemList.push(thisProblem.numbersentence); 
                 }
                 else
                 {
@@ -268,8 +268,8 @@
 				wrongAnswer(answer); 
 				showAnswer(); 
 				
-				var thisProblem = new Problem(problem, answer); 
-				problemList.push(thisProblem.numbersentence); 
+				//var thisProblem = new Problem(problem, answer); 
+				//problemList.push(thisProblem.numbersentence); 
             }
        
 			showCurrentScore(); 
