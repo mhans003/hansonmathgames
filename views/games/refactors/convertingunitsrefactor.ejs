@@ -107,7 +107,7 @@
 				
 			</div>
 			
-			<%- include ("../../partials/showpracticeproblems.ejs") %>
+			<!--include "../../partials/showpracticeproblems.ejs" here-->
 			
 		</div>
         
@@ -125,7 +125,7 @@
         const resetGameVar = document.querySelector('#resetGame');
         const showAnswerVar = document.querySelector('#showAnswer'); 
 		const submitScoreVar = document.querySelector('#submitScore'); 
-		const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
+		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
 		var timerVar = document.querySelector("#timer"); 
 		
@@ -179,7 +179,7 @@
 			
 			timerVar.style.display = "none"; 
 			submitScoreVar.style.display = 'none'; 
-			showPracticeProblemsVar.style.display = 'none'; 
+			//showPracticeProblemsVar.style.display = 'none'; 
 			
 			largerUnitsVar.style.display = 'none';
        		smallerUnitsVar.style.display = 'none';
@@ -212,34 +212,34 @@
 			continueOff(); 
 			
 			scoreVar.style.color = 'green'; 
-			showPracticeProblemsVar.style.display = 'block'; 
+			//showPracticeProblemsVar.style.display = 'block'; 
             
 			//create new score 
 			
 			createNewScore(); 
 			
 			//populate problems
-			populatePracticeProblems(); 
+			//populatePracticeProblems(); 
 			
 		}
 		
 		function resetGame() {
 			
-			problemList = []; 
+			//problemList = []; 
 			
        		startOn(); 
 			resetOff(); 
 			clearTimer(); 
 			continueOff(); 
 			resetVariables();
-			createPracticeProblemsButton(); 
+			//createPracticeProblemsButton(); 
 			
 			continueVar.value = ''; 
 			scoreVar.innerHTML = ''; 
 			showAnswerVar.innerHTML = ''; 
 			scoreVar.style.color = 'black';  
 			submitScoreVar.style.display = 'none'; 
-			showPracticeProblemsVar.style.display = 'none';
+			//showPracticeProblemsVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
 			
 			largerUnitsVar.style.display = 'none';
@@ -279,8 +279,8 @@
 				
 				showAnswerVar.innerHTML += problem + ' = ' + answerWithUnits + '<br>';
 				
-				var thisProblem = new Problem(problem, answerWithUnits); 
-				problemList.push(thisProblem.numbersentence); 
+				//var thisProblem = new Problem(problem, answerWithUnits); 
+				//problemList.push(thisProblem.numbersentence); 
             }
 			
 			showCurrentScore(); 

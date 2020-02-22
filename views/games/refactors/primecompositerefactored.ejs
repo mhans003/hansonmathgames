@@ -241,7 +241,7 @@
         
         function resetGame() {
 			
-			problemList = []; 
+			//problemList = []; 
 			
        		startOn(); 
 			resetOff(); 
@@ -278,15 +278,7 @@
             numberCorrect = 0;
             numberIncorrect = 0; 
             let randomNumber = 0;
-            
-            //document.getElementById('problem').innerHTML = '';
-            //document.querySelector('.problem').style.color = 'black';
-            
-            
-            
-            //document.getElementById('score').innerHTML = 'Current Score: ';
 			
-			//document.getElementById("submitscore").style.display = "none"; 
         }
         
         function createProblem() {
@@ -316,8 +308,7 @@
             }
             
             problemContainerVar.innerHTML = randomNumber;
-            
-            //console.log(isPrime); 
+
         }
         
         function checkPrime() {
