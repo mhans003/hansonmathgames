@@ -1,8 +1,18 @@
 <div id="highscores">
 	<% if(scores.length > 0) { %>
-		<h3>High Score</h3>
-		<% for(var i = scores.length; i > scores.length - 1; i--) { %>
-			<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
+		<h3>High Scores</h3>
+		<% if(scores.length > 3) { %>
+			<% for(var i = scores.length; i > scores.length - 3; i--) { %>
+				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
+			<% } %>
+		<% } else if(scores.length > 2) { %>
+			<% for(var i = scores.length; i > scores.length - 2; i--) { %>
+				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
+			<% } %>
+		<% } else { %>
+			<% for(var i = scores.length; i > scores.length - 1; i--) { %>
+				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
+			<% } %>
 		<% } %>
 	<% } %>
 	<br>
