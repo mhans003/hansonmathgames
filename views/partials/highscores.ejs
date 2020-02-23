@@ -1,19 +1,23 @@
 <div id="highscores">
 	<% if(scores.length > 0) { %>
 		<h3>High Scores</h3>
-		<% if(scores.length > 3) { %>
+		<% if(scores.length > 2) { %>
 			<% for(var i = scores.length; i > scores.length - 3; i--) { %>
 				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
 			<% } %>
-		<% } else if(scores.length > 2) { %>
+			<input class='lowestHighScore' style='display:none;' value='<%= scores[scores.length - 3].score %>'>
+		<% } else if(scores.length > 1) { %>
 			<% for(var i = scores.length; i > scores.length - 2; i--) { %>
 				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
 			<% } %>
+			<input class='lowestHighScore' style='display:none;' value=''>
 		<% } else { %>
 			<% for(var i = scores.length; i > scores.length - 1; i--) { %>
 				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
 			<% } %>
+			<input class='lowestHighScore' style='display:none;' value=''>
 		<% } %>
 	<% } %>
+	<input class='lowestHighScore' style='display:none;' value=''>
 	<br>
 </div>
