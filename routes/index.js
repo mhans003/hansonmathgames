@@ -1,7 +1,10 @@
 var express = require("express"); 
 var router = express.Router(); 
 var passport = require("passport"); 
+var Score = require("../models/score"); //correct path? 
 var User = require("../models/user"); //correct path? 
+
+var middleware = require("../middleware");
 
 //root
 router.get("/", function(req, res) {
@@ -64,5 +67,11 @@ router.get("/logout", function(req, res) {
 	req.flash("success", "Signed Out"); 
 	res.redirect("/"); 
 });
+
+//profile
+
+router.get("/profile", middleware.isLoggedIn, function(req, res) {
+	//Score.find({{author.username:}})
+}); 
 
 module.exports = router; 

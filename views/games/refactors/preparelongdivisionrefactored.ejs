@@ -252,7 +252,10 @@
             
 			//create new score 
 			
-			createNewScore(); 
+			if(finalScore > document.querySelector('.lowestHighScore').value)
+				{
+					createNewScore(); 
+				}
 			
 			//populate problems
 			//populatePracticeProblems(); 
