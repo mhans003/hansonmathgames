@@ -147,7 +147,7 @@ function createNewScore() {
 function resetVariables() {
 	
 	finalScore = 0;
-	startTime = 10; 
+	startTime = 60; 
 	
 }
 
