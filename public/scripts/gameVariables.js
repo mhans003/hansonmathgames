@@ -5,6 +5,6 @@ let lowestHighScore = null;
 
 //TIMER 
 
-let startTime = 10; 
+let startTime = 60; 
 let setTimer = ''; 
 
