@@ -21,12 +21,51 @@ router.get("/multiplication", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores); 
-				res.render("games/multiplication", {scores:allscores}); 
+				Score.find({game:"Hanson Multiplication Game",author:req.user.username},{},{"sort":"score"}, function(err, userscores) {
+					if(err)
+						{
+							console.log(err); 
+							res.redirect("back"); 
+						}
+					else
+						{
+							//console.log(allscores); 
+							res.render("games/multiplication", {scores:allscores,userScores:userscores}); 
+						}
+				}); 
+				//console.log(allscores); 
+				//res.render("games/multiplication", {scores:allscores}); 
 			}
 	});
 }); 
-
+/*
+router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				Score.find({game:"Hanson Multiplication Game",author:req.user.id},{},{"sort":"score"}, function(err, userscores) {
+					if(err)
+						{
+							console.log(err); 
+							res.redirect("back"); 
+						}
+					else
+						{
+							console.log(userscores); 
+							res.render("games/refactors/multiplicationrefactored", {scores:allscores,userScores:userscores}); 
+						}
+				}); 
+				//console.log(allscores); 
+				//res.render("games/multiplication", {scores:allscores}); 
+			}
+	});
+}); 
+*/
 router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)

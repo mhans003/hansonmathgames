@@ -203,11 +203,10 @@
             
 			//create new score 
 			
-			if(finalScore > document.querySelector('.lowestHighScore').value)
+			if(finalScore > document.querySelector('.lowestHighScore').value || finalScore > document.querySelector('.usershighscore').value)
 				{
 					createNewScore(); 
 				}
-			
 			
 			//populate problems
 			//populatePracticeProblems(); 
