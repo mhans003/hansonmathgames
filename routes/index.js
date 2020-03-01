@@ -110,7 +110,7 @@ router.post("/forgot", function(req, res, next) {
 			var smtpTransport = nodemailer.createTransport({
 				service: "Gmail",
 				auth: {
-					user: "mrhansonswims@gmail.com",
+					user: "hansonmathgames@gmail.com",
 					pass: process.env.GMAILPW
 					//pass: GMAILPW
 				}
@@ -118,7 +118,7 @@ router.post("/forgot", function(req, res, next) {
 			//console.log(process.env.GMAILPW); //see if saved/shows up
 			var mailOptions = {
 				to: user.email,
-				from: "mrhansonswims@gmail.com",
+				from: "hansonmathgames@gmail.com",
 				subject: "Password Reset",
 				text: "Click on following link to reset: " + "http://" + req.headers.host + "/reset/" + token + "\n" 
 			};
@@ -133,5 +133,70 @@ router.post("/forgot", function(req, res, next) {
 		res.redirect("/forgot"); 
 	}); 
 }); 
+
+//handle password reset (from email)
+router.get("/reset/:token", function(req, res) {
+	User.findOne({resetPasswordToken:req.params.token,resetPasswordExpires:{$gt:Date.now()}}, function(err, user) {
+		if(!user) 
+			{
+				req.flash("error", "Password reset token is invalid or is expired."); 
+				return res.redirect("/forgot"); 
+			}
+		res.render("reset", {token:req.params.token}); 
+	});
+});
+
+router.post("/reset/:token", function(req, res) {
+	async.waterfall([
+		function(done) {
+			User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires:{$gt:Date.now()}}, function(err, user) {
+				if(!user) 
+					{
+						req.flash("error", "Password reset token is invalid or expired.");
+						return res.redirect("back"); 
+					}
+				if(req.body.password === req.body.confirm) 
+					{
+						user.setPassword(req.body.password, function(err) {
+							user.resetPasswordToken = undefined; 
+							user.resetPasswordExpires = undefined; 
+							
+							user.save(function(err) {
+								req.logIn(user, function(err) {
+									done(err, user);
+								});
+							});
+						});
+					}
+				else
+					{
+						req.flash("error", "Passwords do not match"); 
+						return res.redirect("back"); 
+					}
+			});
+		},
+		function(user, done) {
+			var smtpTransport = nodemailer.createTransport({
+				service: "Gmail",
+				auth: {
+					user: "hansonmathgames@gmail.com",
+					pass: process.env.GMAILPW
+				}
+			});
+			var mailOptions = {
+				to: user.email,
+				from: "hansonmathgames@gmail.com",
+				subject: "Password Changed",
+				text: "This confirms that password for " + user.email + " has just changed.\n"
+			};
+			smtpTransport.sendMail(mailOptions, function(err) {
+				req.flash("success", "Password Changed"); 
+				done(err); 
+			}); 
+		}
+	], function(err) {
+		res.redirect("/"); 
+	}); 
+});
 
 module.exports = router; 
