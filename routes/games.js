@@ -81,6 +81,21 @@ router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res
 	});
 }); 
 
+router.get("/multiplicationpowersoften", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Multiplication Game Powers of Ten"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				console.log(allscores); 
+				res.render("games/refactors/multiplicationpowersoften", {scores:allscores}); 
+			}
+	});
+}); 
+
 router.get("/division", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Division Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
