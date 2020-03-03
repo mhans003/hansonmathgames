@@ -71,6 +71,22 @@ router.get("/logout", function(req, res) {
 	res.redirect("/"); 
 });
 
+//userscores page
+router.get("/userscores", function(req, res) {
+	Score.find({},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err); 
+				res.redirect("back"); 
+			}
+		else
+			{
+				//console.log(allscores); 
+				res.render("userscores", {scores:allscores}); 
+			}
+	});
+});
+
 //profile
 
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
