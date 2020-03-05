@@ -60,13 +60,32 @@ router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res
 							res.render("games/refactors/multiplicationrefactored", {scores:allscores,userScores:userscores}); 
 						}
 				}); 
-				//console.log(allscores); 
 				//res.render("games/multiplication", {scores:allscores}); 
 			}
 	});
 }); 
 */
+
+
 router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/multiplicationrefactored", {scores:allscores}); 
+			}
+	});
+});
+
+/*
+router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res) {
+	
+	var usersHighestScore = Score.findOne({game:"Hanson Multiplication Game"},{},{"sort":"score"}); 
+	var allscores = Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}); 
 	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
@@ -80,7 +99,7 @@ router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res
 			}
 	});
 }); 
-
+*/
 router.get("/multiplicationpowersoften", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Multiplication Game Powers of Ten"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
@@ -90,7 +109,6 @@ router.get("/multiplicationpowersoften", middleware.isLoggedIn, function(req, re
 			}
 		else
 			{
-				console.log(allscores); 
 				res.render("games/refactors/multiplicationpowersoften", {scores:allscores}); 
 			}
 	});
@@ -105,7 +123,6 @@ router.get("/division", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/division", {scores:allscores}); 
 			}
 	});
@@ -120,7 +137,6 @@ router.get("/divisionrefactored", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/refactors/divisionrefactored", {scores:allscores}); 
 			}
 	});
@@ -135,7 +151,6 @@ router.get("/rounding", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/rounding", {scores:allscores}); 
 			}
 	}); 
@@ -150,7 +165,6 @@ router.get("/roundingrefactored", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/refactors/roundingrefactored", {scores:allscores}); 
 			}
 	}); 
@@ -165,7 +179,6 @@ router.get("/convertingunits", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/convertingunits", {scores:allscores}); 
 			}
 	}); 
@@ -180,7 +193,6 @@ router.get("/convertingunitsrefactor", middleware.isLoggedIn, function(req, res)
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/refactors/convertingunitsrefactor", {scores:allscores}); 
 			}
 	}); 
@@ -203,7 +215,6 @@ router.get("/primecomposite", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/primecomposite", {scores:allscores}); 
 			}
 	}); 
@@ -218,7 +229,6 @@ router.get("/primecompositerefactored", middleware.isLoggedIn, function(req, res
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/refactors/primecompositerefactored", {scores:allscores}); 
 			}
 	}); 
@@ -245,7 +255,6 @@ router.get("/preparelongdivision", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/preparelongdivision", {scores:allscores}); 
 			}
 	});  
@@ -260,7 +269,6 @@ router.get("/preparelongdivisionrefactored", middleware.isLoggedIn, function(req
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/refactors/preparelongdivisionrefactored", {scores:allscores}); 
 			}
 	});  
@@ -275,7 +283,6 @@ router.get("/divisionremainders", middleware.isLoggedIn, function(req, res) {
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/divisionremainders", {scores:allscores}); 
 			}
 	}); 
@@ -290,11 +297,38 @@ router.get("/divisionremaindersrefactored", middleware.isLoggedIn, function(req,
 			}
 		else
 			{
-				console.log(allscores);
 				res.render("games/refactors/divisionremaindersrefactored", {scores:allscores}); 
 			}
 	}); 
 }); 
+
+router.get("/addition", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Addition Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/addition", {scores:allscores}); 
+			}
+	});
+});
+
+router.get("/subtraction", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Subtraction Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/subtraction", {scores:allscores}); 
+			}
+	});
+});
 
 router.get("/submit", function(req, res) {
 	console.log("this is the post show route");  //later, show form that will have post route, and then in score.ejs(or something similar, allow user to submit score, passing in unique id to make url unique. later make sure it is authenticated, and signed in)
