@@ -12,4 +12,23 @@ middlewareObject.isLoggedIn = function(req, res, next) {
 	res.redirect("/login");
 }
 
-module.exports = middlewareObject
+middlewareObject.middlewareTest = function(req, res, next) {
+	console.log("middleware test"); 
+	return next(); 
+}
+/*
+middlewareObject.getScores = function(req, res, next) {
+	Score.find({game:req.params.},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				return next(allscores); 
+			}
+	});
+}
+*/
+module.exports = middlewareObject; 
