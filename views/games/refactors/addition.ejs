@@ -1,0 +1,287 @@
+<html>
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <%- include("../../partials/sharedstyles") %>
+        
+        <style>
+            
+            .correctAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: correct;
+                animation-duration: 2s;
+            }
+            
+            .incorrectAnswer {
+                position: relative; 
+                -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+                -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+                animation-name: incorrect;
+                animation-duration: 2s;
+            }
+            
+            #score {
+                font-size: 1.2em; 
+            }
+            
+            #popup {
+                font-size: 2.5em;
+                color: rgba(230,230,255,0.15);
+            }
+			
+			#problemContainer {
+                font-size: 2.5em;
+            }
+            
+            @-webkit-keyframes correct {
+                0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top: 110px;}
+          
+                90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes correct {
+              0%   {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:110px;}
+      
+              90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+            
+            @-webkit-keyframes incorrect {
+                0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:110px;}
+          
+                90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+          
+            @keyframes incorrect {
+              0%   {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:110px;}
+      
+              90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
+                
+              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+            }
+        
+        </style>
+    
+    </head>
+    
+    <title>Hanson Addition Fact Game</title>
+    
+    <body>
+		
+		<%- include("../../partials/navbaronly") %>
+        
+        <div class="container">
+        
+            <h1>Hanson Addition Game</h1>
+            <hr>
+			
+			<%- include ("../../partials/highscores.ejs") %>
+			
+			<%- include ("../../partials/scoreform.ejs") %>
+			
+			<div id="timer"></div>
+			
+            <!--<input type='submit' value='START' class='startGame'>-->
+            <button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
+            <br>
+            <!--<input type='submit' value='RESET' class='resetGame'>-->
+            <button type="button" class="btn btn-primary" id="resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+            <br>
+            <br> 
+			
+            <div id='problemContainer'>
+                
+            </div>
+            
+            <div class='answerContainer' id='answerContainer'>
+				
+                <br>
+                <div id = 'popup'> </div>
+                <br>
+                <h3>Answer</h3>
+                
+                <input id='answer' type='text' placeholder=''>
+                
+            </div>
+            
+            <br>
+            
+            <div class>
+                
+                <p id='score'>Current Score: </p>
+            
+                <h3>Problems to Practice:</h3>
+                <p id='showAnswer'></p>
+				
+            </div>
+			
+			<!--include "../../partials/showpracticeproblems.ejs" here-->
+            
+        </div>
+        
+    </body>
+	
+    <script> 
+		
+		//VARIABLES
+        
+		let gameName = "Hanson Addition Game"; 
+        
+		const scoreVar = document.querySelector('#score'); 
+		const continueVar = document.querySelector('#answer');
+        const startGameVar = document.querySelector('#startGame');
+        const resetGameVar = document.querySelector('#resetGame');
+        const showAnswerVar = document.querySelector('#showAnswer'); 
+		const submitScoreVar = document.querySelector('#submitScore'); 
+        const problemContainerVar = document.querySelector('#problemContainer'); 
+		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
+		
+		var timerVar = document.querySelector("#timer"); 
+        
+        //EVENTS
+        
+        startGameVar.addEventListener('click', startGame);
+        resetGameVar.addEventListener('click', resetGame);
+        continueVar.addEventListener('keydown', function(event) {
+            if(event.keyCode === 13 && startGameVar.disabled == true) {
+                checkAnswer(); 
+            }
+            
+        });
+		
+		//INITIALIZE
+		setUp(); 
+        
+        //FUNCTIONS
+		
+		function setUp() {
+			
+			resetOff();
+			continueOff(); 
+			problemContainerOff(); 
+			
+			timerVar.style.display = "none"; 
+			submitScoreVar.style.display = 'none'; 
+			//showPracticeProblemsVar.style.display = 'none'; 
+			
+		}
+        
+        function startGame() {
+            
+			startOff(); 
+			resetOff(); 
+			continueOn(); 
+			problemContainerOn(); 
+			
+			setUpTimer();
+			
+            createProblem(); 
+			
+        }
+		
+		function timeout() {
+			
+			endTimer(); 
+			
+			//alert('Time\'s Up!');
+			
+			resetOn();
+			continueOff(); 
+			
+			problemContainerVar.style.color = 'green';
+			//showPracticeProblemsVar.style.display = 'block'; 
+			problemContainerVar.innerHTML = 'Final Score: ' + finalScore; 
+            
+			//create new score 
+			
+			if(finalScore > document.querySelector('.lowestHighScore').value || finalScore > document.querySelector('.usershighscore').value)
+				{
+					createNewScore(); 
+				}
+			
+			//populate problems
+			//populatePracticeProblems(); 
+
+		}
+        
+        function resetGame() {
+             
+			//problemList = []; 
+			
+       		startOn(); 
+			resetOff(); 
+			clearTimer(); 
+			continueOff(); 
+			resetVariables();
+			problemContainerOff(); 
+			//createPracticeProblemsButton(); 
+			
+			continueVar.value = ''; 
+			showAnswerVar.innerHTML = ''; 
+			problemContainerVar.innerHTML = ''; 
+			submitScoreVar.style.display = 'none'; 
+			scoreVar.innerHTML = 'Current Score: '; 
+			problemContainerVar.style.color = 'black'; 
+			//showPracticeProblemsVar.style.display = 'none';
+			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+
+        }
+        
+        function createProblem() {
+            
+            let addend1 = Math.floor(Math.random() * 10);
+            let addend2 = Math.floor(Math.random() * 10);
+            problem = addend1 + ' + ' + addend2; 
+            answer = addend1 + addend2;
+       
+			problemContainerVar.innerHTML = problem; 
+            
+        }
+        
+        function checkAnswer() {
+            
+            let userInput = Number(continueVar.value);
+            
+            if(userInput === answer)
+            {
+                if(answer === 0 && continueVar.value === '')
+                {
+					wrongAnswer(10); 
+					showAnswer(); 
+					
+					//var thisProblem = new Problem(problem, answer); 
+					//problemList.push(thisProblem.numbersentence); 
+                }
+                else
+                {
+					correctAnswer(answer); 
+                }
+            }
+            else
+            {
+				wrongAnswer(answer); 
+				showAnswer(); 
+				
+				//var thisProblem = new Problem(problem, answer); 
+				//problemList.push(thisProblem.numbersentence); 
+            }
+       
+			showCurrentScore(); 
+            
+            continueVar.value = ''; 
+            createProblem();
+            
+        }
+        
+    </script>
+    
+</html>
