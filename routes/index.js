@@ -22,32 +22,41 @@ router.get("/register", function(req, res) {
 }); 
 
 router.post("/register", function(req, res) {
-	console.log(req.body); 
-	var newUser = new User({
-		username:req.body.username,
-		firstName:req.body.firstName,
-		lastName:req.body.lastName,
-		email:req.body.email
-	});
-	
-	if(req.body.adminCode === "secretcode123")
+	//access code added. to remove, remove if/else statement
+	if(req.body.accessCode === "hansonstars123")
 		{
-			newUser.isAdmin = true; 
+			console.log(req.body); 
+			var newUser = new User({
+				username:req.body.username,
+				firstName:req.body.firstName,
+				lastName:req.body.lastName,
+				email:req.body.email
+			});
+
+			if(req.body.adminCode === "secretcode123")
+				{
+					newUser.isAdmin = true; 
+				}
+
+			//add admin manually into database later
+
+			User.register(newUser, req.body.password, function(err, user) {
+				if(err)
+					{
+						console.log(err); 
+						return res.render("register", {error: err.message});
+					}
+				passport.authenticate("local")(req, res, function() {
+					req.flash("success", "Successfully Signed Up! Nice to meet you, " + req.body.username);
+					res.redirect("/games"); 
+				});
+			}); 
 		}
-	
-	//add admin manually into database later
-	
-	User.register(newUser, req.body.password, function(err, user) {
-		if(err)
-			{
-				console.log(err); 
-				return res.render("register", {error: err.message});
-			}
-		passport.authenticate("local")(req, res, function() {
-			req.flash("success", "Successfully Signed Up! Nice to meet you, " + req.body.username);
-			res.redirect("/games"); 
-		});
-	}); 
+	else
+		{
+			req.flash("error", "Incorrect access code. Ask Mr. Hanson.");
+			res.redirect("register"); 
+		}
 }); 
 
 //login
@@ -90,7 +99,7 @@ router.get("/userscores", function(req, res) {
 //profile
 
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
-	//Score.find({{author.username:}})
+
 }); 
 
 //forgot password
