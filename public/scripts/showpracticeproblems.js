@@ -10,11 +10,11 @@ function Problem(problem, answer) {
 
 function populatePracticeProblems() {
 		
-	var numberOfProblems = 0;
+	let numberOfProblems = 0;
 			
-	for(var i = 0; i < problemList.length; i++)
+	for(let i = 0; i < problemList.length; i++)
 		{
-			var thisInput =  document.createElement("input");
+			let thisInput =  document.createElement("input");
 			document.getElementById('showPracticeProblems').appendChild(thisInput);
 			thisInput.name = 'problem'; 
 			thisInput.value = problemList[i]; 
@@ -26,7 +26,7 @@ function populatePracticeProblems() {
 		}
 			
 	//determine number of problems to be passed into post route 
-	var numberOfProblemsInput = document.createElement("input"); 
+	let numberOfProblemsInput = document.createElement("input"); 
 	document.getElementById('showPracticeProblems').appendChild(numberOfProblemsInput); 
 	numberOfProblemsInput.name = 'numberOfProblems';
 	numberOfProblemsInput.type = 'number';

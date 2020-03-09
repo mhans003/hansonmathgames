@@ -154,7 +154,7 @@ function resetVariables() {
 function createPracticeProblemsButton() {
 	
 	document.getElementById('showPracticeProblems').innerHTML = ''; 
-	var newButton = document.createElement("button");
+	let newButton = document.createElement("button");
 	document.getElementById('showPracticeProblems').appendChild(newButton);
 	newButton.class = "btn btn-lg btn-success btn-inline"; 
 	newButton.type = "submit"; 

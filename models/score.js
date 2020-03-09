@@ -1,7 +1,7 @@
-var mongoose = require("mongoose"); 
+let mongoose = require("mongoose"); 
 //var passportLocalMongoose = require("passport-local-mongoose"); 
 
-var ScoreSchema = new mongoose.Schema({
+let ScoreSchema = new mongoose.Schema({
 	score: {
 		type: Number, 
 		unique: false,
