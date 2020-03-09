@@ -1,10 +1,10 @@
-var mongoose = require("mongoose"); 
+let mongoose = require("mongoose"); 
 
-var User = require("./models/user"); 
-var Score = require("./models/score"); 
+let User = require("./models/user"); 
+let Score = require("./models/score"); 
 
 
-var starterUsers = [
+let starterUsers = [
     {
         username: "mhans003", 
         password: "test",
