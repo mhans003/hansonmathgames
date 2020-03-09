@@ -166,7 +166,7 @@
         const problemContainerVar = document.querySelector('#problemContainer'); 
 		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
-		var timerVar = document.querySelector("#timer"); 
+		let timerVar = document.querySelector("#timer"); 
 		
 		//GAME-SPECIFIC VARIABLES 
       
@@ -327,7 +327,7 @@
 				document.getElementById('popup').innerHTML = '<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' ' + '</div>';
 				document.getElementById('showAnswer').innerHTML += answer + '<br>';
 				
-				//var thisProblem = new Problem(problem, answer); 
+				//let thisProblem = new Problem(problem, answer); 
 				//problemList.push(thisProblem.numbersentence);
             }
     

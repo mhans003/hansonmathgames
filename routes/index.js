@@ -1,13 +1,13 @@
-var express = require("express"); 
-var router = express.Router(); 
-var passport = require("passport"); 
-var Score = require("../models/score"); //correct path? 
-var User = require("../models/user"); //correct path? 
-var async = require("async"); 
-var nodemailer = require("nodemailer"); 
-var crypto = require("crypto"); 
+let express = require("express"); 
+let router = express.Router(); 
+let passport = require("passport"); 
+let Score = require("../models/score"); //correct path? 
+let User = require("../models/user"); //correct path? 
+let async = require("async"); 
+let nodemailer = require("nodemailer"); 
+let crypto = require("crypto"); 
 
-var middleware = require("../middleware");
+let middleware = require("../middleware");
 
 //root
 router.get("/", function(req, res) {
@@ -26,7 +26,7 @@ router.post("/register", function(req, res) {
 	if(req.body.accessCode === "hansonstars123")
 		{
 			console.log(req.body); 
-			var newUser = new User({
+			let newUser = new User({
 				username:req.body.username,
 				firstName:req.body.firstName,
 				lastName:req.body.lastName,
@@ -112,7 +112,7 @@ router.post("/forgot", function(req, res, next) {
 	async.waterfall([
 		function(done) {
 			crypto.randomBytes(20, function(err, buf) {
-				var token = buf.toString("hex"); 
+				let token = buf.toString("hex"); 
 				done(err, token); 
 			});
 		}, 
@@ -132,7 +132,7 @@ router.post("/forgot", function(req, res, next) {
 			});
 		},
 		function(token, user, done) {
-			var smtpTransport = nodemailer.createTransport({
+			let smtpTransport = nodemailer.createTransport({
 				service: "Gmail",
 				auth: {
 					user: "hansonmathgames@gmail.com",
@@ -141,7 +141,7 @@ router.post("/forgot", function(req, res, next) {
 				}
 			}); 
 			//console.log(process.env.GMAILPW); //see if saved/shows up
-			var mailOptions = {
+			let mailOptions = {
 				to: user.email,
 				from: "hansonmathgames@gmail.com",
 				subject: "Password Reset",
@@ -201,14 +201,14 @@ router.post("/reset/:token", function(req, res) {
 			});
 		},
 		function(user, done) {
-			var smtpTransport = nodemailer.createTransport({
+			let smtpTransport = nodemailer.createTransport({
 				service: "Gmail",
 				auth: {
 					user: "hansonmathgames@gmail.com",
 					pass: process.env.GMAILPW
 				}
 			});
-			var mailOptions = {
+			let mailOptions = {
 				to: user.email,
 				from: "hansonmathgames@gmail.com",
 				subject: "Password Changed",
