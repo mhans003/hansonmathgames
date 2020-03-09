@@ -1,10 +1,10 @@
-var express = require("express"); 
-var router = express.Router(); 
-var passport = require("passport"); 
-var Score = require("../models/score"); //correct path? 
-var User = require("../models/user"); //may need for score association
+let express = require("express"); 
+let router = express.Router(); 
+let passport = require("passport"); 
+let Score = require("../models/score"); //correct path? 
+let User = require("../models/user"); //may need for score association
 
-var middleware = require("../middleware");
+let middleware = require("../middleware");
 
 //index
 router.get("/", middleware.isLoggedIn, function(req, res) {
@@ -84,8 +84,8 @@ router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res
 /*
 router.get("/multiplicationrefactored", middleware.isLoggedIn, function(req, res) {
 	
-	var usersHighestScore = Score.findOne({game:"Hanson Multiplication Game"},{},{"sort":"score"}); 
-	var allscores = Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}); 
+	let usersHighestScore = Score.findOne({game:"Hanson Multiplication Game"},{},{"sort":"score"}); 
+	let allscores = Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}); 
 	Score.find({game:"Hanson Multiplication Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
 			{
@@ -339,7 +339,7 @@ router.get("/submit", function(req, res) {
 
 router.post("/submit", function(req, res) {
 
-	var newScore = new Score({
+	let newScore = new Score({
 		score:req.body.score,
 		author:{
 			id: req.user._id,
@@ -361,8 +361,8 @@ router.post("/submit", function(req, res) {
 }); 
 
 router.post("/problems", function(req, res) {
-	var problemList = []; 
-	for(var i = 0; i < req.body.numberOfProblems; i++)
+	let problemList = []; 
+	for(let i = 0; i < req.body.numberOfProblems; i++)
 		{
 			problemList.push(req.body.problem[i]); 
 		}
