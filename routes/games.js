@@ -196,6 +196,20 @@ router.get("/convertingunitsrefactor", middleware.isLoggedIn, function(req, res)
 				res.render("games/refactors/convertingunitsrefactor", {scores:allscores}); 
 			}
 	}); 
+});
+
+router.get("/convertingunitsmetric", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Converting Units Game Metric"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/convertingunitsmetric", {scores:allscores}); 
+			}
+	}); 
 }); 
 
 router.get("/wordform", middleware.isLoggedIn, function(req, res) {
