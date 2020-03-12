@@ -126,6 +126,7 @@
 		//GAME-SPECIFIC VARIABLES
 
 		let answerOnly = ''; 
+		let scoreNumber = 0; 
 		let problemOnly = ''; 
         let answerString = '';
         let answerStringCommas = '';
@@ -219,6 +220,8 @@
 			problemContainerVar.style.color = 'black'; 
 			//showPracticeProblemsVar.style.display = 'none';
 			continueVar.style.backgroundColor = 'rgba(255,255,255,1)';
+			
+			scoreNumber = 0; 
             
         }
         
@@ -341,6 +344,10 @@
 			answerOnly = answerStringCommas; 
 			problemOnly = randomNumberStringCommas + ' rounded to the nearest ' + place[randomPlace]; 
             problem = problemOnly + ' is ' + answerOnly + '.';
+			
+			//SCORE AMOUNT:
+			scoreNumber = answer; 
+			//
             
         }
         
@@ -350,11 +357,12 @@
             
             if(userInput === answer)
             {
-				correctAnswer(1); 
+				correctAnswer(scoreNumber); 
             }
             else
             {
-				wrongAnswerNoScore(); 
+				//wrongAnswerNoScore(); 
+				wrongAnswer(scoreNumber); 
 
 				showAnswerVar.innerHTML += problem + '<br>';
 				

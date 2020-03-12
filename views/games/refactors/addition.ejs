@@ -203,10 +203,12 @@
             
 			//create new score 
 			
-			if(finalScore > document.querySelector('.lowestHighScore').value || finalScore > document.querySelector('.usershighscore').value)
+			if(finalScore > document.querySelector('.lowestHighScore').value || 
+			   finalScore > document.querySelector('.usershighscore').value)
 				{
 					createNewScore(); 
 				}
+			
 			
 			//populate problems
 			//populatePracticeProblems(); 
@@ -250,7 +252,16 @@
         function checkAnswer() {
             
             let userInput = Number(continueVar.value);
-            
+			
+			/*
+			//should only use if returning a value
+			(userInput === answer) ? 
+				((answer === 0 && continueVar.value === '') ? 
+				 (wrongAnswer(10), showAnswer()) 
+				 : correctAnswer(answer)) 
+			: (wrongAnswer(answer), showAnswer()); 
+			*/
+			
             if(userInput === answer)
             {
                 if(answer === 0 && continueVar.value === '')
@@ -274,7 +285,7 @@
 				//let thisProblem = new Problem(problem, answer); 
 				//problemList.push(thisProblem.numbersentence); 
             }
-       
+       		
 			showCurrentScore(); 
             
             continueVar.value = ''; 
