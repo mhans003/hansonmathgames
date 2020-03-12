@@ -74,7 +74,7 @@
 		<div class="container">
 			
 			<h1>Hanson Converting Units Game</h1>  
-			<h2 style='font-style: italic;'>Non-Metric</h2>
+			<h2 style='font-style: italic;'>Metric</h2>
 			<hr>
 			
 			<%- include ("../../partials/highscores.ejs") %>
@@ -118,7 +118,7 @@
 		
 		//VARIABLES
 		
-		let gameName = "Hanson Converting Units Game"; 
+		let gameName = "Hanson Converting Units Game Metric"; 
         
 		const scoreVar = document.querySelector('#score'); 
 		const continueVar = document.querySelector('#answer');
@@ -145,15 +145,27 @@
 			
         }
         
+		/*
         let conversionList = [new Conversions('Feet','Inches',12),
                               new Conversions('Yards','Feet',3),
+                              new Conversions('Meters','Centimeters',100),
+                              new Conversions('Kilometers','Meters',1000),
+                              new Conversions('Centimeters','Millimeters',10),
+                              new Conversions('Kilograms','Grams',1000),
                               new Conversions('Hours','Minutes',60),
                               new Conversions('Minutes','Seconds',60),
                               new Conversions('Gallons','Quarts',4),
                               new Conversions('Quarts','Pints',2),
                               new Conversions('Pints','Cups',2),
-                              new Conversions('Weeks','Days',7),
-							  new Conversions('Dollars','Cents',100)];
+                              new Conversions('Weeks','Days',7)];
+		*/
+		
+		let conversionList = [new Conversions('Meters','Centimeters',100),
+                              new Conversions('Kilometers','Meters',1000),
+                              new Conversions('Centimeters','Millimeters',10),
+							  new Conversions('Meters','Millimeters',1000),
+							  new Conversions('Liters','Milliliters',1000),
+                              new Conversions('Kilograms','Grams',1000)];
         
         //EVENTS
         
