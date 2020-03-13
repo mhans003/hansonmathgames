@@ -114,6 +114,20 @@ router.get("/multiplicationpowersoften", middleware.isLoggedIn, function(req, re
 	});
 }); 
 
+router.get("/multiplicationto20", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Multiplication Game to 20"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/multiplicationto20", {scores:allscores}); 
+			}
+	});
+}); 
+
 router.get("/division", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Division Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
