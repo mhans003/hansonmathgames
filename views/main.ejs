@@ -1,10 +1,75 @@
-<%- include("./partials/header") %>
+<html> 
+	
+	<head>
+		<!-- Make site responsive on mobile/tablet -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Hanson Math Games</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+		<%- include("./partials/sharedstyles") %>
+		<style>
+			
+			body {
+				background-color: rgba(220,220,250,0.2); 
+				padding-top: 10%; 
+			}
+			
+		</style>
+	</head>
+	
+	<body> 
+		
+		<div class="container"> <!--container for page; closed in footer-->
 
-<h1>Main Page</h1>
-<hr>
+			<h1>Hanson Math Games</h1>
+			<hr>
+			
+			<div class="container">
+				<div class="row">
+					<div class="credentialsform col-xsm-4">
+						<div class="form-group">
+							<a href="/games">View All Games</a>
+						</div>
 
-<a href="/games">View All Games</a>
+						<% if(!currentUser) { %>
+							<div class="form-group">
+								<a href="/register">
+									<button class="btn btn-lg btn-success btn-block" type="submit">Sign Up</button>
+								</a>
+							</div>
+							<div class="form-group">
+								<a href="/login">
+									<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+								</a>
+							</div>
+						<% } else {%>
+							<div class="form-group">
+								<a href="/logout">Sign Out</a>
+							</div>
+						<% } %>
+					</div>
+				</div>
+			</div>
+			
 
-<!--put games into a database and retrieve url name?--> 
+			<!--put games into a database and retrieve url name?--> 
 
-<%- include("./partials/footer") %>
+		</div>
+		
+	</body>
+
+	<!-- jQuery CDN -->
+	<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous">
+	</script>
+
+	<!-- Bootstrap JS CDN -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<!--if features aren't working such as fade (jquery) then don't use minified version, use full -->
+
+</html>
+
+
