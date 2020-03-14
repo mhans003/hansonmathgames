@@ -156,6 +156,20 @@ router.get("/divisionrefactored", middleware.isLoggedIn, function(req, res) {
 	});
 }); 
 
+router.get("/divisionlongmental", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Division Game Long Mental"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/divisionlongmental", {scores:allscores}); 
+			}
+	});
+}); 
+
 router.get("/rounding", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Rounding Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
