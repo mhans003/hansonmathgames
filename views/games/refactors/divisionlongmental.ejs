@@ -29,12 +29,12 @@
             }
             
             #popup {
-                font-size: 2.0em;
+                font-size: 1.5em;
                 color: rgba(230,230,255,0.15);
             }
 			
 			#problemContainer {
-                font-size: 2.0em;
+                font-size: 1.5em;
             }
             
             @-webkit-keyframes correct {
@@ -134,7 +134,10 @@
 
 		let dividend = 0; 
 		let dividends = [];
+		let answerString = '' ;
 		let dividendString = ''; 
+		let answerStringCommas = '' ;
+		let dividendStringCommas = ''; 
 		let gameName = "Hanson Division Game Long Mental";  
 		
 		const scoreVar = document.querySelector('#score'); 
@@ -240,8 +243,8 @@
 			
 			dividends = [];
 			dividendString = ''; 
+			dividendStringCommas = ''; 
    
-            //answer = Math.floor(Math.random() * 13);
             let divisor = Math.floor(Math.random() * 8 + 2);
 			
 			for(let i = 0; i < 3; i++)
@@ -255,39 +258,109 @@
 					dividendString += String(dividends[i]); 
 				}
 			
+			//get number dividend and answer
             dividend = Number(dividendString);
-			problem = dividend + ' &#247; ' + divisor; 
-			answer = dividend / divisor; 
-			//problem = dividend +  ' &div; '  + divisor; 
-			//problem = dividend +  ' รท '  + divisor; 
-            
+			answer = dividend / divisor;
+			answerString = String(answer); 
+			
+			//see if there's a need to add comma to problem output
+			if(dividendString.length > 3)
+				{
+					dividendStringCommas = addCommas(dividendString); 
+					problem = dividendStringCommas + ' &#247; ' + divisor; 
+				}
+			else
+				{
+					problem = dividend + ' &#247; ' + divisor;
+				}
+			
+			//see if there's a need to add comma to answer output 
+			if(answerString.length > 3)
+				{
+					answerStringCommas = addCommas(answerString); 
+				}
+			else
+				{
+					answerStringCommas = answerString; 
+				}
+			
+			//output problem
 			problemContainerVar.innerHTML = problem; 
             
         }
+		
+		function addCommas(numberString) {
+			
+			let characterArray = []; 
+			let stringWithCommas = ''; 
+			let characterArrayCommas = []; 
+			
+            for(let i = 0; i < numberString.length; i++)
+            {
+                characterArray[i] = numberString[i];
+            }
+                
+            for(let i = characterArray.length - 1; i >= 0; i--)
+            {
+                if(i === characterArray.length - 4)
+                {
+                    characterArrayCommas.unshift(','); 
+                }
+                characterArrayCommas.unshift(characterArray[i]); 
+            }
+                
+            //Put the characterArrayCommas back into a string:
+                
+            for(let i = 0; i < characterArrayCommas.length; i++)
+            {
+                stringWithCommas += characterArrayCommas[i]; 
+            }
+			
+			return stringWithCommas; 
+			
+		}
         
         function checkAnswer() {
 			
-            let userInput = Number(continueVar.value);
+            //let userInput = Number(continueVar.value);
+			//let userInputString = continueVar.value; 
+			
+			let userInput = continueVar.value;
             
-            if(userInput === answer)
+            //if(userInput === answer || userInputString === answerStringCommas)
+			if(userInput === answerStringCommas || Number(userInput) === answer)
             {
                 if(answer === 0 && continueVar.value === '')
                 {
-					wrongAnswer(5000); 
-					showAnswer(); 
+					//wrongAnswer(5000); 
+					finalScore -= 5000;
+					continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+					document.getElementById('popup').innerHTML = 
+						'<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' -' + answerStringCommas + '</div>';
+					//showAnswer(); 
+					document.getElementById('showAnswer').innerHTML += problem + ' = ' + answerStringCommas + '<br>';
 					
 					//let thisProblem = new Problem(problem, answer); 
 					//problemList.push(thisProblem.numbersentence); 
                 }
                 else
                 {
-					correctAnswer(answer); 
+					//correctAnswer(answer); 
+					finalScore += answer;
+					continueVar.style.backgroundColor = 'rgba(80,255,150,0.10)';
+					document.getElementById('popup').innerHTML = 
+						'<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + ' +' + answerStringCommas + '</div>';
                 }
             }
             else
             {
-    			wrongAnswer(answer); 
-				showAnswer();
+    			//wrongAnswer(answer);
+				finalScore -= answer;
+				continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+				document.getElementById('popup').innerHTML = 
+					'<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' -' + answerStringCommas + '</div>';
+				//showAnswer();
+				document.getElementById('showAnswer').innerHTML += problem + ' = ' + answerStringCommas + '<br>';
 				
 				//let thisProblem = new Problem(problem, answer); 
 				//problemList.push(thisProblem.numbersentence); 
