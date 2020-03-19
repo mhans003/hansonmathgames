@@ -25,7 +25,14 @@ router.post("/register", function(req, res) {
 	//access code added. to remove, remove if/else statement
 	if(req.body.accessCode === "hansonstars123")
 		{
-			console.log(req.body); 
+			//console.log(req.body); 
+			
+			if(req.body.password !== req.body.confirmPassword)
+				{
+					req.flash("error", "Passwords don't match");
+					return res.redirect("register");
+				}
+			
 			let newUser = new User({
 				username:req.body.username,
 				firstName:req.body.firstName,
@@ -44,7 +51,8 @@ router.post("/register", function(req, res) {
 				if(err)
 					{
 						console.log(err); 
-						return res.render("register", {error: err.message});
+						let errorMessage = (err.code === 11000) ? "Email already registered" : err.message;
+						return res.render("register", {error: errorMessage});
 					}
 				passport.authenticate("local")(req, res, function() {
 					req.flash("success", "Successfully Signed Up! Nice to meet you, " + req.body.username);
