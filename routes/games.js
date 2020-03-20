@@ -170,6 +170,20 @@ router.get("/divisionlongmental", middleware.isLoggedIn, function(req, res) {
 	});
 }); 
 
+router.get("/fractionaddition", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Fraction Addition Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/fractionaddition", {scores:allscores}); 
+			}
+	});
+}); 
+
 router.get("/rounding", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Rounding Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
