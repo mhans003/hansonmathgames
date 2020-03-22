@@ -156,6 +156,20 @@ router.get("/divisionrefactored", middleware.isLoggedIn, function(req, res) {
 	});
 }); 
 
+router.get("/mixedoperations", middleware.isLoggedIn, function(req, res) {
+	Score.find({game:"Hanson Mixed Operations Game"},{},{"sort":"score"}, function(err, allscores) {
+		if(err)
+			{
+				console.log(err);
+				res.redirect("back"); 
+			}
+		else
+			{
+				res.render("games/refactors/mixedoperations", {scores:allscores}); 
+			}
+	});
+}); 
+
 router.get("/divisionlongmental", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Division Game Long Mental"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
