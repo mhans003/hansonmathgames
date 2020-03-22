@@ -73,7 +73,7 @@
     
     </head>
     
-    <title>Hanson Addition Fact Game</title>
+    <title>Hanson Mixed Operations Game</title>
     
     <body>
 		
@@ -81,7 +81,7 @@
         
         <div class="container">
         
-            <h1>Hanson Addition Game</h1>
+            <h1>Hanson Mixed Operations Game</h1>
             <hr>
 			
 			<%- include ("../../partials/highscores.ejs") %>
@@ -134,7 +134,7 @@
 		
 		//VARIABLES
         
-		let gameName = "Hanson Addition Game"; 
+		let gameName = "Hanson Mixed Operations Game"; 
         
 		const scoreVar = document.querySelector('#score'); 
 		const continueVar = document.querySelector('#answer');
@@ -146,6 +146,11 @@
 		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
 		let timerVar = document.querySelector("#timer"); 
+		
+		//GAME-SPECIFIC
+		
+		let scoreAmount = 0; 
+		const operations = [addition, subtraction, multiplication, division]; 
         
         //EVENTS
         
@@ -240,14 +245,70 @@
         
         function createProblem() {
             
-            let addend1 = Math.floor(Math.random() * 10);
+            let randomIndex = Math.floor(Math.random() * operations.length); 
+			operations[randomIndex](); 
+            
+        }
+		
+		function addition() {
+			
+			let addend1 = Math.floor(Math.random() * 10);
             let addend2 = Math.floor(Math.random() * 10);
             problem = addend1 + ' + ' + addend2; 
             answer = addend1 + addend2;
+			
+			scoreAmount = answer; 
        
 			problemContainerVar.innerHTML = problem; 
+			
+		}
+		
+		function subtraction() {
+			
+			let num1 = Math.floor(Math.random() * 11);
+            let num2 = Math.floor(Math.random() * 11);
+			
+			if(num1 < num2) 
+				{
+					let temp = num1; 
+					num1 = num2; 
+					num2 = temp; 
+				}
+			
+            problem = num1 + ' - ' + num2; 
+            answer = num1 - num2;
+			
+			scoreAmount = num1; 
+       
+			problemContainerVar.innerHTML = problem; 
+			
+		}
+		
+		function multiplication() {
+			
+			let factor1 = Math.floor(Math.random() * 13);
+            let factor2 = Math.floor(Math.random() * 13);
+            problem = factor1 + ' x ' + factor2; 
+            answer = factor1 * factor2;
+			
+			scoreAmount = factor1; 
+       
+			problemContainerVar.innerHTML = problem; 
+			
+		}
+		
+		function division() {
+			
+			answer = Math.floor(Math.random() * 13);
+            let divisor = Math.floor(Math.random() * 12 + 1);
+            dividend = answer * divisor;
+			problem = dividend + ' &#247; ' + divisor;
+			
+			scoreAmount = answer; 
             
-        }
+			problemContainerVar.innerHTML = problem; 
+			
+		}
         
         function checkAnswer() {
             
@@ -274,12 +335,12 @@
                 }
                 else
                 {
-					correctAnswer(answer); 
+					correctAnswer(scoreAmount); 
                 }
             }
             else
             {
-				wrongAnswer(answer); 
+				wrongAnswer(scoreAmount); 
 				showAnswer(); 
 				
 				//let thisProblem = new Problem(problem, answer); 
