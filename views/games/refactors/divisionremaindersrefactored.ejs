@@ -89,6 +89,8 @@
 			
 			<%- include ("../../partials/scoreform.ejs") %>
 			
+			<%- include("../../partials/instructions/divisionremainders") %>
+			
 			<div id="timer"></div>
 			
 			<button type="button" class="btn btn-primary" id="startGame">START <i class="fas fa-play-circle"></i></button>
@@ -274,6 +276,10 @@
 			
             let rawInput = continueVar.value;
             let userInput = rawInput.replace(' ','');
+			if(userInput.indexOf('R') !== 0)
+            {
+                userInput = userInput.replace('R','r');
+            }
             if(userInput.indexOf('r0') !== 0)
             {
                 userInput = userInput.replace('r0','');
