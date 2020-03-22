@@ -89,6 +89,8 @@
 			
 			<%- include ("../../partials/scoreform.ejs") %>
 			
+			<%- include ("../../partials/instructions/multiplicationpowersoften.ejs") %>
+			
 			<div id="timer"></div>
 			
             <!--<input type='submit' value='START' class='startGame'>-->
@@ -146,7 +148,13 @@
         const problemContainerVar = document.querySelector('#problemContainer'); 
 		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
-		let timerVar = document.querySelector("#timer"); 
+		let timerVar = document.querySelector("#timer");
+		
+		//GAME-SPECIFIC
+		
+		let scoreAmount = 0; 
+		let scoreAmountString = ''; 
+		let answerStringCommas = ''; 
         
         //EVENTS
         
@@ -243,34 +251,89 @@
             let factor2 = Math.ceil(Math.random() * 9) * 10**Math.ceil(Math.random() * 2);
             problem = factor1 + ' x ' + factor2; 
             answer = factor1 * factor2;
+			scoreAmount = (answer / 100); 
+			answerStringCommas = addCommas(String(answer)); 
+			scoreAmountString = addCommas(String(scoreAmount)); 
        
 			problemContainerVar.innerHTML = problem; 
             
         }
+		
+		function addCommas(numberString) {
+			
+			let characterArray = []; 
+			let stringWithCommas = ''; 
+			let characterArrayCommas = []; 
+			
+            for(let i = 0; i < numberString.length; i++)
+            {
+                characterArray[i] = numberString[i];
+            }
+                
+            for(let i = characterArray.length - 1; i >= 0; i--)
+            {
+                if(i === characterArray.length - 4)
+                {
+                    characterArrayCommas.unshift(','); 
+                }
+                characterArrayCommas.unshift(characterArray[i]); 
+            }
+                
+            //Put the characterArrayCommas back into a string:
+                
+            for(let i = 0; i < characterArrayCommas.length; i++)
+            {
+                stringWithCommas += characterArrayCommas[i]; 
+            }
+			
+			return stringWithCommas; 
+			
+		}
         
         function checkAnswer() {
             
-            let userInput = Number(continueVar.value);
+            let userInput = String(continueVar.value);
+			
+			if(userInput.indexOf(',') !== 0)
+            {
+                userInput = userInput.replace(',','');
+            }
+			
+			userInput = Number(userInput);
             
             if(userInput === answer)
             {
                 if(answer === 0 && continueVar.value === '')
                 {
-					wrongAnswer(500); 
-					showAnswer(); 
+					//wrongAnswer(500); 
+					finalScore -= 500;
+					continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+					document.getElementById('popup').innerHTML = 
+						'<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' -' + scoreAmountString + '</div>';
+					//showAnswer(); 
+					document.getElementById('showAnswer').innerHTML += problem + ' = ' + answerStringCommas + '<br>';
 					
 					//let thisProblem = new Problem(problem, answer); 
 					//problemList.push(thisProblem.numbersentence); 
                 }
                 else
                 {
-					correctAnswer(answer / 100); 
+					//correctAnswer(answer / 100); 
+					finalScore += scoreAmount;
+					continueVar.style.backgroundColor = 'rgba(80,255,150,0.10)';
+					document.getElementById('popup').innerHTML = 
+						'<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + ' +' + scoreAmountString + '</div>';
                 }
             }
             else
             {
-				wrongAnswer(answer / 100); 
-				showAnswer(); 
+				//wrongAnswer(answer / 100); 
+				finalScore -= scoreAmount;
+				continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+				document.getElementById('popup').innerHTML = 
+					'<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' -' + scoreAmountString + '</div>';
+				//showAnswer(); 
+				document.getElementById('showAnswer').innerHTML += problem + ' = ' + answerStringCommas + '<br>';
 				
 				//let thisProblem = new Problem(problem, answer); 
 				//problemList.push(thisProblem.numbersentence); 
