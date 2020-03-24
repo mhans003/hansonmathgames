@@ -34,7 +34,7 @@
           
                 90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+                100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
           
             @keyframes correct {
@@ -42,7 +42,7 @@
       
               90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+              100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
             
             @-webkit-keyframes incorrect {
@@ -50,7 +50,7 @@
           
                 90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+                100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
           
             @keyframes incorrect {
@@ -58,7 +58,7 @@
       
               90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+              100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
             
         </style>
@@ -345,7 +345,7 @@
             
 			answerOnly = answerStringCommas; 
 			problemOnly = randomNumberStringCommas + ' rounded to the nearest ' + place[randomPlace]; 
-            problem = problemOnly + ' is ' + answerOnly + '.';
+			problem = problemOnly + ' is ' + answerOnly + '.';
 			
 			//SCORE AMOUNT:
 			scoreNumber = answer; 
@@ -359,12 +359,20 @@
             
             if(userInput === answer)
             {
-				correctAnswer(scoreNumber); 
+				//correctAnswer(scoreNumber); 
+				finalScore += scoreNumber;
+				continueVar.style.backgroundColor = 'rgba(80,255,150,0.10)';
+				document.getElementById('popup').innerHTML = 
+					'<div class="correctAnswer"><i class="fas fa-thumbs-up"></i>' + ' +' + answerStringCommas + '</div>';
             }
             else
             {
 				//wrongAnswerNoScore(); 
-				wrongAnswer(scoreNumber); 
+				//wrongAnswer(scoreNumber); 
+				finalScore -= scoreNumber;
+				continueVar.style.backgroundColor = 'rgba(255,80,50,0.10)';
+				document.getElementById('popup').innerHTML = 
+					'<div class="incorrectAnswer"><i class="fas fa-thumbs-down"></i>' + ' -' + answerStringCommas + '</div>';
 
 				showAnswerVar.innerHTML += problem + '<br>';
 				
