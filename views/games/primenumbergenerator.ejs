@@ -28,11 +28,15 @@
 			<label for='input'>How many prime numbers do you want to generate?</label>
 			<input id='input' class='input' type='number' placeholder=''>
 
-			<button type="button" class="btn btn-primary primeNumbers">Generate Prime Numbers <i class="fas fa-play-circle"></i></button>
+			<button type="button" class="btn btn-primary primeNumbers">
+				Generate Prime Numbers <i class="fas fa-play-circle"></i>
+			</button>
 			<br>
 			<br>
 
-			<button type="button" class="btn btn-primary resetGame">RESET <i class="fas fa-undo-alt"></i></button>
+			<button type="button" class="btn btn-primary resetGame">
+				RESET <i class="fas fa-undo-alt"></i>
+			</button>
 			<br>
 			<br>
 
@@ -64,13 +68,15 @@
 			
 			if(numberOfPrimes < 1)
 				{
-					document.getElementById('show primes').innerHTML = 'Enter a whole number greater than 0.';
+					document.getElementById('show primes').innerHTML = 
+						'Enter a whole number greater than 0.';
                 	return 0; 
 				}
             
             if(numberOfPrimes > 4999)
             {
-                document.getElementById('show primes').innerHTML = 'Enter a whole number less than 5,000.';
+                document.getElementById('show primes').innerHTML = 
+					'Enter a whole number less than 5,000.';
                 return 0; 
             }
             
@@ -120,7 +126,8 @@
                 }
             }
             
-            document.getElementById('show primes').innerHTML = 'The first ' + Number(inputVar.value) + ' prime numbers are: ' + primeString; 
+            document.getElementById('show primes').innerHTML = 
+				'The first ' + Number(inputVar.value) + ' prime numbers are: ' + primeString; 
             
         }
         
