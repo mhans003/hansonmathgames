@@ -58,6 +58,7 @@ hr {
 }
 
 #timer {
-	color: rgba(50,50,70,0.8);
+	margin-top: 5px; 
+	color: rgba(50,50,140,0.8); 
 }
 

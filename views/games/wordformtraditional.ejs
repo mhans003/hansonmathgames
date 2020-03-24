@@ -15,7 +15,7 @@
                 border-width: 4px;
                 padding: 20px;
                 margin-top: 20px;
-                box-shadow: 3px 5px rgba(110,110,135,1); 
+                box-shadow: 3px 3px rgba(110,110,135,1); 
 				
             }
 			
@@ -166,7 +166,32 @@
             
             let output = '';
             
-            let ending = ['',' Thousand',' Million',' Billion', ' Trillion', ' Quadrillion', ' Quintillion', ' Sextillion', ' Septillion', ' Octillion', ' Nonillion', ' Decillion', ' Undecillion', ' Duodecillion', ' Tredecillion', ' Quattuordecillion', ' Quindecillion', ' Sexdecillion', ' Septen-decillion', ' Octodecillion', ' Novemdecillion', ' Vigintillion'];
+			/*
+            let ending = [
+				'',
+				' thousand',
+				' million',
+				' Billion', 
+				' Trillion', 
+				' Quadrillion', 
+				' Quintillion', 
+				' Sextillion', 
+				' Septillion', 
+				' Octillion', 
+				' Nonillion', 
+				' Decillion', 
+				' Undecillion', 
+				' Duodecillion', 
+				' Tredecillion', 
+				' Quattuordecillion', 
+				' Quindecillion', 
+				' Sexdecillion', 
+				' Septen-decillion', 
+				' Octodecillion', 
+				' Novemdecillion', 
+				' Vigintillion'
+			];
+			*/
             
             for(let i = periodArrays.length - 1; i >= 0; i--)
             {
@@ -179,31 +204,31 @@
                         hundredString = '';
                         break;
                     case '1':
-                        hundredString = 'One Hundred';
+                        hundredString = 'one hundred';
                         break;
                     case '2':
-                        hundredString = 'Two Hundred';
+                        hundredString = 'two hundred';
                         break;
                     case '3':
-                        hundredString = 'Three Hundred';
+                        hundredString = 'three hundred';
                         break;
                     case '4':
-                        hundredString = 'Four Hundred';
+                        hundredString = 'four hundred';
                         break;
                     case '5':
-                        hundredString = 'Five Hundred';
+                        hundredString = 'five hundred';
                         break;
                     case '6':
-                        hundredString = 'Six Hundred';
+                        hundredString = 'six hundred';
                         break;
                     case '7':
-                        hundredString = 'Seven Hundred';
+                        hundredString = 'seven hundred';
                         break;
                     case '8':
-                        hundredString = 'Eight Hundred';
+                        hundredString = 'eight hundred';
                         break;
                     case '9':
-                        hundredString = 'Nine Hundred';
+                        hundredString = 'nine hundred';
                         break;
                 }
                 
@@ -220,89 +245,89 @@
                         
                         switch(ones) {
                             case '0':
-                                tenString = 'Ten';
+                                tenString = 'ten';
                                 break;
                             case '1':
-                                tenString = 'Eleven';
+                                tenString = 'eleven';
                                 break;
                             case '2':
-                                tenString = 'Twelve';
+                                tenString = 'twelve';
                                 break;
                             case '3':
-                                tenString = 'Thirteen';
+                                tenString = 'thirteen';
                                 break;
                             case '4':
-                                tenString = 'Fourteen';
+                                tenString = 'fourteen';
                                 break;
                             case '5':
-                                tenString = 'Fifteen';
+                                tenString = 'fifteen';
                                 break;
                             case '6':
-                                tenString = 'Sixteen';
+                                tenString = 'sixteen';
                                 break;
                             case '7':
-                                tenString = 'Seventeen';
+                                tenString = 'seventeen';
                                 break;
                             case '8':
-                                tenString = 'Eighteen';
+                                tenString = 'eighteen';
                                 break;
                             case '9':
-                                tenString = 'Nineteen';
+                                tenString = 'nineteen';
                                 break; 
                         }
                         
                         break;
                     case '2':
-                        tenString = 'Twenty';
+                        tenString = 'twenty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '3':
-                        tenString = 'Thirty';
+                        tenString = 'thirty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '4':
-                        tenString = 'Forty';
+                        tenString = 'forty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '5':
-                        tenString = 'Fifty';
+                        tenString = 'fifty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '6':
-                        tenString = 'Sixty';
+                        tenString = 'sixty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '7':
-                        tenString = 'Seventy';
+                        tenString = 'seventy';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '8':
-                        tenString = 'Eighty';
+                        tenString = 'eighty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '9':
-                        tenString = 'Ninety';
+                        tenString = 'ninety';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
@@ -317,31 +342,31 @@
                             oneString = '';
                             break;
                         case '1':
-                            oneString = 'One';
+                            oneString = 'one';
                             break;
                         case '2':
-                            oneString = 'Two';
+                            oneString = 'two';
                             break;
                         case '3':
-                            oneString = 'Three';
+                            oneString = 'three';
                             break;
                         case '4':
-                            oneString = 'Four';
+                            oneString = 'four';
                             break;
                         case '5':
-                            oneString = 'Five';
+                            oneString = 'five';
                             break;
                         case '6':
-                            oneString = 'Six';
+                            oneString = 'six';
                             break;
                         case '7':
-                            oneString = 'Seven';
+                            oneString = 'seven';
                             break;
                         case '8':
-                            oneString = 'Eight';
+                            oneString = 'eight';
                             break;
                         case '9':
-                            oneString = 'Nine';
+                            oneString = 'nine';
                             break;
                     }
                 }
@@ -401,9 +426,72 @@
         //for IF includes decimal
         
         function generateDecimals() {
-            
-            let decimalEndings = [' Tenths', ' Hundredths', ' Thousandths', ' Ten Thousandths', ' Hundred Thousandths', ' Millionths',' Ten Millionths', ' Hundred Millionths', ' Billionths', ' Ten Billionths', ' Hundred Billionths', ' Trillionths', ' Ten Trillionths', ' Hundred Trillionths', ' Quadrillionths', ' Ten Quadrillionths', ' Hundred Quadrillionths', ' Quintillionths', ' Ten Quintillionths', ' Hundred Quintillionths', ' Sextillionths', ' Ten Sextillionths', ' Hundred Sextillionths', ' Septillionths', ' Ten Septillionths', ' Hundred Septillionths', ' Octillionths', ' Ten Octillionths', ' Hundred Octillionths', ' Nonillionths', ' Ten Nonillionths', ' Hundred Nonillionths', ' Decillionths', ' Ten Decillionths', ' Hundred Decillionths', ' Duodecillionths', ' Ten Duodecillionths', ' Hundred Duodecillionths', ' Tredecillionths', ' Ten Tredecillionths', ' Hundred Tredecillionths', ' Quattuordecillionths', ' Ten Quattuordecillionths', ' Hundred Quattuordecillionths', ' Quindecillionths', ' Ten Quindecillionths', ' Hundred Quindecillionths', ' Sexdecillionths', ' Ten Sexdecillionths', ' Hundred Sexdecillionths', ' Septendecillionths', ' Ten Septendecillionths', ' Hundred Septendecillionths', ' Octodecillionths', ' Ten Octodecillionths', ' Hundred Octodecillionths', ' Novemdecillionths', ' Ten Novemdecillionths', ' Hundred Novemdecillionths', ' Vigintillionths', ' Ten Vigintillionths', ' Hundred Vigintillionths'];
-            
+            /*
+            let decimalEndings = [
+				' tenths', 
+				' hundredths', 
+				' thousandths', 
+				' ten thousandths', 
+				' hundred thousandths', 
+				' millionths',
+				' ten millionths', 
+				' hundred millionths', 
+				' Billionths', 
+				' ten Billionths', 
+				' hundred Billionths', 
+				' Trillionths', 
+				' ten Trillionths', 
+				' hundred Trillionths', 
+				' Quadrillionths', 
+				' ten Quadrillionths', 
+				' hundred Quadrillionths', 
+				' Quintillionths', 
+				' ten Quintillionths', 
+				' hundred Quintillionths', 
+				' Sextillionths', 
+				' ten Sextillionths', 
+				' hundred Sextillionths', 
+				' Septillionths', 
+				' ten Septillionths', 
+				' hundred Septillionths', 
+				' Octillionths', 
+				' ten Octillionths', 
+				' hundred Octillionths', 
+				' Nonillionths', 
+				' ten Nonillionths', 
+				' hundred Nonillionths', 
+				' Decillionths', 
+				' ten Decillionths', 
+				' hundred Decillionths', 
+				' Duodecillionths', 
+				' ten Duodecillionths', 
+				' hundred Duodecillionths', 
+				' Tredecillionths', 
+				' ten Tredecillionths', 
+				' hundred Tredecillionths', 
+				' Quattuordecillionths', 
+				' ten Quattuordecillionths', 
+				' hundred Quattuordecillionths', 
+				' Quindecillionths', 
+				' ten Quindecillionths', 
+				' hundred Quindecillionths', 
+				' Sexdecillionths', 
+				' ten Sexdecillionths', 
+				' hundred Sexdecillionths', 
+				' Septendecillionths', 
+				' ten Septendecillionths', 
+				' hundred Septendecillionths', 
+				' Octodecillionths', 
+				' ten Octodecillionths', 
+				' hundred Octodecillionths', 
+				' Novemdecillionths', 
+				' ten Novemdecillionths', 
+				' hundred Novemdecillionths', 
+				' Vigintillionths', 
+				' ten Vigintillionths', 
+				' hundred Vigintillionths'
+			];
+            */
             if (fractionalNumberLength % 3 !== 0)
             {
                 if (fractionalNumberLength % 3 === 1)
@@ -443,9 +531,32 @@
             }
             
             let output = '';
-            
-            let ending = ['',' Thousand',' Million',' Billion', ' Trillion', ' Quadrillion', ' Quintillion', ' Sextillion', ' Septillion', ' Octillion', ' Nonillion', ' Decillion', ' Undecillion', ' Duodecillion', ' Tredecillion', ' Quattuordecillion', ' Quindecillion', ' Sexdecillion', ' Septen-decillion', ' Octodecillion', ' Novemdecillion', ' Vigintillion'];
-            
+			/*
+			let ending = [
+				'',
+				' thousand',
+				' million',
+				' Billion', 
+				' Trillion', 
+				' Quadrillion', 
+				' Quintillion', 
+				' Sextillion', 
+				' Septillion', 
+				' Octillion', 
+				' Nonillion', 
+				' Decillion', 
+				' Undecillion', 
+				' Duodecillion', 
+				' Tredecillion', 
+				' Quattuordecillion', 
+				' Quindecillion', 
+				' Sexdecillion', 
+				' Septen-decillion', 
+				' Octodecillion', 
+				' Novemdecillion', 
+				' Vigintillion'
+			];
+            */
             for(let i = decimalPeriodArrays.length - 1; i >= 0; i--)
             {
                 let hundreds = decimalPeriodArrays[i][0];
@@ -457,31 +568,31 @@
                         hundredString = '';
                         break;
                     case '1':
-                        hundredString = 'One Hundred';
+                        hundredString = 'one hundred';
                         break;
                     case '2':
-                        hundredString = 'Two Hundred';
+                        hundredString = 'two hundred';
                         break;
                     case '3':
-                        hundredString = 'Three Hundred';
+                        hundredString = 'three hundred';
                         break;
                     case '4':
-                        hundredString = 'Four Hundred';
+                        hundredString = 'four hundred';
                         break;
                     case '5':
-                        hundredString = 'Five Hundred';
+                        hundredString = 'five hundred';
                         break;
                     case '6':
-                        hundredString = 'Six Hundred';
+                        hundredString = 'six hundred';
                         break;
                     case '7':
-                        hundredString = 'Seven Hundred';
+                        hundredString = 'seven hundred';
                         break;
                     case '8':
-                        hundredString = 'Eight Hundred';
+                        hundredString = 'eight hundred';
                         break;
                     case '9':
-                        hundredString = 'Nine Hundred';
+                        hundredString = 'nine hundred';
                         break;
                 }
                 
@@ -498,89 +609,89 @@
                         
                         switch(ones) {
                             case '0':
-                                tenString = 'Ten';
+                                tenString = 'ten';
                                 break;
                             case '1':
-                                tenString = 'Eleven';
+                                tenString = 'eleven';
                                 break;
                             case '2':
-                                tenString = 'Twelve';
+                                tenString = 'twelve';
                                 break;
                             case '3':
-                                tenString = 'Thirteen';
+                                tenString = 'thirteen';
                                 break;
                             case '4':
-                                tenString = 'Fourteen';
+                                tenString = 'fourteen';
                                 break;
                             case '5':
-                                tenString = 'Fifteen';
+                                tenString = 'fifteen';
                                 break;
                             case '6':
-                                tenString = 'Sixteen';
+                                tenString = 'sixteen';
                                 break;
                             case '7':
-                                tenString = 'Seventeen';
+                                tenString = 'seventeen';
                                 break;
                             case '8':
-                                tenString = 'Eighteen';
+                                tenString = 'eighteen';
                                 break;
                             case '9':
-                                tenString = 'Nineteen';
+                                tenString = 'nineteen';
                                 break; 
                         }
                         
                         break;
                     case '2':
-                        tenString = 'Twenty';
+                        tenString = 'twenty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '3':
-                        tenString = 'Thirty';
+                        tenString = 'thirty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '4':
-                        tenString = 'Forty';
+                        tenString = 'forty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '5':
-                        tenString = 'Fifty';
+                        tenString = 'fifty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '6':
-                        tenString = 'Sixty';
+                        tenString = 'sixty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '7':
-                        tenString = 'Seventy';
+                        tenString = 'seventy';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '8':
-                        tenString = 'Eighty';
+                        tenString = 'eighty';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
                         }
                         break;
                     case '9':
-                        tenString = 'Ninety';
+                        tenString = 'ninety';
                         if(ones !== '0')
                         {
                             tenString += '-'; 
@@ -595,31 +706,31 @@
                             oneString = '';
                             break;
                         case '1':
-                            oneString = 'One';
+                            oneString = 'one';
                             break;
                         case '2':
-                            oneString = 'Two';
+                            oneString = 'two';
                             break;
                         case '3':
-                            oneString = 'Three';
+                            oneString = 'three';
                             break;
                         case '4':
-                            oneString = 'Four';
+                            oneString = 'four';
                             break;
                         case '5':
-                            oneString = 'Five';
+                            oneString = 'five';
                             break;
                         case '6':
-                            oneString = 'Six';
+                            oneString = 'six';
                             break;
                         case '7':
-                            oneString = 'Seven';
+                            oneString = 'seven';
                             break;
                         case '8':
-                            oneString = 'Eight';
+                            oneString = 'eight';
                             break;
                         case '9':
-                            oneString = 'Nine';
+                            oneString = 'nine';
                             break;
                     }
                 }
@@ -636,7 +747,7 @@
             
             if(Number(fractionalNumber) == 0)
             {
-                output = 'Zero'; 
+                output = 'zero'; 
             }
             
             let decimalEnding = decimalEndings[fractionPlace - 1];
@@ -645,7 +756,7 @@
             
             if(output.includes('undefined'))
             {
-                output = '(Too Many Decimal Places)'; 
+                output = '(Too many decimal places)'; 
             }
             
             return output; 
