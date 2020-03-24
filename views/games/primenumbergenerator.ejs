@@ -60,11 +60,17 @@
         
         function generatePrimes() {
             
-            let numberOfPrimes = Number(inputVar.value);
+            let numberOfPrimes = parseInt(inputVar.value);
+			
+			if(numberOfPrimes < 1)
+				{
+					document.getElementById('show primes').innerHTML = 'Enter a whole number greater than 0.';
+                	return 0; 
+				}
             
             if(numberOfPrimes > 4999)
             {
-                document.getElementById('show primes').innerHTML = 'Enter a number less than 5,000.';
+                document.getElementById('show primes').innerHTML = 'Enter a whole number less than 5,000.';
                 return 0; 
             }
             
