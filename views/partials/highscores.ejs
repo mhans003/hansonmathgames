@@ -1,6 +1,7 @@
 <div id="highscores">
 	<% if(scores.length > 0) { %>
 		<h3>High Scores</h3>
+		<hr class="scoreHr">
 		<% if(scores.length > 4) { %>
 			<% for(let i = scores.length; i > scores.length - 5; i--) { %>
 				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
@@ -37,6 +38,8 @@
 				<% break; %>
 			<% } %>
 		<% } %>
+	
+		<hr class="scoreHr">
 	
 	<% } %>
 	<input class='lowestHighScore' style='display:none;' value=''>

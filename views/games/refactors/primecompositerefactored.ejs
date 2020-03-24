@@ -38,7 +38,7 @@
           
                 90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-                100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+                100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
           
             @keyframes correct {
@@ -46,7 +46,7 @@
       
               90% {color:rgba(80,255,150,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-              100% {color: rgba(80, 255, 150, 0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+              100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
             
             @-webkit-keyframes incorrect {
@@ -54,7 +54,7 @@
           
                 90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-                100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+                100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
           
             @keyframes incorrect {
@@ -62,7 +62,7 @@
       
               90% {color:rgba(255,80,50,0.6); font-size: 1em; width: 200px; margin: auto; left:0px; top:0px;}
                 
-              100% {color:rgba(255,80,50,0.6); display: none; font-size: 1em; margin: auto; width: 200px;}
+              100% {visibility: hidden; display: none; font-size: 1em; margin: auto; width: 200px;}
             }
 			
         </style>
@@ -123,10 +123,10 @@
 			
 			<div id='popup'> </div>
 
-			<h2>Prime Numbers:</h2>
+			<h3>Prime Numbers:</h3>
 			<p id='showPrime'></p>
 
-			<h2>Composite Numbers:</h2>
+			<h3>Composite Numbers:</h3>
 			<p id='showComposite'></p>
 			
 		</div>
