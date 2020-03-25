@@ -106,13 +106,24 @@ div#problemContainer {
 
 }
 
+h6.userScoreOutput {
+	
+	color: rgba(70, 70, 140, 0.8); 
+	text-shadow: 0px 0px 0px rgba(50,50,50,0.1),
+				 0px 1px 1px rgba(20,70,110,0.3),
+				 0px 6px 6px rgba(20,70,110,0.3),
+				 8px 13px 15px rgba(150,150,0,0.2);
+	
+}
+
 #highscores {
 	color: rgba(110, 110, 140, 0.8); 
 }
 
 #timer {
-	margin-top: 5px; 
-	color: rgba(50,50,140,0.8); 
+	font-size: 1.25em; 
+	margin-top: 20px; 
+	color: rgba(80,80,140,0.9); 
 	text-shadow: 0px 4px 3px rgba(0,0,0,0.1),
 				 0px 8px 13px rgba(0,0,0,0.1),
 				 0px 18px 18px rgba(0,0,0,0.1);
