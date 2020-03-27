@@ -160,7 +160,7 @@
                 let thisNumerator = numerator / factors[thisFactor];
                 let thisDenominator = denominator / factors[thisFactor];
                 
-                let thisFraction = thisNumerator + '/' + thisDenominator;
+                let thisFraction = thisNumerator + '&frasl;' + thisDenominator;
                 simplifiedFractions.push(thisFraction); 
             }
             
@@ -172,7 +172,7 @@
             
             for(let thisFraction = 0; thisFraction < simplifiedFractions.length; thisFraction++)
             {
-                fractionString += numerator + '/' + denominator + ' = ' + fractions[thisFraction] + '<br>';
+                fractionString += numerator + '&frasl;' + denominator + ' = ' + fractions[thisFraction] + '<br>';
             }
             
             simplifiedFractionsVar.innerHTML = '<strong>' + 'Simplified Fractions:' + '</strong>' + '<br>' + fractionString;
