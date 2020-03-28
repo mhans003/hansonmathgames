@@ -11,8 +11,22 @@
 		<style>
 			
 			body {
+				
 				background-color: rgba(220,220,250,0.2); 
-				padding-top: 10%; 
+				padding-top: 5%; 
+				
+			}
+			
+			div.animationContainer {
+				
+				position: absolute;
+				bottom: 0px;
+				left: 0%;
+				margin: auto auto 0px;
+				width:100%;
+				height: auto;
+				display:none;
+			
 			}
 			
 		</style>
@@ -62,9 +76,15 @@
 				</div>
 			</div>
 			
-		<%- include("./partials/mainsvg") %>
+			<%- include("./partials/mainsvg") %>
+			
+			<div id="animationContainer">
+
+			</div>
 
 		</div>
+		
+		<%- include("./partials/mainsvganimated") %>
 		
 	</body>
 
@@ -78,6 +98,214 @@
 	<!-- Bootstrap JS CDN -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<!--if features aren't working such as fade (jquery) then don't use minified version, use full -->
+	
+	<!-- GSAP CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
+	
+	<script>
+	
+		let $addition = $('#add'),
+			$addition2 = $('#add2'),
+			$addition3 = $('#add3'),
+			$addition4 = $('#add4'),
+			$addition5 = $('#add5'),
+			$addition6 = $('#add6'),
+			$addition7 = $('#add7'),
+			$addition8 = $('#add8'),
+			$addition9 = $('#add9'),
+			$addition10 = $('#add10'),
+			$subtraction = $('#sub'),
+			$subtraction2 = $('#sub2'),
+			$subtraction3 = $('#sub3'),
+			$subtraction4 = $('#sub4'),
+			$subtraction5 = $('#sub5'),
+			$subtraction6 = $('#sub6'),
+			$subtraction7 = $('#sub7'),
+			$subtraction8 = $('#sub8'),
+			$subtraction9 = $('#sub9'),
+			$subtraction10 = $('#sub10'),
+			$multiplication = $('#mult'),
+			$multiplication2 = $('#mult2'),
+			$multiplication3 = $('#mult3'),
+			$multiplication4 = $('#mult4'),
+			$multiplication5 = $('#mult5'),
+			$multiplication6 = $('#mult6'),
+			$multiplication7 = $('#mult7'),
+			$multiplication8 = $('#mult8'),
+			$multiplication9 = $('#mult9'),
+			$multiplication10 = $('#mult10'),
+			$divide = $('#divide'),
+			$divide2 = $('#divide2'),
+			$divide3 = $('#divide3'),
+			$divide4 = $('#divide4'),
+			$divide5 = $('#divide5'),
+			$divide6 = $('#divide6'),
+			$divide7 = $('#divide7'),
+			$divide8 = $('#divide8'),
+			$divide9 = $('#divide9'),
+			$divide10 = $('#divide10'),
+			$animationContainer = $('#animationContainer');
+		
+		function clearScreen() {
+			
+			let clearTl = new TimelineMax();
+        
+        	clearTl
+				.set($addition, {autoAlpha: 0})
+				.set($subtraction, {autoAlpha: 0})
+				.set($multiplication, {autoAlpha: 0})
+				.set($divide, {autoAlpha: 0, onComplete: showContainer});
+            
+			function showContainer() {
+
+				$animationContainer.css('display', 'block'); 
+
+			}
+            
+        return clearTl; 
+			
+		}
+		
+		function enterAddition() {
+			
+			let additionTl = new TimelineMax(); 
+			
+			//additionTl.to($addition, 1.5, {autoAlpha: 1, ease: Bounce.easeOut});
+			additionTl.fromTo($addition, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition2, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition3, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition4, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition5, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition6, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition7, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition8, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition9, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			additionTl.fromTo($addition10, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			
+			
+			
+			return additionTl; 
+			
+		}
+		
+		function enterSubtraction() {
+			
+			let subtractionTl = new TimelineMax(); 
+			
+			//additionTl.to($addition, 1.5, {autoAlpha: 1, ease: Bounce.easeOut});
+			subtractionTl.fromTo($subtraction, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction2, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction3, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction4, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction5, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction6, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction7, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction8, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction9, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			subtractionTl.fromTo($subtraction10, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			
+			
+			
+			return subtractionTl; 
+			
+		}
+		
+		function enterMultiplication() {
+			
+			let multiplicationTl = new TimelineMax(); 
+			
+			//additionTl.to($addition, 1.5, {autoAlpha: 1, ease: Bounce.easeOut});
+			multiplicationTl.fromTo($multiplication, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication2, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication3, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication4, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication5, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication6, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication7, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication8, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication9, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			multiplicationTl.fromTo($multiplication10, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			
+			
+			
+			return multiplicationTl; 
+			
+		}
+		
+		function enterDivision() {
+			
+			let divisionTl = new TimelineMax(); 
+			
+			//additionTl.to($addition, 1.5, {autoAlpha: 1, ease: Bounce.easeOut});
+			divisionTl.fromTo($divide, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide2, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide3, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide4, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide5, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide6, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide7, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide8, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide9, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut}, '-=0.5');
+			divisionTl.fromTo($divide10, 1, {x: Math.random() * 1600 - (Math.random() * 100), y: Math.random() * 450, scale: 0.2, autoAlpha: 0, transformOrigin: 'center center'}, {scale: 0.75, autoAlpha: 0.3, transformOrigin: 'center center', ease: Elastic.easeOut, onComplete: startAnimation}, '-=0.5');
+			
+			
+			
+			return divisionTl; 
+			
+		}
+		
+		function createNewAddition(num) {
+			
+			//create and append a new g element(addition #_) to the svganimated tag(animated symbols)
+			
+			let newG = document.createElement("g"); 
+			newG.id = "add" + num; 
+			
+			let newShape = document.createElement("polygon"); 
+			newShape.points = "2,20 20,20 20,2 40,2 40,20 58,20 58,40 40,40 40,58 20,58 20,40 2,40"; 
+			newShape.fill = "url(#inside)"; 
+			newShape.stroke = "url(#outside)"; 
+			newShape.strokeWidth = "3"; 
+			
+			newG.appendChild(newShape); 
+			
+			document.body.querySelector('#animatedSymbols').appendChild(newG); 
+	
+		}
+		
+		function startAnimation() {
+			
+			let masterTl = new TimelineMax(); 
+			
+			masterTl
+				.add(clearScreen(), 'clear-screen');
+			
+			let firstTl = new TimelineMax(); 
+			
+			firstTl
+				.add(enterAddition(), 'enter-addition');
+		
+			
+			let secondTl = new TimelineMax();
+			
+			secondTl
+				.add(enterSubtraction(), 'enter-subtraction'); 
+			
+			let thirdTl = new TimelineMax(); 
+			
+			thirdTl
+				.add(enterMultiplication(), 'enter-multiplication'); 
+			
+			let fourthTl = new TimelineMax(); 
+			
+			fourthTl
+				.add(enterDivision(), 'enter-division');
+			
+		}
+		
+		startAnimation(); 
+	
+	</script>
 
 </html>
 
