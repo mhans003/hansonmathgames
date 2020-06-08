@@ -87,6 +87,10 @@ div#mathSymbolContainer {
 	
 }
 
+a:hover {
+	text-decoration: none; 
+}
+
 .scoreHr {
 	width: 20%;
     border: 0;
@@ -127,6 +131,34 @@ h6.userScoreOutput {
 				 0px 6px 6px rgba(20,70,110,0.3),
 				 8px 13px 15px rgba(150,150,0,0.2);
 	
+}
+
+.btn-secondary {
+	background-color: rgba(90,100,220,1) !important; 
+	border-color: rgba(90,100,220,1) !important; 
+}
+
+.btn-secondary:hover {
+	background-color: rgba(100,110,230,0.8) !important; 
+	border-color: rgba(90,100,220,1) !important; 
+}
+
+.btn-secondary:focus {
+	box-shadow: none; 
+}
+
+.btn-info {
+	background-color: rgba(130,130,165,1) !important; 
+	border-color: rgba(130,130,165,1) !important; 
+}
+
+.btn-info:hover {
+	background-color: rgba(130,130,165,0.8) !important; 
+	border-color: rgba(130,130,165,1) !important; 
+}
+
+.btn-info:focus {
+	box-shadow: none; 
 }
 
 #highscores {
