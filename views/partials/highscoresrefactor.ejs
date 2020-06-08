@@ -1,6 +1,7 @@
 <div id="highscores">
 	<% if(scores.length > 0) { %>
 		<h3>High Scores</h3>
+		<hr class="scoreHr">
 		<% if(scores.length > 4) { %>
 			<% for(let i = scores.length; i > scores.length - 5; i--) { %>
 				<h6><strong><%= scores[i - 1].author.username %>: </strong><%= scores[i - 1].score %></h6>
@@ -29,15 +30,20 @@
 		<% } %>
 	
 		<br>
-				
-		
-
+	
+		<% for(let i = users.length - 1; i >= 0; i--) { %>
+			<% if(scores[i].author.username === currentUser.username) { %>
+				<h6 class="userScoreOutput">
+					<i><strong>Your Highest Score: </strong><%= usersHighScore[i].score %></i>
+				</h6>
+				<input class='usershighscore' style='display:none;' value='<%= usersHighScore[i].score %>'>
+				<% break; %>
+			<% } %>
+		<% } %>
+	
+		<hr class="scoreHr">
 	
 	<% } %>
-	
-	<h6 style="color:rgba(90, 90, 130, 0.9);"><i><strong>Your Highest Score: </strong><%= usersHighestScore %></i></h6>
-	<input class='usershighscore' style='display:none;' value='<%= usersHighestScore %>'>
-	
 	<input class='lowestHighScore' style='display:none;' value=''>
 	<input class='usershighscore' style='display:none;' value=''>
 	
