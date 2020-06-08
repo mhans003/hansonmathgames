@@ -9,6 +9,12 @@
 		<%- include("../partials/sharedstyles") %>
         
         <style>
+			
+			hr {
+				
+				width: 35%;
+				
+			}
             
         </style>
     
@@ -33,10 +39,10 @@
 			<br>
 			<br>
 
-			<button type="button" class="btn btn-primary" id="getFractions">Generate Simplified Fractions <i class="fas fa-play-circle"></i></button>
+			<button type="button" class="btn btn-secondary" id="getFractions">Generate Simplified Fractions <i class="fas fa-play-circle"></i></button>
 			<br>
 			<br>
-			<button type="button" class="btn btn-primary" id="reset">RESET <i class="fas fa-undo-alt"></i></button>
+			<button type="button" class="btn btn-secondary" id="reset">RESET <i class="fas fa-undo-alt"></i></button>
 			<br>
 			<p id='error'></p>
 
@@ -172,10 +178,13 @@
             
             for(let thisFraction = 0; thisFraction < simplifiedFractions.length; thisFraction++)
             {
-                fractionString += numerator + '&frasl;' + denominator + ' = ' + fractions[thisFraction] + '<br>';
+                fractionString += numerator + '&frasl;' + denominator + ' = ' 
+					+ '(' + numerator + ' &#247; ' + factors[thisFraction] + ')' + ' &frasl; ' + '(' + denominator 
+					+ ' &#247; ' + factors[thisFraction] + ')' + ' = '
+					+ fractions[thisFraction] + '<br>';
             }
             
-            simplifiedFractionsVar.innerHTML = '<strong>' + 'Simplified Fractions:' + '</strong>' + '<br>' + fractionString;
+            simplifiedFractionsVar.innerHTML = '<strong>' + 'Simplified Fractions:' + '</strong>' + '<br>' + '<hr>' + fractionString;
             
         }
         

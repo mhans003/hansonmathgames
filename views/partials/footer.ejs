@@ -1,4 +1,13 @@
 </div>
+
+<footer id="main-footer" class="p-3 mt-5 bg-dark text-muted fixed-bottom">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+			Hanson Math Games   |  <span class="ml-auto" id="year"></span>
+        </div>
+    </div>
+</footer>
+
 </body>
 
 <!-- jQuery CDN -->
@@ -11,6 +20,13 @@
 <!-- Bootstrap JS CDN -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!--if features aren't working such as fade (jquery) then don't use minified version, use full -->
+
+<script>
+
+	//Get current year for copyright. 
+	$('#year').text(new Date().getFullYear()); 
+	
+</script>
 
 </html>
 
