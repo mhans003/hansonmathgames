@@ -6,5 +6,10 @@ let lowestHighScore = null;
 //TIMER 
 
 let startTime = 60; 
+let remainingTime; 
 let setTimer = ''; 
+
+let perimeter; 
+
+
 
