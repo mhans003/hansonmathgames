@@ -91,6 +91,8 @@
 			<br>
 		
 			<div id="timer"></div>
+			
+			<%- include ("../../partials/timer.ejs") %>
 		
 			<br>
 			
@@ -173,6 +175,8 @@
 		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
 		let timerVar = document.querySelector("#timer"); 
+		let timerDiv = document.querySelector("#timerDiv"); 
+		let timerCircle = document.querySelector("#timerCircle");  
 		
 		//GAME-SPECIFIC VARIABLES 
       
@@ -215,6 +219,7 @@
 			problemContainerOff(); 
 			
 			timerVar.style.display = "none"; 
+			timerDiv.style.display = "none"; 
 			submitScoreVar.style.display = 'none'; 
 			inputContainerVar.style.display = 'none'; 
 			//showPracticeProblemsVar.style.display = 'none'; 

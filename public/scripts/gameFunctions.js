@@ -61,6 +61,13 @@ function setUpTimer() {
 	timerVar.style.display = "block"; 
 	setTimer = setInterval(countDown, 1000); 
 	
+	//timer circle
+	perimeter = timerCircle.getAttribute('r') * 2 * Math.PI; 
+	timerCircle.setAttribute('stroke-dasharray', perimeter); 
+	timerDiv.style.display = "block"; 
+	
+	remainingTime = startTime; 
+	
 }
 
 function endTimer() {
@@ -78,21 +85,36 @@ function clearTimer() {
 
 function countDown() {
 			
-	startTime--; 
+	//startTime--; 
+	remainingTime--; 
+	
+	tick(); 
 			
-	if(startTime > 9)
+	//if(startTime > 9)
+	if(remainingTime > 9)
 		{
-			timerVar.innerHTML = '00:' + startTime; 
+			//timerVar.innerHTML = '00:' + startTime; 
+			timerVar.innerHTML = '00:' + remainingTime; 
 		}
 	else
 		{
-			timerVar.innerHTML = '00:0' + startTime; 
+			//timerVar.innerHTML = '00:0' + startTime; 
+			timerVar.innerHTML = '00:0' + remainingTime;
 		}
-	if(startTime < 1)
+	//if(startTime < 1)
+	if(remainingTime < 1)
 		{
 			timeout(); 
 		}
 			
+}
+
+function tick() {
+	
+	timerCircle.setAttribute('stroke-dashoffset', 
+		perimeter * remainingTime / startTime - perimeter
+	);
+	
 }
 
 function wrongAnswer(amount) {

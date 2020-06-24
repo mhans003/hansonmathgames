@@ -92,6 +92,8 @@
 			<%- include ("../../partials/instructions/divisionlongmental.ejs") %>
 			
 			<div id="timer"></div>
+			
+			<%- include ("../../partials/timer.ejs") %>
         
             <button type="button" class="btn btn-secondary" id="startGame">START <i class="fas fa-play-circle"></i></button>
             <br>
@@ -152,6 +154,8 @@
 		//const showPracticeProblemsVar = document.querySelector('#showPracticeProblems'); 
 		
 		let timerVar = document.querySelector("#timer");  
+		let timerDiv = document.querySelector("#timerDiv"); 
+		let timerCircle = document.querySelector("#timerCircle"); 
         
         //EVENTS
         
@@ -175,6 +179,7 @@
 			problemContainerOff(); 
 			
 			timerVar.style.display = "none"; 
+			timerDiv.style.display = "none"; 
 			submitScoreVar.style.display = 'none'; 
 			//showPracticeProblemsVar.style.display = 'none'; 
 			
