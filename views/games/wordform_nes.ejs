@@ -6,7 +6,8 @@
         
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto|Varela+Round&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nes.css/2.3.0/css/nes.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    	<link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/a18bce666e.js" crossorigin="anonymous"></script>
 		<script src="/scripts/numberWords.js"></script>
         
@@ -16,26 +17,21 @@
 				font-size: 1.25em;
                 text-align: center;
                
-                font-family: 'IBM Plex Mono', monospace;
-                color: rgba(210, 210, 255, 1); 
-                
-                background-color: rgba(100,130,155,1);
+				color: rgba(255,255,255,1); 
+                background-color: rgba(0,0,0,0.9); 
+
                 
                 text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
 						 0px 8px 13px rgba(0,0,0,0.1),
 						 0px 18px 23px rgba(0,0,0,0.1);
+				
+				font-family: 'Press Start 2P'; 
             }
 			
 			nav {
 				font-size: 0.75em; 
 			}
         
-            
-            hr {
-                border: 0;
-                height: 1px;
-                background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(200, 200, 255, 1), rgba(0, 0, 0, 0));
-            }
             
             h1 {
                 
@@ -46,35 +42,18 @@
 						 0px 18px 23px rgba(0,0,0,0.1);
             }
             
-            button, input {
-                box-shadow: 5px 10px rgba(80,110,135,1); 
-            }
-            
             
             .wordsContainer {
                 
-                border-style: outset;
-                border-color: rgba(210, 210, 255, 1);
+              
+   
                 border-width: 4px;
                 padding: 20px;
                 margin-top: 20px;
-                background-color: rgba(120,150,175,1);
-                box-shadow: 5px 10px rgba(80,110,135,1); 
+         
+           
             }
-			
-			.btn-secondary {
-				background-color: rgba(90,100,220,1) !important; 
-				border-color: rgba(90,100,220,1) !important; 
-			}
-
-			.btn-secondary:hover {
-				background-color: rgba(100,110,230,0.8) !important; 
-				border-color: rgba(90,100,220,1) !important; 
-			}
-
-			.btn-secondary:focus {
-				box-shadow: none; 
-			}
+		
             
         </style>
     
@@ -82,15 +61,15 @@
     
     <title>Hanson Word Form Generator</title>
     
-    <body>
+    <body class="container">
 		
 		<%- include("../partials/navbaronly") %>
         
         <h1>Hanson Word Form Generator</h1>
         
-        <hr>
+    	<br>
     
-        <div class='container'>
+        <div class='nes-container is-rounded'>
 
             <label for='input'>Enter a Number:</label>
             <input id='input' class='input' type='number' placeholder=''>
@@ -98,16 +77,16 @@
             <br>
             <br>
             
-            <button type="button" class="btn btn-secondary wordForm">Generate Word Form <i class="fas fa-keyboard"></i></button>
+            <button type="button" class="nes-btn is-error wordForm">Generate Word Form <i class="fas fa-keyboard"></i></button>
             <!--<input type='submit' value='Generate Word Form' class='wordForm'>-->
             
             
-            <button type="button" class="btn btn-secondary resetGame">Reset <i class="fas fa-undo-alt"></i></button>
+            <button type="button" class="nes-btn is-success resetGame">Reset <i class="fas fa-undo-alt"></i></button>
             <!--<input type='submit' value='RESET' class='resetGame'>-->
             <br>
             <br>
             
-            <div class='wordsContainer'>
+            <div class='nes-container is-dark is-rounded wordsContainer'>
                 <p id='showWords'></p>
             </div>
             

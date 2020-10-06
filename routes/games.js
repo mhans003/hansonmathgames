@@ -276,6 +276,10 @@ router.get("/wordformtraditional", middleware.isLoggedIn, function(req, res) {
 	res.render("games/wordformtraditional");  
 }); 
 
+router.get("/wordform_nes", middleware.isLoggedIn, function(req, res) {
+	res.render("games/wordform_nes");  
+}); 
+
 router.get("/primecomposite", middleware.isLoggedIn, function(req, res) {
 	Score.find({game:"Hanson Prime/Composite Numbers Game"},{},{"sort":"score"}, function(err, allscores) {
 		if(err)
