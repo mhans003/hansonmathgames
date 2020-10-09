@@ -16,13 +16,7 @@
 
   },
 
-  "repository": {
-
-    "type": "git",
-
-    "url": REPOURL
-
-  },
+ 
 
   "author": "Michael E Hanson",
 
