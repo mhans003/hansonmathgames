@@ -4,8 +4,8 @@
 
 [Hanson Math Games](https://safe-wave-91410.herokuapp.com/)
 
-![Homepage Screenshot](https://drive.google.com/file/d/1aJbTsVPJH4P2kufhxbDG_vzSkKmwujhr/view?usp=sharing)
-![Game Screenshot](https://drive.google.com/file/d/1sgm8MIkxcAfz7ZoAs9zAq2Ga90O96jJP/view?usp=sharing)
+![Homepage Screenshot](./images/hansonmathgames.jpg)
+![Game Screenshot](./images/screenshot2.jpg)
 
 ## Description
 
