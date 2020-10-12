@@ -23,7 +23,7 @@ router.get("/register", function(req, res) {
 
 router.post("/register", function(req, res) {
 	//access code added. to remove, remove if/else statement
-	if(req.body.accessCode === "hansonstars123")
+	if(req.body.accessCode === process.env.ACCESSCODE)
 		{
 			//console.log(req.body); 
 			
@@ -40,7 +40,7 @@ router.post("/register", function(req, res) {
 				email:req.body.email
 			});
 
-			if(req.body.adminCode === "secretcode123")
+			if(req.body.adminCode === process.env.ADMINCODE)
 				{
 					newUser.isAdmin = true; 
 				}
