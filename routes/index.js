@@ -45,7 +45,7 @@ router.post("/register", function(req, res) {
 					newUser.isAdmin = true; 
 				}
 
-			//add admin manually into database later
+			//add admin manually into database later.
 
 			User.register(newUser, req.body.password, function(err, user) {
 				if(err)
