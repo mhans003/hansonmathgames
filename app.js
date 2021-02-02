@@ -4,7 +4,8 @@ let express = require("express"),
 	mongoose = require("mongoose"),
 	passport = require("passport"),
 	flash = require("connect-flash"),
-	LocalStrategy = require("passport-local");
+	LocalStrategy = require("passport-local"),
+	PORT = process.env.PORT || 3000;
 
 require('dotenv').config();
 
@@ -27,7 +28,9 @@ mongoose.Promise = global.Promise;
 //connect to database
 mongoose.connect(process.env.DATABASEURL, {
 	useNewUrlParser: true,
-	useCreateIndex: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 }).then(() => {
 	//console.log("Databse Connected: " + process.env.DATABASEURL);
 	console.log("database connected"); 
@@ -74,7 +77,6 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use("/games", gameRoutes);  
 
-app.listen(3000, function() { 
-//app.listen(process.env.PORT, function() {
+app.listen(PORT, function() {
 	console.log("hansonmathgames running"); 
 }); 

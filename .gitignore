@@ -106,3 +106,5 @@ dist
 
 
 goorm.manifest
+
+.env
