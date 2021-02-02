@@ -32,20 +32,19 @@ mongoose.connect(process.env.DATABASEURL, {
     useCreateIndex: true,
     useFindAndModify: false
 }).then(() => {
-	//console.log("Databse Connected: " + process.env.DATABASEURL);
 	console.log("database connected"); 
 }).catch(err => {
 	console.log("Database connection error: " + err.message); 
 }); 
 
-//seedDB(); //seed the database
+//seedDB(); 
 
 //include flash
 app.use(flash());
 
 //passport configuration
 app.use(require("express-session")({
-	secret: "Tricky is the best",
+	secret: process.env.SECRET,
 	resave: false,
 	saveUninitialized: false
 }));
