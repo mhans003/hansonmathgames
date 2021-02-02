@@ -60,8 +60,8 @@ app.set("view engine", "ejs");
 
 //include body parser
 app.use(bodyParser.urlencoded({extended: true})); //must use in order to parse request body (req.body) properties
-
-app.use(express.static(__dirname + "/public")); //determine need
+//serve static content
+app.use(express.static(__dirname + "/public"));
 
 //middleware to be called on every route - provide currentUser data and flash messages 
 app.use(function(req, res, next) {
@@ -72,7 +72,6 @@ app.use(function(req, res, next) {
 });
 	
 //include routes 
-//app.use(express.static(__dirname + "/public")); 
 app.use(indexRoutes);
 app.use("/games", gameRoutes);  
 
